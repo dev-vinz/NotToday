@@ -14,6 +14,12 @@ public:
 
 protected:
     //void virtual displayTasks() const = 0;
+    QVector<Task> tasks;
+    Task createTask();
+    void displayTask(Task task, int indice);
+    void displayTasks();
+    void addTask();
+    void addNewTask(int i);
     void virtual initialize() = 0;
 };
 

@@ -2,12 +2,11 @@
 
 TaskManagement::TaskManagement(QWidget *_parent) : TabModel(_parent)
 {
-    mainLayout = new QGridLayout(this);
-    topLayout = new QHBoxLayout(this);
-    boardLayout = new QGridLayout(this);
-
-    mainLayout->addLayout(topLayout,0,0);
-    mainLayout->addLayout(boardLayout,1,0);
+    mainLayout = new QVBoxLayout(this);
+    topLayout = new QHBoxLayout();
+    boardLayout = new QGridLayout();
+    defaultLayout = new QHBoxLayout();
+    mainLayout->addLayout(topLayout);
 
     lblTitle = new QLabel("Aperçu des tâches");
     QFont font = lblTitle->font();
@@ -26,6 +25,8 @@ TaskManagement::TaskManagement(QWidget *_parent) : TabModel(_parent)
     btnModifyTask = new QPushButton("Modifier Tâche",this);
     btnModifyTask->setGeometry(700,50,150,50);
     topLayout->addWidget(btnModifyTask);
+
+    mainLayout->addLayout(boardLayout);
 
     selectLabel = new QLabel("Selecteur");
     selectLabel->setStyleSheet("background: rgba(31,144,186,255); border: 2px solid black;");
@@ -48,6 +49,10 @@ TaskManagement::TaskManagement(QWidget *_parent) : TabModel(_parent)
     boardLayout->addWidget(durationLabel,0,4);
     boardLayout->addWidget(progressionLabel,0,5);
 
+    mainLayout->addLayout(defaultLayout);
+    mainLayout->setStretch(0,1);
+    mainLayout->setStretch(1,9);
+    mainLayout->setStretch(2,1);
 
     connect(btnAddTask, &QPushButton::clicked, this, &TaskManagement::openNewWindow);
     connect(btnModifyTask, &QPushButton::clicked,this, &TaskManagement::openNewWindow);
@@ -58,13 +63,12 @@ void TaskManagement::openNewWindow()
     QObject *emmetteur = sender();
     if(emmetteur==btnModifyTask)
     {
-        modifyTask = new QWindow();
-        modifyTask->setTitle("Modify Task");
+        modifyTask = new QDialog();
         modifyTask->show();
+
     }else
     {
-        addTask = new QWindow();
-        addTask->setTitle("Add Task");
+        addTask = new QDialog();
         addTask->show();
        /*
          * // Create another type of window AddTaskWindow that extends from QWindow
@@ -83,3 +87,4 @@ void TaskManagement::initialize()
 {
 
 }
+

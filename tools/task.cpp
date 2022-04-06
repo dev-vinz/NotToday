@@ -24,19 +24,6 @@ Task::Task(TaskStatus status, int priority, QString name, QDateTime deadline, QD
     }
 }
 
-
-/*Task::Task(TaskStatus status, int priority, QString name, QDateTime deadline, QDateTime startTime, Recurrence recurrence, QDateTime duration, QList<Task*> *parent )
-{
-    this->status=status;
-    this->priority=priority;
-    this->name=name;
-    this->deadline=deadline;
-    this->startTime=startTime;
-    this->recurrence=recurrence;
-    this->duration=duration;
-    this->parent = new QList<Task*>;
-}*/
-
 /*Task Task::createTask(TaskStatus status, int priority, QString name, QDateTime deadline, QDateTime startTime, Recurrence recurrence, QDateTime duration , QList<Task*> *parent)
 {
     return Task(status,priority,name,deadline,startTime,recurrence,duration,parent);
