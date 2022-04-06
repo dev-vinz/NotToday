@@ -10,9 +10,6 @@
 class Task
 {
 private:
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
-    |*                            ATTRIBUTES                             *|
-    \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     int id;
     TaskStatus status;
