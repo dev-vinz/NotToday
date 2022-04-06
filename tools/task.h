@@ -18,9 +18,6 @@ public:
         everyTwoWeek
     };
 
-
-
-
 private:
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                            ATTRIBUTES                             *|
