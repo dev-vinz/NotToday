@@ -18,14 +18,18 @@ class TaskManagement : public TabModel
 public:
     TaskManagement(QWidget *_parent = nullptr);
     void useTask();
+
     QBoxLayout *topLayout;
-    QGridLayout *mainLayout;
+    QBoxLayout *mainLayout;
+    QBoxLayout *defaultLayout;
+
     QPushButton *btnAddTask;
     QPushButton *btnRemoveTask;
     QPushButton *btnModifyTask;
     QLabel *lblTitle;
 
     QGridLayout *boardLayout;
+
     QLabel *selectLabel;
     QLabel *statusLabel;
     QLabel *nameLabel;
@@ -33,15 +37,15 @@ public:
     QLabel *durationLabel;
     QLabel *progressionLabel;
 
-    QWindow *addTask;
-    QWindow *modifyTask;
+    QDialog *addTask;
+    QDialog *modifyTask;
+
+private:
+    void getTasks();
 
 
 protected:
-    //void displayTasks() const override;
-
     void initialize() override;
-
 public slots:
         void openNewWindow();
 };

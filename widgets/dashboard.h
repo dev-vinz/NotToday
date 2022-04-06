@@ -20,12 +20,12 @@ class Dashboard : public TabModel
 private:
     QAction *actSave, *actOpen, *actNew;
     QFile file;
-    QVector<Task> tasks;
-    void createActions();
-    Task createTask();
-    void displayTask(Task task);
-    void displayTasks();
 
+    void createActions();
+    void displayTask(Task task, int indice);
+    void displayTasks();
+    void addTask();
+    void addNewTask(int i);
 public:
     Dashboard(QWidget *_parent = nullptr);
 
@@ -33,8 +33,8 @@ public:
     QAction *getOpenAction() const;
     QAction *getSaveAction() const;
     QBoxLayout *mainLayout;
+    QBoxLayout *defaultLayout;
 
-    QBoxLayout *topLayout;
     QLabel *lblTitle;
     QGridLayout *boardLayout;
     QLabel *selectLabel;
@@ -44,17 +44,17 @@ public:
     QLabel *durationLabel;
     QLabel *progressionLabel;
 
-    QGridLayout *taskLayout;
-    QRadioButton *radSelectTask;
-    QPushButton *btnStatusTask;
-    QLabel *lblNameTask;
-    QLabel *lblDateTask;
-    QLabel *lblDurationTask;
-    QProgressBar *pgbProgressionTask;
+    QBoxLayout *taskLayout;
+
+    QVector<QRadioButton *> *radSelectTask;
+    QVector<QPushButton *> *btnStatusTask;
+    QVector<QLabel *> *lblNameTask;
+    QVector<QLabel *> *lblDateTask;
+    QVector<QLabel *> *lblDurationTask;
+    QVector<QProgressBar *> *pgbProgressionTask;
 
 
 protected:
-    //void displayTasks() const override;
     void initialize() override;
 };
 

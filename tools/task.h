@@ -44,9 +44,7 @@ public:
 public:
 
     Task(TaskStatus status, int priority, QString name, QDateTime deadline, QDateTime startTime, Recurrence recurrence = noRecurrence, QDateTime duration = QDateTime(QDate(12, 12, 12), QTime(12, 12, 12)), QList<Task*> *parent = new QList<Task*>);
-    //Task(TaskStatus status, int priority, QString name, QDateTime deadline, QDateTime startTime, Recurrence recurrence = noRecurrence, QDateTime duration = QDateTime(QDate(0, 0, 0), QTime(0, 0, 0)));
 
-    //Task createTask(TaskStatus status, int priority, QString name, QDateTime deadline, QDateTime startTime, Recurrence recurrence = noRecurrence, QDateTime duration = QDateTime(QDate(0, 0, 0), QTime(0, 0, 0)), QList<Task*> *parent = nullptr);
     QString readTask();
     void updateTask(Task task);
     void deleteTask(Task task);
