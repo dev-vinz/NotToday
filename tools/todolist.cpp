@@ -78,23 +78,7 @@ void ToDoList::removeDependence(Task *_taskSrc, Task *_taskDest)
     }
 }
 
-void ToDoList::runCoffmanGraham() const
-{
-    QVector<Task *> taskList = this->coffman();
-
-    return this->graham(taskList);
-}
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
 |*                          PRIVATE METHODS                          *|
 \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-QVector<Task *> ToDoList::coffman() const
-{
-
-}
-
-void ToDoList::graham(QVector<Task *> _tasks) const
-{
-
-}

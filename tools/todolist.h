@@ -19,9 +19,6 @@ private:
     |*                          PRIVATE METHODS                          *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    QVector<Task *> coffman() const;
-    void graham(QVector<Task *>) const;
-
 public:
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                           CONSTRUCTORS                            *|
@@ -39,8 +36,6 @@ public:
 
     void addDependence(Task *, Task *);
     void removeDependence(Task *, Task *);
-
-    void runCoffmanGraham() const;
 };
 
 #endif // TODOLIST_H

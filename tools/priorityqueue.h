@@ -10,7 +10,6 @@ struct PonderatedTask {
     int priority;
 };
 
-
 class PriorityQueue
 {
 private:
