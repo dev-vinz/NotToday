@@ -9,6 +9,11 @@
 class Task
 {
 private:
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+    |*                            ATTRIBUTES                             *|
+    \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    int id;
     TaskStatus status;
     int priority;
     QString name;
@@ -16,10 +21,22 @@ private:
     QDateTime startTime;
     QDateTime recurrence;
     QDateTime duration;
-    Task *parent;
+    Task **parent;
 
 public:
     Task();
+
+    /* * * * * * * * * * * * * * * * * * *\
+    |*              GETTERS              *|
+    \* * * * * * * * * * * * * * * * * * */
+
+    int getId() const;
+    int getPriority() const;
+    QString getName() const;
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+    |*                          PUBLIC METHODS                           *|
+    \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     bool isCheckable() const;
 };

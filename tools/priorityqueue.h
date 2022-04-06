@@ -1,46 +1,48 @@
-#ifndef TODOLIST_H
-#define TODOLIST_H
+#ifndef PRIORITYQUEUE_H
+#define PRIORITYQUEUE_H
 
-#include <QMap>
 #include <QVector>
 
 #include "task.h"
 
-class ToDoList
+struct PonderatedTask {
+    Task task;
+    int priority;
+};
+
+
+class PriorityQueue
 {
 private:
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                            ATTRIBUTES                             *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    QMap<Task *, QVector<Task *>> graph;
+    QVector<PonderatedTask> pQueue;
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                          PRIVATE METHODS                          *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    QVector<Task *> coffman() const;
-    void graham(QVector<Task *>) const;
+    void heapify(int);
+    void swap(int, int);
 
 public:
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                           CONSTRUCTORS                            *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    ToDoList();
-    ~ToDoList();
+    PriorityQueue();
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                          PUBLIC METHODS                           *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    void addTask(Task *);
-    void removeTask(Task *);
+    bool empty() const;
 
-    void addDependence(Task *, Task *);
-    void removeDependence(Task *, Task *);
+    PonderatedTask pop();
 
-    void runCoffmanGraham() const;
+    void push(PonderatedTask);
 };
 
-#endif // TODOLIST_H
+#endif // PRIORITYQUEUE_H
