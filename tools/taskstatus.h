@@ -1,12 +1,12 @@
 #ifndef TASKSTATUS_H
 #define TASKSTATUS_H
 
-enum TaskStatus
-{
+#include <QString>
+
+enum TaskStatus{
     OPEN,
     DOING,
     DONE,
     LOCKED
 };
-
 #endif // TASKSTATUS_H
