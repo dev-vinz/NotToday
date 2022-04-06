@@ -18,8 +18,12 @@ public:
         everyTwoWeek
     };
 
+private:
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+    |*                            ATTRIBUTES                             *|
+    \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-
+    int id;
 public:
     TaskStatus status;
     int priority;
@@ -54,6 +58,18 @@ public:
     QString getRecurrence(Recurrence recurrence);
     QString DateToString(QDateTime date);
     QString DurationToString();
+
+    /* * * * * * * * * * * * * * * * * * *\
+    |*              GETTERS              *|
+    \* * * * * * * * * * * * * * * * * * */
+
+    int getId() const;
+    int getPriority() const;
+    QString getName() const;
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+    |*                          PUBLIC METHODS                           *|
+    \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     bool isCheckable() const;
 };
