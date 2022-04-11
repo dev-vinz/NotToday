@@ -9,45 +9,51 @@
 #include <QBoxLayout>
 #include <QLabel>
 #include <QMainWindow>
+
 #include "tabmodel.h"
 
 class Task;
+
 class TaskManagement : public TabModel
 {
     Q_OBJECT
-public:
-    TaskManagement(QWidget *_parent = nullptr);
-    void useTask();
-
-    QBoxLayout *topLayout;
-    QBoxLayout *mainLayout;
-    QBoxLayout *defaultLayout;
-
-    QPushButton *btnAddTask;
-    QPushButton *btnRemoveTask;
-    QPushButton *btnModifyTask;
-    QLabel *lblTitle;
-
-    QGridLayout *boardLayout;
-
-    QLabel *selectLabel;
-    QLabel *statusLabel;
-    QLabel *nameLabel;
-    QLabel *dateLabel;
-    QLabel *durationLabel;
-    QLabel *progressionLabel;
-
-    QDialog *addTask;
-    QDialog *modifyTask;
 
 private:
-    void getTasks();
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+    |*                            ATTRIBUTES                             *|
+    \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+    QBoxLayout *topLayout, *mainLayout, *defaultLayout;
+    QDialog *addTask, *modifyTask;
+    QGridLayout *boardLayout;
+    QLabel *lblTitle, *selectLabel, *statusLabel, *nameLabel, *dateLabel, *durationLabel, *progressionLabel;
+    QPushButton *btnAddTask, *btnRemoveTask, *btnModifyTask;
+
+public:
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+    |*                           CONSTRUCTORS                            *|
+    \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    TaskManagement(QWidget *_parent = nullptr);
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+    |*                          PUBLIC METHODS                           *|
+    \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 protected:
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+    |*                         PROTECTED METHODS                         *|
+    \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    void displayTask(Task task, int indice) const override;
     void initialize() override;
+
 public slots:
-        void openNewWindow();
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+     *                            SLOTS                            *
+    \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    void openNewWindow();
 };
 
 #endif // TASKMANAGEMENT_H

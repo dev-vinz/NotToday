@@ -2,164 +2,195 @@
 
 //Est appelé depuis la boite modale qui pour une nouvelle Task, les paramètres viennent des différentes zones de textes
 
-Task::Task(TaskStatus status, int priority, QString name, QDateTime deadline, QDateTime startTime, Recurrence recurrence, QDateTime duration,QList<Task*> *parent)
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+|*                           CONSTRUCTORS                            *|
+\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+Task::Task(TaskStatus status, int priority, QString name, QDateTime deadline, QDateTime startTime, Recurrence recurrence, QDateTime duration, QList<Task*> *parent)
 {
-    this->status=status;
-    this->priority=priority;
-    this->name=name;
-    this->deadline=deadline;
-    this->startTime=startTime;
-    this->recurrence=recurrence;
-    this->duration=duration;
+    this->status = status;
+    this->priority = priority;
+    this->name = name;
+    this->deadline = deadline;
+    this->startTime = startTime;
+    this->recurrence = recurrence;
+    this->duration = duration;
     this->parent = new QList<Task*>;
-    if(parent->size()==0)
-    {
 
-    }else
+    if (this->parent->size() != 0)
     {
-    for(int i=0;i<parent->size();i++)
-    {
-        this->parent->append(parent->at(i));
-    }
+        for(int i = 0; i < this->parent->size(); i++)
+        {
+            this->parent->append(parent->at(i));
+        }
     }
 }
 
-/*Task Task::createTask(TaskStatus status, int priority, QString name, QDateTime deadline, QDateTime startTime, Recurrence recurrence, QDateTime duration , QList<Task*> *parent)
-{
-    return Task(status,priority,name,deadline,startTime,recurrence,duration,parent);
-}*/
+/* * * * * * * * * * * * * * * * * * *\
+|*              GETTERS              *|
+\* * * * * * * * * * * * * * * * * * */
 
-//Est appelé quand on veut afficher
-QString Task::readTask()
+int Task::getId() const
 {
-    QString message = "name: " + this->name + "\n "
-                    + "priority: " + QString::number(this->priority) + "\n "
-                    + "status: " + getTaskStatus(this->status) + "\n "
-                    + "deadline: " + this->DateToString(this->deadline) + "\n "
-                    + "startTime: " + this->DateToString(this->startTime) + "\n "
-                    + "reccurence: " + getRecurrence(this->recurrence) + "\n ";
-
-    message += this->DurationToString() + "\n";
-    /*
-    foreach(Task* str, *this->parent)
-    {
-        message += "Parent " + str->name + "\n";
-    }*/
-    for(int i=0;i<this->parent->size();i++)
-    {
-        message += "Parent " + this->parent->at(i)->name + "\n";
-    }
-    return message;
+    return this->id;
 }
 
-QString Task::DurationToString()
+int Task::getPriority() const
+{
+    return this->priority;
+}
+
+QDateTime Task::getDeadline() const
+{
+    return this->deadline;
+}
+
+QDateTime Task::getDuration() const
+{
+    return this->duration;
+}
+
+QDateTime Task::getStartTime() const
+{
+    return this->startTime;
+}
+
+QList<Task *> *Task::getParents() const
+{
+    return this->parent;
+}
+
+QString Task::getDurationString() const
 {
     QString message = "";
-    if((this->duration.date()==QDate(0,0,0)))
+
+    if (this->duration.date() == QDate(0, 0, 0))
     {
-        this->duration=this->duration.addDays(1);
-        message+=this->duration.toString("HH:mm::ss");
-        this->duration.setDate(QDate(0,0,0));
-    }else
-    {
-        message+= this->duration.toString("yyyy-MM-dd");
-        message+= this->duration.toString("HH:mm::ss");
+        QDateTime date = this->duration.addDays(1);
+
+        message += date.toString("HH:mm::ss");
     }
+    else
+    {
+        message += this->duration.toString("yyyy-MM-dd");
+        message += this->duration.toString("HH:mm::ss");
+    }
+
     return message;
 }
-QString Task::DateToString(QDateTime date)
+
+QString Task::getName() const
 {
-    return date.toString("yyyy-MM-dd");
+    return this->name;
 }
+
+QString Task::getRecurrenceString() const
+{
+    switch (this->recurrence)
+    {
+        case Recurrence::EVERY_DAY:
+            return "Every Day";
+        case Recurrence::EVERY_TWO_WEEKS:
+            return "Every Two Week";
+        case Recurrence::EVERY_WEEK:
+            return "Every Week";
+        case Recurrence::NO_RECURRENCE:
+            return "No Recurrence";
+        default:
+            return "ERROR RECURRENCE";
+    }
+}
+
+QString Task::getStatusString() const
+{
+    switch (this->status) {
+        case TaskStatus::DOING:
+            return "Doing";
+        case TaskStatus::DONE:
+            return "Done";
+        case TaskStatus::LOCKED:
+            return "Locked";
+        case TaskStatus::OPEN:
+            return "Open";
+        default:
+            return "ERROR STATUS";
+    }
+}
+
+Recurrence Task::getRecurrence() const
+{
+    return this->recurrence;
+}
+
+TaskStatus Task::getStatus() const
+{
+    return this->status;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+|*                          PUBLIC METHODS                           *|
+\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+bool Task::isCheckable() const
+{
+    // TODO
+    return false;
+}
+
+void Task::deleteTask(Task task)
+{
+    // TODO
+}
+
 void Task::updateTask(Task task)
 {
-    this->setStatus(task.status);
-    this->setPriority(task.priority);
-    this->setName(task.name);
-    this->setDeadline(task.deadline);
-    this->setStartTime(task.startTime);
-    this->setRecurrence(task.recurrence);
-    this->setDuration(task.duration);
-    /*
-    foreach(Task* task, task.parent)
-    {
-        this->addParent(task);
-    }*/
-    for(int i=0;i<task.parent->size();i++)
+    this->status = task.status;
+    this->priority = task.priority;
+    this->name = task.name;
+    this->deadline = task.deadline;
+    this->startTime = task.startTime;
+    this->recurrence = task.recurrence;
+    this->duration = task.duration;
+
+    delete this->parent;
+    this->parent = new QList<Task *>();
+
+    for (int i = 0; i < task.parent->size(); i++)
     {
         this->addParent(task.parent->at(i));
     }
 }
-void Task::deleteTask(Task task)
-{
 
+//Est appelé quand on veut afficher
+QString Task::readTask() const
+{
+    QString message = "name: " + this->name + "\n "
+                    + "priority: " + QString::number(this->priority) + "\n "
+                    + "status: " + this->getStatusString() + "\n "
+                    + "deadline: " + Utils::dateToString(this->deadline) + "\n "
+                    + "startTime: " + Utils::dateToString(this->startTime) + "\n "
+                    + "reccurence: " + this->getRecurrenceString() + "\n ";
+
+    message += this->getDurationString() + "\n";
+
+    for (int i = 0; i < this->parent->size(); i++)
+    {
+        message += "Parent " + this->parent->at(i)->name + "\n";
+    }
+
+    return message;
 }
 
-void Task::setStatus(TaskStatus status)
-{
-    this->status=status;
-}
-void Task::setPriority(int priority)
-{
-    this->priority=priority;
-}
-void Task::setName(QString name)
-{
-    this->name=name;
-}
-void Task::setDeadline(QDateTime deadline)
-{
-    this->deadline=deadline;
-}
-void Task::setStartTime(QDateTime startTime)
-{
-    this->startTime=startTime;
-}
-void Task::setRecurrence(Recurrence recurrence)
-{
-    this->recurrence=recurrence;
-}
-void Task::setDuration(QDateTime duration)
-{
-    this->duration=duration;
-}
-void Task::addParent(Task* task)
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+|*                          PRIVATE METHODS                          *|
+\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+void Task::addParent(Task *task)
 {
     this->parent->append(task);
 }
-void Task::removeParent(Task* task)
+
+void Task::removeParent(Task *task)
 {
     this->parent->remove(this->parent->indexOf(task));
-}
-
-QString Task::getRecurrence(Recurrence recurrence)
-{
-    switch (recurrence) {
-    case Recurrence::everyDay:
-        return "Every Day";
-    case Recurrence::everyTwoWeek:
-        return "Every Two Week";
-    case Recurrence::everyWeek:
-        return "Every Week";
-    case Recurrence::noRecurrence:
-        return "No Recurrence";
-    default:
-        return "ERROR RECURRENCE";
-    }
-}
-
-QString Task::getTaskStatus(TaskStatus status)
-{
-    switch (status) {
-    case TaskStatus::DOING:
-        return "Doing";
-    case TaskStatus::DONE:
-        return "Done";
-    case TaskStatus::LOCKED:
-        return "Locked";
-    case TaskStatus::OPEN:
-        return "Open";
-    default:
-        return "ERROR STATUS";
-    }
 }

@@ -13,6 +13,7 @@ SOURCES += \
     tools/priorityqueue.cpp \
     tools/task.cpp \
     tools/todolist.cpp \
+    tools/utils.cpp \
     widgets//mainwindow.cpp \
     widgets/dashboard.cpp \
     widgets/tabmodel.cpp \
@@ -22,9 +23,11 @@ SOURCES += \
 
 HEADERS += \
     tools/priorityqueue.h \
+    tools/recurrence.h \
     tools/task.h \
     tools/taskstatus.h \
     tools/todolist.h \
+    tools/utils.h \
     widgets//mainwindow.h \
     widgets/dashboard.h \
     widgets/tabmodel.h \
