@@ -4,7 +4,11 @@
 #include <QMap>
 #include <QVector>
 
+#include "priorityqueue.h"
 #include "task.h"
+
+#define DEADLINE_PRIORITY 10
+#define PARENT_PRIORITY 5
 
 class ToDoList
 {
@@ -27,9 +31,17 @@ public:
     ToDoList();
     ~ToDoList();
 
+    /* * * * * * * * * * * * * * * * * * *\
+    |*              GETTERS              *|
+    \* * * * * * * * * * * * * * * * * * */
+
+    QList<Task *> getTasks() const;
+
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                          PUBLIC METHODS                           *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    QVector<Task *> run() const;
 
     void addTask(Task *);
     void removeTask(Task *);

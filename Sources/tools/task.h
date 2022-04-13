@@ -4,7 +4,6 @@
 #include <QDateTime>
 #include <QList>
 #include <QString>
-//TESTING REBASE
 #include <QList>
 
 #include "recurrence.h"
@@ -14,6 +13,9 @@
 class Task
 {
 private:
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+    |*                            ATTRIBUTES                             *|
+    \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     int id;
     TaskStatus status;
@@ -23,21 +25,19 @@ private:
     QDateTime startTime;
     Recurrence recurrence;
     QDateTime duration;
-    QList<Task *> *parent;
+    QList<Task *> parent;
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                          PRIVATE METHODS                          *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-    void addParent(Task* task);
-    void removeParent(Task* task);
 
 public:
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                           CONSTRUCTORS                            *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    Task(TaskStatus status, int priority, QString name, QDateTime deadline, QDateTime startTime, Recurrence recurrence = Recurrence::NO_RECURRENCE, QDateTime duration = QDateTime(QDate(12, 12, 12), QTime(12, 12, 12)), QList<Task *> *parent = new QList<Task *>);
+    Task(TaskStatus status, int priority, QString name, QDateTime deadline, QDateTime startTime, Recurrence recurrence = Recurrence::NO_RECURRENCE, QDateTime duration = QDateTime(QDate(12, 12, 12), QTime(12, 12, 12)), QList<Task *> parent = QList<Task *>());
+    ~Task();
 
     /* * * * * * * * * * * * * * * * * * *\
     |*              GETTERS              *|
@@ -50,7 +50,7 @@ public:
     QDateTime getDuration() const;
     QDateTime getStartTime() const;
 
-    QList<Task *> *getParents() const;
+    QList<Task *> getParents() const;
 
     QString getDurationString() const;
     QString getName() const;
@@ -67,7 +67,9 @@ public:
 
     bool isCheckable() const;
 
+    void addParent(Task* task);
     void deleteTask(Task task);
+    void removeParent(Task* task);
     void updateTask(Task task);
 
     QString readTask() const;

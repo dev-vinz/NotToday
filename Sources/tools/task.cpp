@@ -6,7 +6,7 @@
 |*                           CONSTRUCTORS                            *|
 \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-Task::Task(TaskStatus status, int priority, QString name, QDateTime deadline, QDateTime startTime, Recurrence recurrence, QDateTime duration, QList<Task*> *parent)
+Task::Task(TaskStatus status, int priority, QString name, QDateTime deadline, QDateTime startTime, Recurrence recurrence, QDateTime duration, QList<Task*> parent)
 {
     this->status = status;
     this->priority = priority;
@@ -15,15 +15,18 @@ Task::Task(TaskStatus status, int priority, QString name, QDateTime deadline, QD
     this->startTime = startTime;
     this->recurrence = recurrence;
     this->duration = duration;
-    this->parent = new QList<Task*>;
 
-    if (this->parent->size() != 0)
+    if (parent.size() != 0)
     {
-        for(int i = 0; i < this->parent->size(); i++)
+        for(int i = 0; i < parent.size(); i++)
         {
-            this->parent->append(parent->at(i));
+            this->parent.append(parent.at(i));
         }
     }
+}
+
+Task::~Task()
+{
 }
 
 /* * * * * * * * * * * * * * * * * * *\
@@ -55,7 +58,7 @@ QDateTime Task::getStartTime() const
     return this->startTime;
 }
 
-QList<Task *> *Task::getParents() const
+QList<Task *> Task::getParents() const
 {
     return this->parent;
 }
@@ -131,6 +134,11 @@ TaskStatus Task::getStatus() const
 |*                          PUBLIC METHODS                           *|
 \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+void Task::addParent(Task *task)
+{
+    this->parent.append(task);
+}
+
 bool Task::isCheckable() const
 {
     // TODO
@@ -140,6 +148,11 @@ bool Task::isCheckable() const
 void Task::deleteTask(Task task)
 {
     // TODO
+}
+
+void Task::removeParent(Task *task)
+{
+    this->parent.remove(this->parent.indexOf(task));
 }
 
 void Task::updateTask(Task task)
@@ -152,12 +165,11 @@ void Task::updateTask(Task task)
     this->recurrence = task.recurrence;
     this->duration = task.duration;
 
-    delete this->parent;
-    this->parent = new QList<Task *>();
+    this->parent.clear();
 
-    for (int i = 0; i < task.parent->size(); i++)
+    for (int i = 0; i < task.parent.size(); i++)
     {
-        this->addParent(task.parent->at(i));
+        this->addParent(task.parent.at(i));
     }
 }
 
@@ -173,9 +185,9 @@ QString Task::readTask() const
 
     message += this->getDurationString() + "\n";
 
-    for (int i = 0; i < this->parent->size(); i++)
+    for (int i = 0; i < this->parent.size(); i++)
     {
-        message += "Parent " + this->parent->at(i)->name + "\n";
+        message += "Parent " + this->parent.at(i)->name + "\n";
     }
 
     return message;
@@ -185,12 +197,3 @@ QString Task::readTask() const
 |*                          PRIVATE METHODS                          *|
 \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-void Task::addParent(Task *task)
-{
-    this->parent->append(task);
-}
-
-void Task::removeParent(Task *task)
-{
-    this->parent->remove(this->parent->indexOf(task));
-}

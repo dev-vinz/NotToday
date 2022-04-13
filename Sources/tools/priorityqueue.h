@@ -6,7 +6,7 @@
 #include "task.h"
 
 struct PonderatedTask {
-    Task task;
+    Task *task;
     int priority;
 };
 
@@ -40,6 +40,8 @@ public:
     bool empty() const;
 
     PonderatedTask pop();
+
+    QVector<Task *> toQVector() const;
 
     void push(PonderatedTask);
 };

@@ -10,15 +10,61 @@ ToDoList::ToDoList()
 
 ToDoList::~ToDoList()
 {
-    foreach (Task *t, this->graph.keys())
+    QList<Task *> keys = this->graph.keys();
+
+    foreach (Task *t, keys)
     {
         this->removeTask(t);
     }
 }
 
+/* * * * * * * * * * * * * * * * * * *\
+|*              GETTERS              *|
+\* * * * * * * * * * * * * * * * * * */
+
+QList<Task *> ToDoList::getTasks() const
+{
+    return this->graph.keys();
+}
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
 |*                          PUBLIC METHODS                           *|
 \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+QVector<Task *> ToDoList::run() const
+{
+    /**
+     * 1. Sort by deadline
+     * 2. Make sure parents are before childrens
+     * 3. If equality, task's priority first
+     */
+
+    PriorityQueue pQueue;
+
+    foreach (Task *t, this->graph.keys())
+    {
+        QDateTime now = QDateTime::currentDateTime();
+
+        int deadlinePriority = now.secsTo(t->getDeadline()) * DEADLINE_PRIORITY;
+        int parentPriority = 0;
+
+        foreach (const Task *parent, t->getParents())
+        {
+            if (parent->getStatus() != TaskStatus::DONE)
+            {
+                parentPriority += PARENT_PRIORITY;
+            }
+        }
+
+        PonderatedTask pTask;
+        pTask.task = t;
+        pTask.priority = deadlinePriority + parentPriority - t->getPriority();
+
+        pQueue.push(pTask);
+    }
+
+    return pQueue.toQVector();
+}
 
 void ToDoList::addTask(Task *_task)
 {
@@ -39,9 +85,16 @@ void ToDoList::removeTask(Task *_task)
     {
         this->graph.remove(_task);
 
-        foreach (Task *t, this->graph.keys())
+        QList<Task *> keys = this->graph.keys();
+
+        foreach (Task *t, keys)
         {
-            this->removeDependence(t, _task);
+            QList<Task *> dep = this->graph.value(t);
+
+            if (dep.contains(_task))
+            {
+                this->removeDependence(t, _task);
+            }
         }
 
         delete _task;
@@ -58,6 +111,8 @@ void ToDoList::addDependence(Task *_taskSrc, Task *_taskDest)
     if (!this->graph[_taskSrc].contains(_taskDest))
     {
         this->graph[_taskSrc].append(_taskDest);
+
+        _taskDest->addParent(_taskSrc);
     }
     else
     {
@@ -70,6 +125,8 @@ void ToDoList::removeDependence(Task *_taskSrc, Task *_taskDest)
     if (this->graph[_taskSrc].contains(_taskDest))
     {
         this->graph[_taskSrc].removeOne(_taskDest);
+
+        _taskDest->removeParent(_taskSrc);
     }
     else
     {
