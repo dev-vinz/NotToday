@@ -51,6 +51,8 @@ public:
 
     void addDependence(Task *, Task *);
     void removeDependence(Task *, Task *);
+
+    void serialize();
 };
 
 #endif // TODOLIST_H
