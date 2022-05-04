@@ -1,56 +1,53 @@
-#ifndef TODOLIST_H
-#define TODOLIST_H
+#ifndef TIMESPAN_H
+#define TIMESPAN_H
 
-#include <QMap>
-#include <QVector>
+#include <QString>
 
-#include "priorityqueue.h"
-#include "task.h"
 
-#define DEADLINE_PRIORITY 10
-#define PARENT_PRIORITY 5
-
-class ToDoList
+class TimeSpan
 {
 private:
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                            ATTRIBUTES                             *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    static constexpr int HOURS_IN_A_DAY_IN_MINUTES = 8 * 60;
-
-    QMap<Task *, QVector<Task *>> graph;
+    float totalSeconds;
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
-    |*                          PRIVATE METHODS                          *|
+    |*                           CONSTRUCTORS                            *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    TimeSpan(int seconds);
 
 public:
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                           CONSTRUCTORS                            *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    ToDoList();
-    ~ToDoList();
-
-    /* * * * * * * * * * * * * * * * * * *\
-    |*              GETTERS              *|
-    \* * * * * * * * * * * * * * * * * * */
-
-    QList<Task *> getTasks() const;
-    QVector<Task *> getToday() const;
+    TimeSpan();
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                          PUBLIC METHODS                           *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    QVector<Task *> run() const;
+    double totalMinutes() const;
+    double totalHours() const;
+    double totalDays() const;
 
-    void addTask(Task *);
-    void removeTask(Task *);
+    TimeSpan add(const TimeSpan);
+    TimeSpan substract(const TimeSpan);
 
-    void addDependence(Task *, Task *);
-    void removeDependence(Task *, Task *);
+    QString toString() const;
+
+    static TimeSpan fromMinutes(int minutes);
+    static TimeSpan fromHours(int hours);
+    static TimeSpan fromDays(int days);
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+    |*                         OPERATORS OVERLOAD                        *|
+    \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    friend TimeSpan operator-(TimeSpan const &ts1, TimeSpan const &ts2);
 };
 
-#endif // TODOLIST_H
+#endif // TIMESPAN_H

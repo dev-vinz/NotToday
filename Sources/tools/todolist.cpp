@@ -27,6 +27,45 @@ QList<Task *> ToDoList::getTasks() const
     return this->graph.keys();
 }
 
+QList<Task *> ToDoList::getToday() const
+{
+    QList<Task *> orderedTasks = this->run();
+    QList<Task *> today;
+
+    double totalMinutes = 0;
+
+    foreach (Task *task, orderedTasks)
+    {
+        double timeNext = totalMinutes + task->getDuration().totalMinutes();
+
+        if (timeNext > ToDoList::HOURS_IN_A_DAY_IN_MINUTES)
+        {
+            // Temps en minutes
+            double overflow = timeNext - ToDoList::HOURS_IN_A_DAY_IN_MINUTES;
+            double available = task->getDuration().totalMinutes() - overflow;
+
+            Task *copy = new Task(*task);
+
+            // TODO : Modifier task et mettre le temps overflow
+            task->setDuration(TimeSpan::fromMinutes(overflow));
+
+            // TODO : Modifier la copy et mettre le temps disponible
+            copy->setDuration(TimeSpan::fromMinutes(available));
+
+            today.push_back(copy);
+
+            break;
+        }
+        else
+        {
+            today.push_back(task);
+            totalMinutes = timeNext;
+        }
+    }
+
+    return today;
+}
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
 |*                          PUBLIC METHODS                           *|
 \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */

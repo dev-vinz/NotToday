@@ -23,7 +23,9 @@ Task TabModel::createTask()
     QDateTime deadline = QDateTime(QDate(2024, 12, 2), QTime(0, 0, 0));
     QDateTime start = QDateTime(QDate(2023, 12, 2), QTime(0, 0, 0));
     Recurrence recu = Recurrence::EVERY_TWO_WEEKS;
-    QDateTime dura = QDateTime(QDate(0, 0, 0), QTime(15, 15, 15));
+    TimeSpan dura = TimeSpan::fromMinutes(15)
+            .add(TimeSpan::fromHours(15))
+            .add(TimeSpan::fromDays(15));
 
-    return Task(status ,prio, name, deadline, start, recu, dura);
+    return Task(status, prio, name, deadline, start, dura, recu);
 }

@@ -12,6 +12,7 @@ SOURCES += \
     main.cpp \
     tools/priorityqueue.cpp \
     tools/task.cpp \
+    tools/timespan.cpp \
     tools/todolist.cpp \
     tools/utils.cpp \
     widgets//mainwindow.cpp \
@@ -26,6 +27,7 @@ HEADERS += \
     tools/recurrence.h \
     tools/task.h \
     tools/taskstatus.h \
+    tools/timespan.h \
     tools/todolist.h \
     tools/utils.h \
     widgets//mainwindow.h \
