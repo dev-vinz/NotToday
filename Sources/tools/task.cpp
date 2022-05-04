@@ -48,7 +48,10 @@ int Task::getId() const
 {
     return this->id;
 }
-
+/*!
+ * @brief test DOXYGEN .cpp looooooooool
+ * @return
+ */
 int Task::getPriority() const
 {
     return this->priority;

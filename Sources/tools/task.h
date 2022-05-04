@@ -45,7 +45,10 @@ public:
     /* * * * * * * * * * * * * * * * * * *\
     |*              GETTERS              *|
     \* * * * * * * * * * * * * * * * * * */
-
+    /*!
+     * @brief Test DOXYGEN .h
+     * @return
+     */
     int getId() const;
     int getPriority() const;
 

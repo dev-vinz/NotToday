@@ -15,6 +15,8 @@ recurrence.h
 task.cpp
 task.h
 taskstatus.h
+timespan.h
+timespan.cpp
 todolist.cpp
 todolist.h
 utils.cpp
