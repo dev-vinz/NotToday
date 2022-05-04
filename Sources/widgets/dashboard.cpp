@@ -115,7 +115,7 @@ void Dashboard::displayTask(Task task, int indice) const
     }
     lblNameTask->at(indice)->setText(task.getName());
     lblDateTask->at(indice)->setText(Utils::dateToString(task.getDeadline()));
-    lblDurationTask->at(indice)->setText(task.getDurationString());
+    lblDurationTask->at(indice)->setText(task.getDuration().toString());
     pgbProgressionTask->at(indice)->setMaximum(100); //VOir comment faire avec la progression
     pgbProgressionTask->at(indice)->setValue(50);
 }

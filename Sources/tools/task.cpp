@@ -6,7 +6,7 @@
 |*                           CONSTRUCTORS                            *|
 \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-Task::Task(TaskStatus status, int priority, QString name, QDateTime deadline, QDateTime startTime, Recurrence recurrence, QDateTime duration, QList<Task*> parent)
+Task::Task(TaskStatus status, int priority, QString name, QDateTime deadline, QDateTime startTime, TimeSpan duration, Recurrence recurrence, QList<Task*> parent)
 {
     this->status = status;
     this->priority = priority;
@@ -17,6 +17,17 @@ Task::Task(TaskStatus status, int priority, QString name, QDateTime deadline, QD
     this->duration = duration;
 
     if (parent.size() != 0)
+    {
+        for(int i = 0; i < parent.size(); i++)
+        {
+            this->parent.append(parent.at(i));
+        }
+    }
+}
+
+Task::Task(const Task& task) : status(task.status), priority(task.priority), name(task.name), deadline(task.deadline), startTime(task.startTime), duration(task.duration), recurrence(task.recurrence)
+{
+    if (task.parent.size() != 0)
     {
         for(int i = 0; i < parent.size(); i++)
         {
@@ -43,14 +54,14 @@ int Task::getPriority() const
     return this->priority;
 }
 
+TimeSpan Task::getDuration() const
+{
+    return this->duration;
+}
+
 QDateTime Task::getDeadline() const
 {
     return this->deadline;
-}
-
-QDateTime Task::getDuration() const
-{
-    return this->duration;
 }
 
 QDateTime Task::getStartTime() const
@@ -61,25 +72,6 @@ QDateTime Task::getStartTime() const
 QList<Task *> Task::getParents() const
 {
     return this->parent;
-}
-
-QString Task::getDurationString() const
-{
-    QString message = "";
-
-    if (this->duration.date() == QDate(0, 0, 0))
-    {
-        QDateTime date = this->duration.addDays(1);
-
-        message += date.toString("HH:mm::ss");
-    }
-    else
-    {
-        message += this->duration.toString("yyyy-MM-dd");
-        message += this->duration.toString("HH:mm::ss");
-    }
-
-    return message;
 }
 
 QString Task::getName() const
@@ -128,6 +120,15 @@ Recurrence Task::getRecurrence() const
 TaskStatus Task::getStatus() const
 {
     return this->status;
+}
+
+/* * * * * * * * * * * * * * * * * * *\
+|*              SETTERS              *|
+\* * * * * * * * * * * * * * * * * * */
+
+void Task::setDuration(TimeSpan ts)
+{
+    this->duration = ts;
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
@@ -183,7 +184,7 @@ QString Task::readTask() const
                     + "startTime: " + Utils::dateToString(this->startTime) + "\n "
                     + "reccurence: " + this->getRecurrenceString() + "\n ";
 
-    message += this->getDurationString() + "\n";
+    message += this->duration.toString() + "\n";
 
     for (int i = 0; i < this->parent.size(); i++)
     {

@@ -8,6 +8,7 @@
 
 #include "recurrence.h"
 #include "taskstatus.h"
+#include "timespan.h"
 #include "utils.h"
 
 class Task
@@ -23,8 +24,8 @@ private:
     QString name;
     QDateTime deadline;
     QDateTime startTime;
+    TimeSpan duration;
     Recurrence recurrence;
-    QDateTime duration;
     QList<Task *> parent;
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
@@ -36,7 +37,8 @@ public:
     |*                           CONSTRUCTORS                            *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    Task(TaskStatus status, int priority, QString name, QDateTime deadline, QDateTime startTime, Recurrence recurrence = Recurrence::NO_RECURRENCE, QDateTime duration = QDateTime(QDate(12, 12, 12), QTime(12, 12, 12)), QList<Task *> parent = QList<Task *>());
+    Task(TaskStatus status, int priority, QString name, QDateTime deadline, QDateTime startTime, TimeSpan duration, Recurrence recurrence = Recurrence::NO_RECURRENCE, QList<Task *> parent = QList<Task *>());
+    Task(const Task &);
     ~Task();
 
     /* * * * * * * * * * * * * * * * * * *\
@@ -46,13 +48,13 @@ public:
     int getId() const;
     int getPriority() const;
 
+    TimeSpan getDuration() const;
+
     QDateTime getDeadline() const;
-    QDateTime getDuration() const;
     QDateTime getStartTime() const;
 
     QList<Task *> getParents() const;
 
-    QString getDurationString() const;
     QString getName() const;
     QString getRecurrenceString() const;
     QString getStatusString() const;
@@ -60,6 +62,12 @@ public:
     Recurrence getRecurrence() const;
 
     TaskStatus getStatus() const;
+
+    /* * * * * * * * * * * * * * * * * * *\
+    |*              SETTERS              *|
+    \* * * * * * * * * * * * * * * * * * */
+
+    void setDuration(TimeSpan);
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                          PUBLIC METHODS                           *|
@@ -70,7 +78,7 @@ public:
     void addParent(Task* task);
     void deleteTask(Task task);
     void removeParent(Task* task);
-    void updateTask(Task task);
+    void updateTask(Task task); // TODO : hein, c'est débile non ?!
 
     QString readTask() const;
 };
