@@ -1,15 +1,19 @@
 #include "dashboard.h"
 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+|*                           CONSTRUCTORS                            *|
+\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 Dashboard::Dashboard(QWidget *_parent) : TabModel(_parent)
 {
     this->initialize();
 
     //initialize list of item of the Tasks
-    radSelectTask = new QVector<QRadioButton*>;
-    btnStatusTask = new QVector<QPushButton*>;
-    lblNameTask = new QVector<QLabel*>;
-    lblDateTask = new QVector<QLabel*>;
-    lblDurationTask = new QVector<QLabel*>;
+    radSelectTask = new QVector<QRadioButton *>;
+    btnStatusTask = new QVector<QPushButton *>;
+    lblNameTask = new QVector<QLabel *>;
+    lblDateTask = new QVector<QLabel *>;
+    lblDurationTask = new QVector<QLabel *>;
     pgbProgressionTask = new QVector<QProgressBar *>;
 
 
@@ -43,67 +47,59 @@ Dashboard::Dashboard(QWidget *_parent) : TabModel(_parent)
     progressionLabel->setStyleSheet("background: rgba(31,144,186,255); border: 2px solid black;");
 
 
-    boardLayout->addWidget(selectLabel,0,0);
-    boardLayout->addWidget(statusLabel,0,1);
-    boardLayout->addWidget(nameLabel,0,2);
-    boardLayout->addWidget(dateLabel,0,3);
-    boardLayout->addWidget(durationLabel,0,4);
-    boardLayout->addWidget(progressionLabel,0,5);
+    boardLayout->addWidget(selectLabel, 0, 0);
+    boardLayout->addWidget(statusLabel, 0, 1);
+    boardLayout->addWidget(nameLabel, 0, 2);
+    boardLayout->addWidget(dateLabel, 0, 3);
+    boardLayout->addWidget(durationLabel, 0, 4);
+    boardLayout->addWidget(progressionLabel, 0, 5);
 
     tasks.append(createTask());
     tasks.append(createTask());
     tasks.append(createTask());
     tasks.append(createTask());
-
 
     //pour chaque tâche on en ajoute une "Vide" puis on la remplace par les bonnes valeurs
-    for(int i = 0; i<tasks.size();i++)
+    for(int i = 0; i < tasks.size(); i++)
     {
         addNewTask(i);
         displayTask(tasks.at(i), i);
     }
 
     mainLayout->addLayout(defaultLayout);
-    mainLayout->setStretch(0,1);
-    mainLayout->setStretch(1,9);
-    mainLayout->setStretch(2,1);
+    mainLayout->setStretch(0, 1);
+    mainLayout->setStretch(1, 9);
+    mainLayout->setStretch(2, 1);
 
-    connect(actOpen, &QAction::triggered,this, &Dashboard::addTask);
-
-
+    connect(actOpen, &QAction::triggered, this, &Dashboard::addTask);
 }
 
-void Dashboard::addTask()
+/* * * * * * * * * * * * * * * * * * *\
+|*              GETTERS              *|
+\* * * * * * * * * * * * * * * * * * */
+
+QAction *Dashboard::getNewAction() const
 {
-    this->tasks.append(createTask());
-    addNewTask(this->tasks.size()-1);
-    displayTask(this->tasks.at(this->tasks.size()-1),this->tasks.size()-1);
+    return this->actNew;
 }
 
-void Dashboard::addNewTask(int i)
+QAction *Dashboard::getOpenAction() const
 {
-    radSelectTask->push_back(new QRadioButton(this));
-    btnStatusTask->push_back(new QPushButton(this));
-    lblNameTask->push_back(new QLabel("NO_NAME",this));
-    lblDateTask->push_back(new QLabel("NO_DATE",this));
-    lblDurationTask->push_back(new QLabel("NO_DURATION"));
-    pgbProgressionTask->push_back(new QProgressBar(this));
-
-    boardLayout->addWidget(radSelectTask->at(i),i+1,0);
-    boardLayout->addWidget(btnStatusTask->at(i),i+1,1);
-    boardLayout->addWidget(lblNameTask->at(i),i+1,2);
-    boardLayout->addWidget(lblDateTask->at(i),i+1,3);
-    boardLayout->addWidget(lblDurationTask->at(i),i+1,4);
-    boardLayout->addWidget(pgbProgressionTask->at(i),i+1,5);
+    return this->actOpen;
 }
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
- *                           PRIVATE                           *
-\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-
-void Dashboard::displayTask(Task task, int indice)
+QAction *Dashboard::getSaveAction() const
 {
-    switch (task.status) {
+    return this->actSave;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+|*                         PROTECTED METHODS                         *|
+\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+void Dashboard::displayTask(Task task, int indice) const
+{
+    switch (task.getStatus()) {
     case TaskStatus::DOING:
         btnStatusTask->at(indice)->setStyleSheet("background: orange;");
         break;
@@ -117,19 +113,44 @@ void Dashboard::displayTask(Task task, int indice)
         btnStatusTask->at(indice)->setStyleSheet("background: gray;");
         break;
     }
-    lblNameTask->at(indice)->setText(task.name);
-    lblDateTask->at(indice)->setText(task.DateToString(task.deadline));
-    lblDurationTask->at(indice)->setText(task.DurationToString());
+    lblNameTask->at(indice)->setText(task.getName());
+    lblDateTask->at(indice)->setText(Utils::dateToString(task.getDeadline()));
+    lblDurationTask->at(indice)->setText(task.getDurationString());
     pgbProgressionTask->at(indice)->setMaximum(100); //VOir comment faire avec la progression
     pgbProgressionTask->at(indice)->setValue(50);
 }
 
-void Dashboard::displayTasks()
+void Dashboard::initialize()
 {
-    for(int i = 0; i<tasks.size();i++)
-    {
-        displayTask(tasks.at(i), i);
-    }
+    this->createActions();
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+|*                          PRIVATE METHODS                          *|
+\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+void Dashboard::addNewTask(int i)
+{
+    radSelectTask->push_back(new QRadioButton(this));
+    btnStatusTask->push_back(new QPushButton(this));
+    lblNameTask->push_back(new QLabel("NO_NAME", this));
+    lblDateTask->push_back(new QLabel("NO_DATE", this));
+    lblDurationTask->push_back(new QLabel("NO_DURATION"));
+    pgbProgressionTask->push_back(new QProgressBar(this));
+
+    boardLayout->addWidget(radSelectTask->at(i), i + 1, 0);
+    boardLayout->addWidget(btnStatusTask->at(i), i + 1, 1);
+    boardLayout->addWidget(lblNameTask->at(i), i + 1, 2);
+    boardLayout->addWidget(lblDateTask->at(i),i + 1, 3);
+    boardLayout->addWidget(lblDurationTask->at(i), i + 1, 4);
+    boardLayout->addWidget(pgbProgressionTask->at(i),i + 1, 5);
+}
+
+void Dashboard::addTask()
+{
+    this->tasks.append(createTask());
+    addNewTask(this->tasks.size() - 1);
+    displayTask(this->tasks.at(this->tasks.size() - 1), this->tasks.size() - 1);
 }
 
 void Dashboard::createActions()
@@ -147,31 +168,10 @@ void Dashboard::createActions()
     this->actNew->setStatusTip(tr("Create a new blank file"));
 }
 
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
- *                          PROTECTED                          *
-\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-
-void Dashboard::initialize()
+void Dashboard::displayTasks()
 {
-    this->createActions();
-}
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
- *                           PUBLIC                            *
-\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-QAction *Dashboard::getNewAction() const
-{
-    return this->actNew;
-}
-
-QAction *Dashboard::getOpenAction() const
-{
-    return this->actOpen;
-}
-
-QAction *Dashboard::getSaveAction() const
-{
-    return this->actSave;
+    for(int i = 0; i < tasks.size(); i++)
+    {
+        displayTask(tasks.at(i), i);
+    }
 }

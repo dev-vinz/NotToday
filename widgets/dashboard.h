@@ -18,43 +18,50 @@ class Dashboard : public TabModel
     Q_OBJECT
 
 private:
-    QAction *actSave, *actOpen, *actNew;
-    QFile file;
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+    |*                            ATTRIBUTES                             *|
+    \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    void createActions();
-    void displayTask(Task task, int indice);
-    void displayTasks();
-    void addTask();
+    QAction *actSave, *actOpen, *actNew;
+    QBoxLayout *mainLayout, *defaultLayout, *taskLayout;
+    QFile file;
+    QGridLayout *boardLayout;
+    QLabel *lblTitle, *selectLabel, *statusLabel, *nameLabel, *dateLabel, *durationLabel, *progressionLabel;
+    QVector<QLabel *> *lblNameTask, *lblDateTask, *lblDurationTask;
+    QVector<QProgressBar *> *pgbProgressionTask;
+    QVector<QPushButton *> *btnStatusTask;
+    QVector<QRadioButton *> *radSelectTask;
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+    |*                          PRIVATE METHODS                          *|
+    \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
     void addNewTask(int i);
+    void addTask();
+    void createActions();
+    void displayTasks();
+
 public:
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+    |*                           CONSTRUCTORS                            *|
+    \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
     Dashboard(QWidget *_parent = nullptr);
+
+    /* * * * * * * * * * * * * * * * * * *\
+    |*              GETTERS              *|
+    \* * * * * * * * * * * * * * * * * * */
 
     QAction *getNewAction() const;
     QAction *getOpenAction() const;
     QAction *getSaveAction() const;
-    QBoxLayout *mainLayout;
-    QBoxLayout *defaultLayout;
-
-    QLabel *lblTitle;
-    QGridLayout *boardLayout;
-    QLabel *selectLabel;
-    QLabel *statusLabel;
-    QLabel *nameLabel;
-    QLabel *dateLabel;
-    QLabel *durationLabel;
-    QLabel *progressionLabel;
-
-    QBoxLayout *taskLayout;
-
-    QVector<QRadioButton *> *radSelectTask;
-    QVector<QPushButton *> *btnStatusTask;
-    QVector<QLabel *> *lblNameTask;
-    QVector<QLabel *> *lblDateTask;
-    QVector<QLabel *> *lblDurationTask;
-    QVector<QProgressBar *> *pgbProgressionTask;
-
 
 protected:
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+    |*                         PROTECTED METHODS                         *|
+    \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    void displayTask(Task task, int indice) const override;
     void initialize() override;
 };
 

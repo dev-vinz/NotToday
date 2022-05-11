@@ -6,7 +6,6 @@
 
 ToDoList::ToDoList()
 {
-
 }
 
 ToDoList::~ToDoList()
