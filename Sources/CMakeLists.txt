@@ -24,19 +24,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #    endif()
 #endif()
 
+find_package(Qt6 6.1.2 REQUIRED COMPONENTS Core)
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
+add_subdirectory("tools")
+
 set(PROJECT_SOURCES
         main.cpp
-
-        tools/priorityqueue.h tools/priorityqueue.cpp
-        tools/recurrence.h
-        tools/task.h tools/task.cpp
-        tools/taskstatus.h
-        tools/timespan.h tools/timespan.cpp
-        tools/todolist.h tools/todolist.cpp
-        tools/utils.h tools/utils.cpp
 
         widgets/dashboard.h widgets/dashboard.cpp
         widgets/mainwindow.h widgets/mainwindow.cpp
@@ -63,7 +58,7 @@ else()
     endif()
 endif()
 
-target_link_libraries(NotToday PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(NotToday PRIVATE Qt${QT_VERSION_MAJOR}::Widgets LibTools)
 
 set_target_properties(NotToday PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
@@ -74,3 +69,44 @@ set_target_properties(NotToday PROPERTIES
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(NotToday)
 endif()
+
+###############################################################################
+##########          Doxygen
+###############################################################################
+find_package(Doxygen)
+
+if(NOT DOXYGEN_FOUND)
+message(FATAL_ERROR "Doxygen is needed to build the documentation.")
+endif()
+
+set(doxyfile ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile)
+
+add_custom_target(BuildDoc ALL
+  COMMAND ${DOXYGEN_EXECUTABLE} ${doxyfile}
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/..
+  COMMENT "Generating Doxygen documentation"
+  VERBATIM
+)
+
+###############################################################################
+##########          TESTING
+###############################################################################
+
+# GoogleTest
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/archive/609281088cfefc76f9d0ce82e1ff6c30cc3591e5.zip
+  )
+
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+
+add_executable(tests tests.cpp ${tools_TESTS})
+target_include_directories(tests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(tests gtest_main LibTools)
+
+include(GoogleTest)
+gtest_discover_tests(tests)
+enable_testing()
