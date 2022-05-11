@@ -22,13 +22,14 @@ protected:
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                            ATTRIBUTES                             *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
     QVector<Task> tasks;
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                         PROTECTED METHODS                         *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    Task createTask();
+    static Task createTask();
 
     void addNewTask(int i);
     void addTask();

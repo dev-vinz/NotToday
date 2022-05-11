@@ -11,6 +11,7 @@
 #include <QMainWindow>
 
 #include "tabmodel.h"
+#include "taskdialog.h"
 
 class Task;
 

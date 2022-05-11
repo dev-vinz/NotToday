@@ -37,7 +37,8 @@ QVector<Task *> PriorityQueue::toQVector() const
     PriorityQueue old = *this;
     QVector<Task *> vector;
 
-    while (!old.empty()) {
+    while (!old.empty())
+    {
         vector.push_back(old.pop().task);
     }
 

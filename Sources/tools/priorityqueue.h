@@ -5,7 +5,8 @@
 
 #include "task.h"
 
-struct PonderatedTask {
+struct PonderatedTask
+{
     Task *task;
     int priority;
 };
