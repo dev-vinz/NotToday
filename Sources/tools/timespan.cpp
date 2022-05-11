@@ -47,7 +47,13 @@ TimeSpan TimeSpan::substract(const TimeSpan ts)
 
 QString TimeSpan::toString() const
 {
-    return "TODO";
+    TimeSpan ts = TimeSpan::fromMinutes(this->totalMinutes());
+    int days = ts.totalDays();
+    ts.substract(days*60*60*24);
+    int hours = ts.totalHours();
+    ts.substract(hours*60*60);
+    int minutes = ts.totalMinutes();
+    return QString("%1:%2:%3").arg(QString::number(days), QString::number(hours), QString::number(minutes));
 }
 
 TimeSpan TimeSpan::fromMinutes(int minutes)

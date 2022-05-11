@@ -60,7 +60,7 @@ TaskManagement::TaskManagement(QWidget *_parent) : TabModel(_parent)
 
     connect(btnAddTask, &QPushButton::clicked, this, &TaskManagement::openNewWindow);
     connect(btnModifyTask, &QPushButton::clicked, this, &TaskManagement::openNewWindow);
-    // connect(btnRemoveTask, &QPushButton::clicked, this, &Task::deleteTask);
+    //connect(btnRemoveTask, &QPushButton::clicked, this, &Task::deleteTask);
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
