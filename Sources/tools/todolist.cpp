@@ -176,4 +176,3 @@ void ToDoList::removeDependence(Task *_taskSrc, Task *_taskDest)
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
 |*                          PRIVATE METHODS                          *|
 \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-

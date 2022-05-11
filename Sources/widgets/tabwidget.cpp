@@ -16,5 +16,4 @@ void TabWidget::initialize()
 
     this->addTab(dashboard, tr("Dashboard"));
     this->addTab(taskManagement, tr("Task Management"));
-
 }

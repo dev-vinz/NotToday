@@ -44,10 +44,7 @@ public:
     /* * * * * * * * * * * * * * * * * * *\
     |*              GETTERS              *|
     \* * * * * * * * * * * * * * * * * * */
-    /*!
-     * @brief Test DOXYGEN .h
-     * @return
-     */
+
     int getId() const;
     int getPriority() const;
 
@@ -78,9 +75,9 @@ public:
 
     bool isCheckable() const;
 
-    void addParent(Task* task);
+    void addParent(Task *task);
     void deleteTask(Task task);
-    void removeParent(Task* task);
+    void removeParent(Task *task);
     void updateTask(Task task); // TODO : hein, c'est débile non ?!
 
     QString readTask() const;

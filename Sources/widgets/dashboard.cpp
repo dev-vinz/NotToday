@@ -8,7 +8,7 @@ Dashboard::Dashboard(QWidget *_parent) : TabModel(_parent)
 {
     this->initialize();
 
-    //initialize list of item of the Tasks
+    // initialize list of item of the Tasks
     radSelectTask = new QVector<QRadioButton *>;
     btnStatusTask = new QVector<QPushButton *>;
     lblNameTask = new QVector<QLabel *>;
@@ -16,8 +16,7 @@ Dashboard::Dashboard(QWidget *_parent) : TabModel(_parent)
     lblDurationTask = new QVector<QLabel *>;
     pgbProgressionTask = new QVector<QProgressBar *>;
 
-
-    //Initialise the Layouts
+    // Initialise the Layouts
     mainLayout = new QVBoxLayout(this);
     defaultLayout = new QHBoxLayout(this);
     boardLayout = new QGridLayout(this);
@@ -35,17 +34,16 @@ Dashboard::Dashboard(QWidget *_parent) : TabModel(_parent)
     selectLabel = new QLabel("Selecteur");
     selectLabel->setStyleSheet("background: rgba(31,144,186,255); border: 2px solid black;");
     selectLabel->setMaximumHeight(40);
-    statusLabel= new QLabel("Status");
+    statusLabel = new QLabel("Status");
     statusLabel->setStyleSheet("background: rgba(31,144,186,255); border: 2px solid black;");
-    nameLabel= new QLabel("Name");
+    nameLabel = new QLabel("Name");
     nameLabel->setStyleSheet("background: rgba(31,144,186,255); border: 2px solid black;");
-    dateLabel= new QLabel("Date");
+    dateLabel = new QLabel("Date");
     dateLabel->setStyleSheet("background: rgba(31,144,186,255); border: 2px solid black;");
-    durationLabel= new QLabel("Duration");
+    durationLabel = new QLabel("Duration");
     durationLabel->setStyleSheet("background: rgba(31,144,186,255); border: 2px solid black;");
-    progressionLabel= new QLabel("Progression");
+    progressionLabel = new QLabel("Progression");
     progressionLabel->setStyleSheet("background: rgba(31,144,186,255); border: 2px solid black;");
-
 
     boardLayout->addWidget(selectLabel, 0, 0);
     boardLayout->addWidget(statusLabel, 0, 1);
@@ -59,8 +57,8 @@ Dashboard::Dashboard(QWidget *_parent) : TabModel(_parent)
     tasks.append(createTask());
     tasks.append(createTask());
 
-    //pour chaque tâche on en ajoute une "Vide" puis on la remplace par les bonnes valeurs
-    for(int i = 0; i < tasks.size(); i++)
+    // pour chaque tâche on en ajoute une "Vide" puis on la remplace par les bonnes valeurs
+    for (int i = 0; i < tasks.size(); i++)
     {
         addNewTask(i);
         displayTask(tasks.at(i), i);
@@ -99,7 +97,8 @@ QAction *Dashboard::getSaveAction() const
 
 void Dashboard::displayTask(Task task, int indice) const
 {
-    switch (task.getStatus()) {
+    switch (task.getStatus())
+    {
     case TaskStatus::DOING:
         btnStatusTask->at(indice)->setStyleSheet("background: orange;");
         break;
@@ -113,10 +112,11 @@ void Dashboard::displayTask(Task task, int indice) const
         btnStatusTask->at(indice)->setStyleSheet("background: gray;");
         break;
     }
+
     lblNameTask->at(indice)->setText(task.getName());
     lblDateTask->at(indice)->setText(Utils::dateToString(task.getDeadline()));
     lblDurationTask->at(indice)->setText(task.getDuration().toString());
-    pgbProgressionTask->at(indice)->setMaximum(100); //VOir comment faire avec la progression
+    pgbProgressionTask->at(indice)->setMaximum(100); // VOir comment faire avec la progression
     pgbProgressionTask->at(indice)->setValue(50);
 }
 
@@ -141,9 +141,9 @@ void Dashboard::addNewTask(int i)
     boardLayout->addWidget(radSelectTask->at(i), i + 1, 0);
     boardLayout->addWidget(btnStatusTask->at(i), i + 1, 1);
     boardLayout->addWidget(lblNameTask->at(i), i + 1, 2);
-    boardLayout->addWidget(lblDateTask->at(i),i + 1, 3);
+    boardLayout->addWidget(lblDateTask->at(i), i + 1, 3);
     boardLayout->addWidget(lblDurationTask->at(i), i + 1, 4);
-    boardLayout->addWidget(pgbProgressionTask->at(i),i + 1, 5);
+    boardLayout->addWidget(pgbProgressionTask->at(i), i + 1, 5);
 }
 
 void Dashboard::addTask()
@@ -170,7 +170,7 @@ void Dashboard::createActions()
 
 void Dashboard::displayTasks()
 {
-    for(int i = 0; i < tasks.size(); i++)
+    for (int i = 0; i < tasks.size(); i++)
     {
         displayTask(tasks.at(i), i);
     }

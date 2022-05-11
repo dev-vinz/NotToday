@@ -2,7 +2,10 @@
 #define UTILS_H
 
 #include <QDateTime>
+#include <QList>
 #include <QString>
+
+#include "timespan.h"
 
 class Utils
 {
@@ -12,6 +15,7 @@ public:
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     static QString dateToString(QDateTime date);
+    static TimeSpan stringToTime(QString date);
 };
 
 #endif // UTILS_H

@@ -26,7 +26,7 @@ TaskManagement::TaskManagement(QWidget *_parent) : TabModel(_parent)
     btnRemoveTask->setGeometry(600, 50, 150, 50);
     topLayout->addWidget(btnRemoveTask);
 
-    btnModifyTask = new QPushButton("Modifier Tâche",this);
+    btnModifyTask = new QPushButton("Modifier Tâche", this);
     btnModifyTask->setGeometry(700, 50, 150, 50);
     topLayout->addWidget(btnModifyTask);
 
@@ -35,15 +35,15 @@ TaskManagement::TaskManagement(QWidget *_parent) : TabModel(_parent)
     selectLabel = new QLabel("Selecteur");
     selectLabel->setStyleSheet("background: rgba(31,144,186,255); border: 2px solid black;");
     selectLabel->setMaximumHeight(40);
-    statusLabel= new QLabel("Status");
+    statusLabel = new QLabel("Status");
     statusLabel->setStyleSheet("background: rgba(31,144,186,255); border: 2px solid black;");
-    nameLabel= new QLabel("Name");
+    nameLabel = new QLabel("Name");
     nameLabel->setStyleSheet("background: rgba(31,144,186,255); border: 2px solid black;");
-    dateLabel= new QLabel("Date");
+    dateLabel = new QLabel("Date");
     dateLabel->setStyleSheet("background: rgba(31,144,186,255); border: 2px solid black;");
-    durationLabel= new QLabel("Duration");
+    durationLabel = new QLabel("Duration");
     durationLabel->setStyleSheet("background: rgba(31,144,186,255); border: 2px solid black;");
-    progressionLabel= new QLabel("Progression");
+    progressionLabel = new QLabel("Progression");
     progressionLabel->setStyleSheet("background: rgba(31,144,186,255); border: 2px solid black;");
 
     boardLayout->addWidget(selectLabel, 0, 0);
@@ -60,7 +60,7 @@ TaskManagement::TaskManagement(QWidget *_parent) : TabModel(_parent)
 
     connect(btnAddTask, &QPushButton::clicked, this, &TaskManagement::openNewWindow);
     connect(btnModifyTask, &QPushButton::clicked, this, &TaskManagement::openNewWindow);
-    //connect(btnRemoveTask, &QPushButton::clicked, this, &Task::deleteTask);
+    // connect(btnRemoveTask, &QPushButton::clicked, this, &Task::deleteTask);
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
@@ -69,12 +69,10 @@ TaskManagement::TaskManagement(QWidget *_parent) : TabModel(_parent)
 
 void TaskManagement::displayTask(Task task, int indice) const
 {
-
 }
 
 void TaskManagement::initialize()
 {
-
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
@@ -85,22 +83,14 @@ void TaskManagement::openNewWindow()
 {
     QObject *emmetteur = sender();
 
-    if(emmetteur == btnModifyTask)
+    if (emmetteur == btnModifyTask)
     {
-        modifyTask = new QDialog();
+        modifyTask = new TaskDialog(createTask());
         modifyTask->show();
-
     }
     else
     {
-        addTask = new QDialog();
+        addTask = new TaskDialog();
         addTask->show();
-
-        // TODO
-       /*
-         * // Create another type of window AddTaskWindow that extends from QWindow
-        DEstroy??
-        */
     }
 }
-
