@@ -10,14 +10,14 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-    /*
+
     QApplication a(argc, argv);
 
     MainWindow w;
     w.show();
 
     return a.exec();
-    */
+    /*
 
     Task *t1 = new Task(TaskStatus::OPEN, 3, "Task 1", QDateTime(QDate(2022, 04, 26), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromHours(4));
     Task *t2 = new Task(TaskStatus::OPEN, 1, "Task 2", QDateTime(QDate(2022, 04, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromHours(4));
@@ -49,6 +49,6 @@ int main(int argc, char *argv[])
     cout << endl;
 
     cout << "Taille second tableau : " << v2.size() << endl;
-
+*/
     return 0;
 }

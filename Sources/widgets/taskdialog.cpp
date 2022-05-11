@@ -35,12 +35,12 @@ TaskDialog::TaskDialog(QWidget *_parent) : QDialog(_parent)
     mainLayout->addWidget(textName, 2, 0);
 
     textDeadline = new QLineEdit("", this);
-    QRegularExpression R_date("(0[1-9]|[12][0-9]|3[01])/(0[1-9]|[1][0-2])/(20[0-9][0-9])");
+    QRegularExpression R_date(Utils::dateRegex());
     QRegularExpressionValidator *valida = new QRegularExpressionValidator(R_date, this);
     textDeadline->setValidator(valida);
 
     // Set place holder for date lineedit
-    textDeadline->setPlaceholderText("Example : 21/05/2019");
+    textDeadline->setPlaceholderText("Example : " + Utils::dateFormat());
     mainLayout->addWidget(textDeadline, 2, 1);
 
     cmbReccurence = new QComboBox(this);
@@ -51,12 +51,12 @@ TaskDialog::TaskDialog(QWidget *_parent) : QDialog(_parent)
     mainLayout->addWidget(cmbReccurence, 4, 0);
 
     textDuration = new QLineEdit("", this);
-    QRegularExpression R_duration("^((?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$)"); // dd:HH:mm
+    QRegularExpression R_duration(Utils::timeRegex()); // dd:HH:mm
     QRegularExpressionValidator *validator = new QRegularExpressionValidator(R_duration, this);
     textDuration->setValidator(validator);
 
     // Set place holder for date lineedit
-    textDuration->setPlaceholderText("Example : 12:05:05");
+    textDuration->setPlaceholderText("Example : " + Utils::timeFormat());
     mainLayout->addWidget(textDuration, 4, 1);
 
     cmbParent = new QComboBox(this);
@@ -116,12 +116,12 @@ TaskDialog::TaskDialog(Task task, QWidget *_parent) : QDialog(_parent)
     mainLayout->addWidget(textName, 2, 0);
 
     textDeadline = new QLineEdit("", this);
-    QRegularExpression R_date("(0[1-9]|[12][0-9]|3[01])/(0[1-9]|[1][0-2])/(20[0-9][0-9])"); // dd/MM/yyyy
+    QRegularExpression R_date(Utils::dateRegex()); // dd/MM/yyyy
     QRegularExpressionValidator *valida = new QRegularExpressionValidator(R_date, this);
     textDeadline->setValidator(valida);
 
     // Set place holder for date lineedit
-    textDeadline->setPlaceholderText("Example : 21/05/2019");
+    textDeadline->setPlaceholderText("Example : " +Utils::dateFormat());
     mainLayout->addWidget(textDeadline, 2, 1);
 
     cmbReccurence = new QComboBox(this);
@@ -132,12 +132,12 @@ TaskDialog::TaskDialog(Task task, QWidget *_parent) : QDialog(_parent)
     mainLayout->addWidget(cmbReccurence, 4, 0);
 
     textDuration = new QLineEdit("", this);
-    QRegularExpression R_duration("^((?:[01]|2[0-3]):[0-5]:[0-5]$)"); // HH:mm:ss
+    QRegularExpression R_duration(Utils::timeRegex()); // HH:mm:ss
     QRegularExpressionValidator *validator = new QRegularExpressionValidator(R_duration, this);
     textDuration->setValidator(validator);
 
     // Set place holder for date lineedit
-    textDuration->setPlaceholderText("Example : 12:05:05");
+    textDuration->setPlaceholderText("Example : " + Utils::timeFormat());
     mainLayout->addWidget(textDuration, 4, 1);
 
     cmbParent = new QComboBox(this);
@@ -159,8 +159,10 @@ TaskDialog::TaskDialog(Task task, QWidget *_parent) : QDialog(_parent)
 
     // TaskDialog();
     textName->setText(task.getName());
-    textDeadline->setText(task.getDeadline().toString());
+    textDeadline->setText(task.getDeadline().toString(Utils::dateFormat()));
+
     cmbReccurence->setCurrentIndex(cmbReccurence->findData(task.getRecurrenceString()));
+
     textDuration->setText(task.getDuration().toString());
 
     cmbParent->setCurrentIndex(cmbParent->findData(""));
@@ -169,7 +171,7 @@ TaskDialog::TaskDialog(Task task, QWidget *_parent) : QDialog(_parent)
 
 void TaskDialog::saveAndClose()
 {
-    TaskStatus status;
+    TaskStatus status = TaskStatus::OPEN;
     int priority = nudPriority->value();
     QString name = textName->text();
     if (name == "")
@@ -178,12 +180,12 @@ void TaskDialog::saveAndClose()
     }
 
     QString time = textDeadline->text();
-    if (!time.contains(QRegularExpression("(0[1-9]|[12][0-9]|3[01])/(0[1-9]|[1][0-2])/(20[0-9][0-9])")) || time == "")
+    if (!time.contains(QRegularExpression(Utils::dateRegex())) || time == "")
     {
         return;
     }
 
-    QDateTime da = QDateTime::fromString(time, "dd/MM/yyyy");
+    QDateTime da = QDateTime::fromString(time, Utils::dateFormat());
     QDateTime deadline = (da);
 
     QDateTime startTime = QDateTime::currentDateTime();
@@ -206,7 +208,7 @@ void TaskDialog::saveAndClose()
 
     QString ts = textDuration->text();
 
-    if (!ts.contains(QRegularExpression("^((?:[01]|2[0-3]):[0-5]:[0-5]$)")) || ts == "") // dd:hh:mm
+    if (!ts.contains(QRegularExpression(Utils::timeRegex())) || ts == "") // dd:hh:mm
     {
         return;
     }

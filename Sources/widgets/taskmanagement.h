@@ -30,6 +30,7 @@ private:
     QLabel *lblTitle, *selectLabel, *statusLabel, *nameLabel, *dateLabel, *durationLabel, *progressionLabel;
     QPushButton *btnAddTask, *btnRemoveTask, *btnModifyTask;
 
+
 public:
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                           CONSTRUCTORS                            *|
