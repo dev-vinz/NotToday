@@ -14,12 +14,13 @@ public:
     |*                          PUBLIC METHODS                           *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    static QString dateToString(QDateTime date);
-    static TimeSpan stringToTime(QString date);
-    static QString timeRegex();
-    static QString dateRegex();
     static QString dateFormat();
+    static QString dateRegex();
+    static QString dateToString(QDateTime date);
     static QString timeFormat();
+    static QString timeRegex();
+
+    static TimeSpan stringToTime(QString date);
 
 };
 

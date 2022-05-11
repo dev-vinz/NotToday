@@ -47,12 +47,17 @@ TimeSpan TimeSpan::substract(const TimeSpan ts)
 
 QString TimeSpan::toString() const
 {
-    TimeSpan ts = TimeSpan::fromMinutes(this->totalMinutes());
+    /*TimeSpan ts = TimeSpan::fromMinutes(this->totalMinutes());
     int days = ts.totalDays();
     ts.substract(days*60*60*24);
     int hours = ts.totalHours();
     ts.substract(hours*60*60);
-    int minutes = ts.totalMinutes();
+    //int minutes = ts.totalMinutes();*/
+
+    int minutes = (int)(this->totalSeconds / 60) % 60;
+    int hours = (int)(this->totalSeconds / 3600) % 24;
+    int days = (int)(this->totalSeconds / 86400);
+
     return QString("%1:%2:%3").arg(QString::number(days), QString::number(hours), QString::number(minutes));
 }
 
