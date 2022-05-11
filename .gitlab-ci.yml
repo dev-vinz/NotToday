@@ -9,8 +9,6 @@ before_script:
 stages:
   - info
   - build
-  - test
-  - deploy
 
 info-job:
   tags:
@@ -28,23 +26,14 @@ build-job:
     paths:
     - BUILD/Documentation/
   script:
+    - echo "Building..."
     - mkdir BUILD
     - cd BUILD
     - cmake -G "Ninja" ../Sources
     - ninja
+    - echo "Build complete"
+    - echo "Testing..."
     - ./tests
     - cmake --build . --target BuildDoc
 
-test-job:
-  tags:
-    - alpine-docker
-  stage: test
-  script:
-    - echo "Running tests..."
 
-deploy-job:
-  tags:
-    - alpine-docker
-  stage: deploy
-  script:
-    - echo "Deploying..."
