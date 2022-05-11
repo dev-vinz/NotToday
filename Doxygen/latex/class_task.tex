@@ -1,0 +1,71 @@
+\hypertarget{class_task}{}\doxysection{Task Class Reference}
+\label{class_task}\index{Task@{Task}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_task_a2cefd9cd4bda2a3d21c00badcb9d867e}\label{class_task_a2cefd9cd4bda2a3d21c00badcb9d867e}} 
+{\bfseries Task} (Task\+Status status, int priority, QString name, QDate\+Time deadline, QDate\+Time start\+Time, \mbox{\hyperlink{class_time_span}{Time\+Span}} duration, Recurrence recurrence=Recurrence\+::\+NO\+\_\+\+RECURRENCE, QList$<$ \mbox{\hyperlink{class_task}{Task}} $\ast$ $>$ parent=QList$<$ \mbox{\hyperlink{class_task}{Task}} $\ast$ $>$())
+\item 
+\mbox{\Hypertarget{class_task_aaa788d40a31ff7fa193020bee591db5e}\label{class_task_aaa788d40a31ff7fa193020bee591db5e}} 
+{\bfseries Task} (const \mbox{\hyperlink{class_task}{Task}} \&)
+\item 
+\mbox{\Hypertarget{class_task_abf76ea8bb7d99718c0ae0d231fd4dc52}\label{class_task_abf76ea8bb7d99718c0ae0d231fd4dc52}} 
+int {\bfseries get\+Id} () const
+\item 
+\mbox{\Hypertarget{class_task_adf87b0c5cebcf623ecf56cea17c6fede}\label{class_task_adf87b0c5cebcf623ecf56cea17c6fede}} 
+int {\bfseries get\+Priority} () const
+\item 
+\mbox{\Hypertarget{class_task_a5be0f7223d1e0bd7d20a7cfd3782cca5}\label{class_task_a5be0f7223d1e0bd7d20a7cfd3782cca5}} 
+\mbox{\hyperlink{class_time_span}{Time\+Span}} {\bfseries get\+Duration} () const
+\item 
+\mbox{\Hypertarget{class_task_abea75ee0cec20120db8507c9ba6ea760}\label{class_task_abea75ee0cec20120db8507c9ba6ea760}} 
+QDate\+Time {\bfseries get\+Deadline} () const
+\item 
+\mbox{\Hypertarget{class_task_a49442e163ec997b10739ff78f2cd2091}\label{class_task_a49442e163ec997b10739ff78f2cd2091}} 
+QDate\+Time {\bfseries get\+Start\+Time} () const
+\item 
+\mbox{\Hypertarget{class_task_a2a413572b2802f4bea6f429fc79672ff}\label{class_task_a2a413572b2802f4bea6f429fc79672ff}} 
+QList$<$ \mbox{\hyperlink{class_task}{Task}} $\ast$ $>$ {\bfseries get\+Parents} () const
+\item 
+\mbox{\Hypertarget{class_task_a2b6b4f3265cd9538210ccc62a4fb9bc0}\label{class_task_a2b6b4f3265cd9538210ccc62a4fb9bc0}} 
+QString {\bfseries get\+Name} () const
+\item 
+\mbox{\Hypertarget{class_task_ab0545d26a19d1fea51209f244c30c754}\label{class_task_ab0545d26a19d1fea51209f244c30c754}} 
+QString {\bfseries get\+Recurrence\+String} () const
+\item 
+\mbox{\Hypertarget{class_task_a5d7b3c2ad0501e028c52fd51ceea2772}\label{class_task_a5d7b3c2ad0501e028c52fd51ceea2772}} 
+QString {\bfseries get\+Status\+String} () const
+\item 
+\mbox{\Hypertarget{class_task_af3d6ce6fc1b957d7ff390e3242a89185}\label{class_task_af3d6ce6fc1b957d7ff390e3242a89185}} 
+Recurrence {\bfseries get\+Recurrence} () const
+\item 
+\mbox{\Hypertarget{class_task_a001751ecb4ebcaea0ae6b50ee2948267}\label{class_task_a001751ecb4ebcaea0ae6b50ee2948267}} 
+Task\+Status {\bfseries get\+Status} () const
+\item 
+\mbox{\Hypertarget{class_task_a1110f715e104a2c5e6bb282f18d2c19f}\label{class_task_a1110f715e104a2c5e6bb282f18d2c19f}} 
+void {\bfseries set\+Duration} (\mbox{\hyperlink{class_time_span}{Time\+Span}})
+\item 
+\mbox{\Hypertarget{class_task_afa8874b5720301d72a279258a9c3abc8}\label{class_task_afa8874b5720301d72a279258a9c3abc8}} 
+bool {\bfseries is\+Checkable} () const
+\item 
+\mbox{\Hypertarget{class_task_aadff6f2148631eff8e61bbb6608d8ca4}\label{class_task_aadff6f2148631eff8e61bbb6608d8ca4}} 
+void {\bfseries add\+Parent} (\mbox{\hyperlink{class_task}{Task}} $\ast$task)
+\item 
+\mbox{\Hypertarget{class_task_aedbf76344a9f86a27e9309a529d66922}\label{class_task_aedbf76344a9f86a27e9309a529d66922}} 
+void {\bfseries delete\+Task} (\mbox{\hyperlink{class_task}{Task}} task)
+\item 
+\mbox{\Hypertarget{class_task_a172d940cd366098c1926f91bf8850c39}\label{class_task_a172d940cd366098c1926f91bf8850c39}} 
+void {\bfseries remove\+Parent} (\mbox{\hyperlink{class_task}{Task}} $\ast$task)
+\item 
+\mbox{\Hypertarget{class_task_a3389a1450df6e6d5eec2f8cd896d253b}\label{class_task_a3389a1450df6e6d5eec2f8cd896d253b}} 
+void {\bfseries update\+Task} (\mbox{\hyperlink{class_task}{Task}} task)
+\item 
+\mbox{\Hypertarget{class_task_a49e7b1b36a10eaa438e742642ad7c94b}\label{class_task_a49e7b1b36a10eaa438e742642ad7c94b}} 
+QString {\bfseries read\+Task} () const
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Sources/tools/task.\+h\item 
+Sources/tools/task.\+cpp\end{DoxyCompactItemize}

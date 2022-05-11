@@ -9,18 +9,12 @@
 
 class Task
 {
-public:
-    enum Recurrence
-    {
-        noRecurrence,
-        everyDay,
-        everyWeek,
-        everyTwoWeek
-    };
+private:
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+    |*                            ATTRIBUTES                             *|
+    \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-
-
-public:
+    int id;
     TaskStatus status;
     int priority;
     QString name;
@@ -54,6 +48,18 @@ public:
     QString getRecurrence(Recurrence recurrence);
     QString DateToString(QDateTime date);
     QString DurationToString();
+
+    /* * * * * * * * * * * * * * * * * * *\
+    |*              GETTERS              *|
+    \* * * * * * * * * * * * * * * * * * */
+
+    int getId() const;
+    int getPriority() const;
+    QString getName() const;
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+    |*                          PUBLIC METHODS                           *|
+    \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     bool isCheckable() const;
 };

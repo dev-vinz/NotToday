@@ -1,0 +1,93 @@
+\hypertarget{task_8h_source}{}\doxysection{task.\+h}
+\label{task_8h_source}\index{Sources/tools/task.h@{Sources/tools/task.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef TASK\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define TASK\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <QDateTime>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <QList>}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <QString>}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <QList>}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include "{}recurrence.h"{}}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include "{}taskstatus.h"{}}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}timespan.h"{}}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include "{}utils.h"{}}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{keyword}{class }\mbox{\hyperlink{class_task}{Task}}}
+\DoxyCodeLine{15 \{}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17 \textcolor{keyword}{private}:}
+\DoxyCodeLine{18     \textcolor{comment}{/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\(\backslash\)}}
+\DoxyCodeLine{19 \textcolor{comment}{    |*                            ATTRIBUTES                             *|}}
+\DoxyCodeLine{20 \textcolor{comment}{    \(\backslash\)* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */}}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22     \textcolor{keywordtype}{int} id;}
+\DoxyCodeLine{23     TaskStatus status;}
+\DoxyCodeLine{24     \textcolor{keywordtype}{int} priority;}
+\DoxyCodeLine{25     QString name;}
+\DoxyCodeLine{26     QDateTime deadline;}
+\DoxyCodeLine{27     QDateTime startTime;}
+\DoxyCodeLine{28     \mbox{\hyperlink{class_time_span}{TimeSpan}} duration;}
+\DoxyCodeLine{29     Recurrence recurrence;}
+\DoxyCodeLine{30     QList<Task *> parent;}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32     \textcolor{comment}{/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\(\backslash\)}}
+\DoxyCodeLine{33 \textcolor{comment}{    |*                          PRIVATE METHODS                          *|}}
+\DoxyCodeLine{34 \textcolor{comment}{    \(\backslash\)* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */}}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36 \textcolor{keyword}{public}:}
+\DoxyCodeLine{37     \textcolor{comment}{/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\(\backslash\)}}
+\DoxyCodeLine{38 \textcolor{comment}{    |*                           CONSTRUCTORS                            *|}}
+\DoxyCodeLine{39 \textcolor{comment}{    \(\backslash\)* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */}}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41     \mbox{\hyperlink{class_task}{Task}}(TaskStatus status, \textcolor{keywordtype}{int} priority, QString name, QDateTime deadline, QDateTime startTime, \mbox{\hyperlink{class_time_span}{TimeSpan}} duration, Recurrence recurrence = Recurrence::NO\_RECURRENCE, QList<Task *> parent = QList<Task *>());}
+\DoxyCodeLine{42     \mbox{\hyperlink{class_task}{Task}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_task}{Task}} \&);}
+\DoxyCodeLine{43     \mbox{\hyperlink{class_task}{\string~Task}}();}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{45     \textcolor{comment}{/* * * * * * * * * * * * * * * * * * *\(\backslash\)}}
+\DoxyCodeLine{46 \textcolor{comment}{    |*              GETTERS              *|}}
+\DoxyCodeLine{47 \textcolor{comment}{    \(\backslash\)* * * * * * * * * * * * * * * * * * */}}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49     \textcolor{keywordtype}{int} getId() \textcolor{keyword}{const};}
+\DoxyCodeLine{50     \textcolor{keywordtype}{int} getPriority() \textcolor{keyword}{const};}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52     \mbox{\hyperlink{class_time_span}{TimeSpan}} getDuration() \textcolor{keyword}{const};}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54     QDateTime getDeadline() \textcolor{keyword}{const};}
+\DoxyCodeLine{55     QDateTime getStartTime() \textcolor{keyword}{const};}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57     QList<Task *> getParents() \textcolor{keyword}{const};}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59     QString getName() \textcolor{keyword}{const};}
+\DoxyCodeLine{60     QString getRecurrenceString() \textcolor{keyword}{const};}
+\DoxyCodeLine{61     QString getStatusString() \textcolor{keyword}{const};}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63     Recurrence getRecurrence() \textcolor{keyword}{const};}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65     TaskStatus getStatus() \textcolor{keyword}{const};}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67     \textcolor{comment}{/* * * * * * * * * * * * * * * * * * *\(\backslash\)}}
+\DoxyCodeLine{68 \textcolor{comment}{    |*              SETTERS              *|}}
+\DoxyCodeLine{69 \textcolor{comment}{    \(\backslash\)* * * * * * * * * * * * * * * * * * */}}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71     \textcolor{keywordtype}{void} setDuration(\mbox{\hyperlink{class_time_span}{TimeSpan}});}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73     \textcolor{comment}{/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\(\backslash\)}}
+\DoxyCodeLine{74 \textcolor{comment}{    |*                          PUBLIC METHODS                           *|}}
+\DoxyCodeLine{75 \textcolor{comment}{    \(\backslash\)* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */}}
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77     \textcolor{keywordtype}{bool} isCheckable() \textcolor{keyword}{const};}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79     \textcolor{keywordtype}{void} addParent(\mbox{\hyperlink{class_task}{Task}} *task);}
+\DoxyCodeLine{80     \textcolor{keywordtype}{void} deleteTask(\mbox{\hyperlink{class_task}{Task}} task);}
+\DoxyCodeLine{81     \textcolor{keywordtype}{void} removeParent(\mbox{\hyperlink{class_task}{Task}} *task);}
+\DoxyCodeLine{82     \textcolor{keywordtype}{void} updateTask(\mbox{\hyperlink{class_task}{Task}} task); \textcolor{comment}{// TODO : hein, c'est débile non ?!}}
+\DoxyCodeLine{83 }
+\DoxyCodeLine{84     QString readTask() \textcolor{keyword}{const};}
+\DoxyCodeLine{85 \};}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// TASK\_H}}
+
+\end{DoxyCode}

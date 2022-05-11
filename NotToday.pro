@@ -10,6 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     main.cpp \
+    tools/priorityqueue.cpp \
     tools/task.cpp \
     tools/todolist.cpp \
     widgets//mainwindow.cpp \
@@ -20,6 +21,7 @@ SOURCES += \
     widgets/taskmanagement.cpp
 
 HEADERS += \
+    tools/priorityqueue.h \
     tools/task.h \
     tools/taskstatus.h \
     tools/todolist.h \

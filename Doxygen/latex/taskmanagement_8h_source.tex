@@ -1,0 +1,66 @@
+\hypertarget{taskmanagement_8h_source}{}\doxysection{taskmanagement.\+h}
+\label{taskmanagement_8h_source}\index{Sources/widgets/taskmanagement.h@{Sources/widgets/taskmanagement.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef TASKMANAGEMENT\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define TASKMANAGEMENT\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <QObject>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <QWidget>}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <QWindow>}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <QMessageBox>}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <QPushButton>}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <QBoxLayout>}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include <QLabel>}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include <QMainWindow>}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include "{}tabmodel.h"{}}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include "{}taskdialog.h"{}}}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{keyword}{class }\mbox{\hyperlink{class_task}{Task}};}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{keyword}{class }\mbox{\hyperlink{class_task_management}{TaskManagement}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_tab_model}{TabModel}}}
+\DoxyCodeLine{19 \{}
+\DoxyCodeLine{20     Q\_OBJECT}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22 \textcolor{keyword}{private}:}
+\DoxyCodeLine{23     \textcolor{comment}{/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\(\backslash\)}}
+\DoxyCodeLine{24 \textcolor{comment}{    |*                            ATTRIBUTES                             *|}}
+\DoxyCodeLine{25 \textcolor{comment}{    \(\backslash\)* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */}}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27     QBoxLayout *topLayout, *mainLayout, *defaultLayout;}
+\DoxyCodeLine{28     QDialog *addTask, *modifyTask;}
+\DoxyCodeLine{29     QGridLayout *boardLayout;}
+\DoxyCodeLine{30     QLabel *lblTitle, *selectLabel, *statusLabel, *nameLabel, *dateLabel, *durationLabel, *progressionLabel;}
+\DoxyCodeLine{31     QPushButton *btnAddTask, *btnRemoveTask, *btnModifyTask;}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 \textcolor{keyword}{public}:}
+\DoxyCodeLine{34     \textcolor{comment}{/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\(\backslash\)}}
+\DoxyCodeLine{35 \textcolor{comment}{    |*                           CONSTRUCTORS                            *|}}
+\DoxyCodeLine{36 \textcolor{comment}{    \(\backslash\)* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */}}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{38     \mbox{\hyperlink{class_task_management}{TaskManagement}}(QWidget *\_parent = \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40     \textcolor{comment}{/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\(\backslash\)}}
+\DoxyCodeLine{41 \textcolor{comment}{    |*                          PUBLIC METHODS                           *|}}
+\DoxyCodeLine{42 \textcolor{comment}{    \(\backslash\)* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */}}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{45     \textcolor{comment}{/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\(\backslash\)}}
+\DoxyCodeLine{46 \textcolor{comment}{    |*                         PROTECTED METHODS                         *|}}
+\DoxyCodeLine{47 \textcolor{comment}{    \(\backslash\)* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */}}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49     \textcolor{keywordtype}{void} displayTask(\mbox{\hyperlink{class_task}{Task}} task, \textcolor{keywordtype}{int} indice) \textcolor{keyword}{const override};}
+\DoxyCodeLine{50     \textcolor{keywordtype}{void} initialize() \textcolor{keyword}{override};}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52 \textcolor{keyword}{public} slots:}
+\DoxyCodeLine{53     \textcolor{comment}{/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\(\backslash\)}}
+\DoxyCodeLine{54 \textcolor{comment}{     *                            SLOTS                            *}}
+\DoxyCodeLine{55 \textcolor{comment}{    \(\backslash\)* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */}}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57     \textcolor{keywordtype}{void} openNewWindow();}
+\DoxyCodeLine{58 \};}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{60 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// TASKMANAGEMENT\_H}}
+
+\end{DoxyCode}

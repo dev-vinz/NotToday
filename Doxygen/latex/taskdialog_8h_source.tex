@@ -1,0 +1,67 @@
+\hypertarget{taskdialog_8h_source}{}\doxysection{taskdialog.\+h}
+\label{taskdialog_8h_source}\index{Sources/widgets/taskdialog.h@{Sources/widgets/taskdialog.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef TASKDIALOG\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define TASKDIALOG\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <QDialog>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <QObject>}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <QWidget>}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <QLabel>}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <QPushButton>}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <QComboBox>}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include <QSpinBox>}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include <QTime>}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include <QGridLayout>}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include <QLineEdit>}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include <QRegularExpression>}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#include <QMessageBox>}}
+\DoxyCodeLine{16 \textcolor{preprocessor}{\#include "{}../Sources/tools/utils.h"{}}}
+\DoxyCodeLine{17 \textcolor{preprocessor}{\#include "{}../Sources/tools/recurrence.h"{}}}
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#include "{}../Sources/tools/todolist.h"{}}}
+\DoxyCodeLine{19 \textcolor{preprocessor}{\#include "{}tabmodel.h"{}}}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21 \textcolor{keyword}{class }\mbox{\hyperlink{class_task}{Task}};}
+\DoxyCodeLine{22 \textcolor{keyword}{class }\mbox{\hyperlink{class_task_dialog}{TaskDialog}} : \textcolor{keyword}{public} QDialog}
+\DoxyCodeLine{23 \{}
+\DoxyCodeLine{24     Q\_OBJECT}
+\DoxyCodeLine{25 \textcolor{keyword}{public}:}
+\DoxyCodeLine{26     \mbox{\hyperlink{class_task_dialog}{TaskDialog}}(QWidget *\_parent= \textcolor{keyword}{nullptr}); \textcolor{comment}{//Constructeur pour créer une nouvelle tâche}}
+\DoxyCodeLine{27     \mbox{\hyperlink{class_task_dialog}{TaskDialog}}(\mbox{\hyperlink{class_task}{Task}} task, QWidget *\_parent = \textcolor{keyword}{nullptr}); \textcolor{comment}{//Constructeur pour modifier une tâche}}
+\DoxyCodeLine{28 \textcolor{keyword}{private}:}
+\DoxyCodeLine{29     \textcolor{keywordtype}{void} initialize();}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 \textcolor{keyword}{private}:}
+\DoxyCodeLine{33     QLabel *labelTitle;}
+\DoxyCodeLine{34     QLabel *labelName;}
+\DoxyCodeLine{35     QLabel *labelDeadline;}
+\DoxyCodeLine{36     QLabel *labelReccurence;}
+\DoxyCodeLine{37     QLabel *labelDuration;}
+\DoxyCodeLine{38     QLabel *labelParent; \textcolor{comment}{//IS SON of}}
+\DoxyCodeLine{39     QLabel *labelPriority;}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41     QLineEdit *textName;}
+\DoxyCodeLine{42     QLineEdit *textDeadline;}
+\DoxyCodeLine{43     QComboBox *cmbReccurence;}
+\DoxyCodeLine{44     QLineEdit *textDuration;}
+\DoxyCodeLine{45     QComboBox *cmbParent;}
+\DoxyCodeLine{46     QSpinBox *nudPriority;}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{48     QGridLayout *mainLayout;}
+\DoxyCodeLine{49     QBoxLayout *timeLayout;}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52     QPushButton *btnSubmit;}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55     \mbox{\hyperlink{class_to_do_list}{ToDoList}} *toDoList;}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57 \textcolor{keyword}{private} slots:}
+\DoxyCodeLine{58     \textcolor{keywordtype}{void} saveAndClose();}
+\DoxyCodeLine{59 \};}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// TASKDIALOG\_H}}
+
+\end{DoxyCode}

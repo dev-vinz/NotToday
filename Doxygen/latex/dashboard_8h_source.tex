@@ -1,0 +1,74 @@
+\hypertarget{dashboard_8h_source}{}\doxysection{dashboard.\+h}
+\label{dashboard_8h_source}\index{Sources/widgets/dashboard.h@{Sources/widgets/dashboard.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef DASHBOARD\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define DASHBOARD\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <QAction>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <QFile>}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <QObject>}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <QWidget>}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <QBoxLayout>}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <QPushButton>}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include <QProgressBar>}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include <QRadioButton>}}
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#include <QLabel>}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include "{}tabmodel.h"{}}}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{keyword}{class }\mbox{\hyperlink{class_dashboard}{Dashboard}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_tab_model}{TabModel}}}
+\DoxyCodeLine{17 \{}
+\DoxyCodeLine{18     Q\_OBJECT}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20 \textcolor{keyword}{private}:}
+\DoxyCodeLine{21     \textcolor{comment}{/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\(\backslash\)}}
+\DoxyCodeLine{22 \textcolor{comment}{    |*                            ATTRIBUTES                             *|}}
+\DoxyCodeLine{23 \textcolor{comment}{    \(\backslash\)* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */}}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25     QAction *actSave, *actOpen, *actNew;}
+\DoxyCodeLine{26     QBoxLayout *mainLayout, *defaultLayout, *taskLayout;}
+\DoxyCodeLine{27     QFile file;}
+\DoxyCodeLine{28     QGridLayout *boardLayout;}
+\DoxyCodeLine{29     QLabel *lblTitle, *selectLabel, *statusLabel, *nameLabel, *dateLabel, *durationLabel, *progressionLabel;}
+\DoxyCodeLine{30     QVector<QLabel *> *lblNameTask, *lblDateTask, *lblDurationTask;}
+\DoxyCodeLine{31     QVector<QProgressBar *> *pgbProgressionTask;}
+\DoxyCodeLine{32     QVector<QPushButton *> *btnStatusTask;}
+\DoxyCodeLine{33     QVector<QRadioButton *> *radSelectTask;}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35     \textcolor{comment}{/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\(\backslash\)}}
+\DoxyCodeLine{36 \textcolor{comment}{    |*                          PRIVATE METHODS                          *|}}
+\DoxyCodeLine{37 \textcolor{comment}{    \(\backslash\)* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */}}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39     \textcolor{keywordtype}{void} addNewTask(\textcolor{keywordtype}{int} i);}
+\DoxyCodeLine{40     \textcolor{keywordtype}{void} addTask();}
+\DoxyCodeLine{41     \textcolor{keywordtype}{void} createActions();}
+\DoxyCodeLine{42     \textcolor{keywordtype}{void} displayTasks();}
+\DoxyCodeLine{43 }
+\DoxyCodeLine{44 \textcolor{keyword}{public}:}
+\DoxyCodeLine{45     \textcolor{comment}{/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\(\backslash\)}}
+\DoxyCodeLine{46 \textcolor{comment}{    |*                           CONSTRUCTORS                            *|}}
+\DoxyCodeLine{47 \textcolor{comment}{    \(\backslash\)* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */}}
+\DoxyCodeLine{48 }
+\DoxyCodeLine{49     \mbox{\hyperlink{class_dashboard}{Dashboard}}(QWidget *\_parent = \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51     \textcolor{comment}{/* * * * * * * * * * * * * * * * * * *\(\backslash\)}}
+\DoxyCodeLine{52 \textcolor{comment}{    |*              GETTERS              *|}}
+\DoxyCodeLine{53 \textcolor{comment}{    \(\backslash\)* * * * * * * * * * * * * * * * * * */}}
+\DoxyCodeLine{54 }
+\DoxyCodeLine{55     QAction *getNewAction() \textcolor{keyword}{const};}
+\DoxyCodeLine{56     QAction *getOpenAction() \textcolor{keyword}{const};}
+\DoxyCodeLine{57     QAction *getSaveAction() \textcolor{keyword}{const};}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{60     \textcolor{comment}{/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\(\backslash\)}}
+\DoxyCodeLine{61 \textcolor{comment}{    |*                         PROTECTED METHODS                         *|}}
+\DoxyCodeLine{62 \textcolor{comment}{    \(\backslash\)* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */}}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64     \textcolor{keywordtype}{void} displayTask(\mbox{\hyperlink{class_task}{Task}} task, \textcolor{keywordtype}{int} indice) \textcolor{keyword}{const override};}
+\DoxyCodeLine{65     \textcolor{keywordtype}{void} initialize() \textcolor{keyword}{override};}
+\DoxyCodeLine{66 \};}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{68 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// DASHBOARD\_H}}
+
+\end{DoxyCode}

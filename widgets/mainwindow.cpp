@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 
+#include "../tools/priorityqueue.h"
+
 MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent)
 {
     this->initialize();
