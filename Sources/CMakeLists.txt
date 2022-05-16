@@ -41,6 +41,8 @@ set(PROJECT_SOURCES
         widgets/taskmanagement.h widgets/taskmanagement.cpp
 )
 
+
+
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(NotToday
         MANUAL_FINALIZATION
@@ -103,7 +105,7 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-add_executable(tests tests.cpp ${tools_TESTS})
+add_executable(tests tests.cpp ${LibTools_TESTS})
 target_include_directories(tests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(tests gtest_main LibTools)
 
