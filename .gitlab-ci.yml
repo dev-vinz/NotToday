@@ -5,6 +5,8 @@ before_script:
  - apt-get install --yes cmake
  - apt-get install ninja-build
  - apt-get install doxygen --assume-yes
+ - apt-get install build-essential
+ - apt-get install qt5-default
 
 stages:
   - info
