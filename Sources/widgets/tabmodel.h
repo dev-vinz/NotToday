@@ -5,7 +5,7 @@
 #include <QTabBar>
 #include <QWidget>
 
-#include "..\tools\task.h"
+#include "../tools/task.h"
 
 class TabModel : public QTabBar
 {
