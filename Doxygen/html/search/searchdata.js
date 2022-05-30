@@ -1,7 +1,7 @@
 var indexSectionsWithContent =
 {
-  0: "dmnprtu",
-  1: "dmptu",
+  0: "dmnpqrtu",
+  1: "dmpqtu",
   2: "r",
   3: "n"
 };

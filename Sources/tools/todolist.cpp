@@ -172,6 +172,43 @@ void ToDoList::removeDependence(Task *_taskSrc, Task *_taskDest)
         qDebug() << "Dependence doesn't exists in graph";
     }
 }
+/*!
+ * \brief ToDoList::read
+ * \param json
+ * \ref https://doc.qt.io/qt-5/qtcore-serialization-savegame-example.html
+ */
+void ToDoList::read(const QJsonObject &json)
+{
+    if(json.contains("graph") && json["graph"].isArray())
+    {
+
+    }
+}
+
+void ToDoList::write(QJsonObject &json) const
+{
+    QMapIterator<Task*, QVector<Task *>> i(this->graph);
+    int j = 0;
+    while (i.hasNext())
+    {
+        i.next();
+        QJsonArray dependenciesArray;
+        QJsonObject originTask;
+        i.key()->write(originTask);
+        dependenciesArray.append(originTask);
+        for (const Task * t : i.value())
+        {
+            QJsonObject taskObject;
+            t->write(taskObject);
+            dependenciesArray.append(taskObject);
+
+        }
+        json[QChar(j)] = dependenciesArray;
+        j++;
+    }
+}
+
+
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
 |*                          PRIVATE METHODS                          *|

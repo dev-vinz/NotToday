@@ -5,6 +5,8 @@
 #include <QList>
 #include <QString>
 #include <QList>
+#include <QJsonObject>
+#include <QJsonArray>
 
 #include "recurrence.h"
 #include "taskstatus.h"
@@ -31,7 +33,6 @@ private:
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                          PRIVATE METHODS                          *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
 public:
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                           CONSTRUCTORS                            *|
@@ -39,6 +40,7 @@ public:
 
     Task(TaskStatus status, int priority, QString name, QDateTime deadline, QDateTime startTime, TimeSpan duration, Recurrence recurrence = Recurrence::NO_RECURRENCE, QList<Task *> parent = QList<Task *>());
     Task(const Task &);
+    Task(const QJsonObject &);
     ~Task();
 
     /* * * * * * * * * * * * * * * * * * *\
@@ -81,6 +83,9 @@ public:
     void updateTask(Task task); // TODO : hein, c'est débile non ?!
 
     QString readTask() const;
+
+    void read(const QJsonObject &json);
+    void write(QJsonObject &json) const;
 };
 
 #endif // TASK_H

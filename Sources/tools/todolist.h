@@ -3,6 +3,8 @@
 
 #include <QMap>
 #include <QVector>
+#include <QJsonObject>
+#include <QJsonArray>
 
 #include "priorityqueue.h"
 #include "task.h"
@@ -31,6 +33,7 @@ public:
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     ToDoList();
+    ToDoList(const QJsonObject &);
     ~ToDoList();
 
     /* * * * * * * * * * * * * * * * * * *\
@@ -51,6 +54,9 @@ public:
 
     void addDependence(Task *, Task *);
     void removeDependence(Task *, Task *);
+
+    void read(const QJsonObject &json);
+    void write(QJsonObject &json) const;
 };
 
 #endif // TODOLIST_H
