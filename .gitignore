@@ -5,6 +5,10 @@
 # Doxygen
 Doxygen/
 
+# BUILD folder
+
+BUILD/
+
 ### C++ ###
 # Prerequisites
 *.d
