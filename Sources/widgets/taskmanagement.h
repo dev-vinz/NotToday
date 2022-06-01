@@ -1,20 +1,19 @@
 #ifndef TASKMANAGEMENT_H
 #define TASKMANAGEMENT_H
 
-#include <QObject>
-#include <QWidget>
-#include <QWindow>
-#include <QMessageBox>
-#include <QPushButton>
 #include <QBoxLayout>
 #include <QLabel>
 #include <QMainWindow>
+#include <QMessageBox>
+#include <QObject>
+#include <QPushButton>
+#include <QWidget>
+#include <QWindow>
 
 #include "tabmodel.h"
 #include "taskdialog.h"
 
 class Task;
-
 class TaskManagement : public TabModel
 {
     Q_OBJECT
@@ -29,7 +28,6 @@ private:
     QGridLayout *boardLayout;
     QLabel *lblTitle, *selectLabel, *statusLabel, *nameLabel, *dateLabel, *durationLabel, *progressionLabel;
     QPushButton *btnAddTask, *btnRemoveTask, *btnModifyTask;
-
 
 public:
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\

@@ -1,5 +1,9 @@
 #include "taskdialog.h"
 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+|*                           CONSTRUCTORS                            *|
+\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 TaskDialog::TaskDialog(QWidget *_parent) : QDialog(_parent)
 {
     // toDoList->addTask(TabModel::createTask());
@@ -169,6 +173,19 @@ TaskDialog::TaskDialog(Task task, QWidget *_parent) : QDialog(_parent)
     nudPriority->setValue(task.getPriority());
 }
 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+|*                          PRIVATE METHODS                          *|
+\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+void TaskDialog::initialize()
+{
+    // TODO
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+ *                            SLOTS                            *
+\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 void TaskDialog::saveAndClose()
 {
     TaskStatus status = TaskStatus::OPEN;
@@ -219,6 +236,7 @@ void TaskDialog::saveAndClose()
     if (!(cmbParent->currentText() == ""))
     { // A parent exists
 
+        // TODO
         // Get la tâche associé au current Text en parcourant todolis
     }
     // Je sais pas comment faire pour avoir les parents vu que dans la combobox c'es tstocké en string

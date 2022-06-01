@@ -150,6 +150,7 @@ void Dashboard::addTask()
 {
     this->tasks.append(createTask());
     addNewTask(this->tasks.size() - 1);
+
     displayTask(this->tasks.at(this->tasks.size() - 1), this->tasks.size() - 1);
 }
 

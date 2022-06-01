@@ -29,3 +29,18 @@ Task TabModel::createTask()
 
     return Task(status, prio, name, deadline, start, dura, recu);
 }
+
+void TabModel::addNewTask(int i)
+{
+    // TODO
+}
+
+void TabModel::addTask()
+{
+    // TODO
+}
+
+void TabModel::displayTasks() const
+{
+    // TODO
+}

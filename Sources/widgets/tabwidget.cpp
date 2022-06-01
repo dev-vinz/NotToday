@@ -1,5 +1,9 @@
 #include "tabwidget.h"
 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+|*                           CONSTRUCTORS                            *|
+\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 TabWidget::TabWidget(QWidget *_parent) : QTabWidget(_parent)
 {
     this->initialize();

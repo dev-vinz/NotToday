@@ -33,6 +33,8 @@ int main(int argc, char *argv[])
     tdl.addTask(t4);
     tdl.addTask(t5);
 
+    // TODO : Changer l'ordre
+
     tdl.addDependence(t1, t2);
     tdl.addDependence(t2, t3);
     tdl.addDependence(t3, t5);

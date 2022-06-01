@@ -45,15 +45,13 @@ TimeSpan TimeSpan::substract(const TimeSpan ts)
     return *this;
 }
 
+QDateTime TimeSpan::toDateTime() const
+{
+    return QDateTime::fromString(this->toString(), "dd:mm:hh");
+}
+
 QString TimeSpan::toString() const
 {
-    /*TimeSpan ts = TimeSpan::fromMinutes(this->totalMinutes());
-    int days = ts.totalDays();
-    ts.substract(days*60*60*24);
-    int hours = ts.totalHours();
-    ts.substract(hours*60*60);
-    //int minutes = ts.totalMinutes();*/
-
     int minutes = (int)(this->totalSeconds / 60) % 60;
     int hours = (int)(this->totalSeconds / 3600) % 24;
     int days = (int)(this->totalSeconds / 86400);
@@ -85,4 +83,55 @@ TimeSpan operator-(TimeSpan const &ts1, TimeSpan const &ts2)
     double diffSeconds = ts1.totalSeconds - ts2.totalSeconds;
 
     return TimeSpan(diffSeconds);
+}
+
+TimeSpan operator+(TimeSpan const &ts1, TimeSpan const &ts2)
+{
+    double totalSeconds = ts1.totalSeconds + ts2.totalSeconds;
+
+    return TimeSpan(totalSeconds);
+}
+
+TimeSpan &TimeSpan::operator-=(const TimeSpan &ts)
+{
+    this->totalSeconds -= ts.totalSeconds;
+
+    return *this;
+}
+
+TimeSpan &TimeSpan::operator+=(const TimeSpan &ts)
+{
+    this->totalSeconds += ts.totalSeconds;
+
+    return *this;
+}
+
+bool operator<(const TimeSpan &ts1, const TimeSpan &ts2)
+{
+    return ts1.totalSeconds < ts2.totalSeconds;
+}
+
+bool operator>(const TimeSpan &ts1, const TimeSpan &ts2)
+{
+    return ts1.totalSeconds > ts2.totalSeconds;
+}
+
+bool operator<=(const TimeSpan &ts1, const TimeSpan &ts2)
+{
+    return !(ts1 > ts2);
+}
+
+bool operator>=(const TimeSpan &ts1, const TimeSpan &ts2)
+{
+    return !(ts1 < ts2);
+}
+
+bool operator==(const TimeSpan &ts1, const TimeSpan &ts2)
+{
+    return ts1.totalSeconds == ts2.totalSeconds;
+}
+
+bool operator!=(const TimeSpan &ts1, const TimeSpan &ts2)
+{
+    return !(ts1 == ts2);
 }

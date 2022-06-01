@@ -2,14 +2,14 @@
 #define DASHBOARD_H
 
 #include <QAction>
-#include <QFile>
-#include <QObject>
-#include <QWidget>
 #include <QBoxLayout>
-#include <QPushButton>
-#include <QProgressBar>
-#include <QRadioButton>
+#include <QFile>
 #include <QLabel>
+#include <QObject>
+#include <QProgressBar>
+#include <QPushButton>
+#include <QRadioButton>
+#include <QWidget>
 
 #include "tabmodel.h"
 

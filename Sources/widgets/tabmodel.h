@@ -33,7 +33,7 @@ protected:
 
     void addNewTask(int i);
     void addTask();
-    void displayTasks();
+    void displayTasks() const;
 
     void virtual displayTask(Task task, int indice) const = 0;
     void virtual initialize() = 0;

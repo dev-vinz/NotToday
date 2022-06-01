@@ -69,10 +69,12 @@ TaskManagement::TaskManagement(QWidget *_parent) : TabModel(_parent)
 
 void TaskManagement::displayTask(Task task, int indice) const
 {
+    // TODO
 }
 
 void TaskManagement::initialize()
 {
+    // TODO
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\

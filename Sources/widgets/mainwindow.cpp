@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 
-#include "../tools/priorityqueue.h"
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+|*                           CONSTRUCTORS                            *|
+\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent)
 {
