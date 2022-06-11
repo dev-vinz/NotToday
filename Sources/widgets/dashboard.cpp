@@ -6,8 +6,6 @@
 
 Dashboard::Dashboard(QWidget *_parent) : TabModel(_parent)
 {
-    this->initialize();
-
     // initialize list of item of the Tasks
     radSelectTask = new QVector<QRadioButton *>;
     btnStatusTask = new QVector<QPushButton *>;
@@ -52,24 +50,33 @@ Dashboard::Dashboard(QWidget *_parent) : TabModel(_parent)
     boardLayout->addWidget(durationLabel, 0, 4);
     boardLayout->addWidget(progressionLabel, 0, 5);
 
-    tasks.append(createTask());
-    tasks.append(createTask());
-    tasks.append(createTask());
-    tasks.append(createTask());
+    Task *t1 = new Task(3, "Task 1", QDateTime(QDate(2022, 06, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromHours(4));
+    Task *t2 = new Task(1, "Task 2", QDateTime(QDate(2022, 06, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromHours(4));
+    Task *t3 = new Task(1, "Task 3", QDateTime(QDate(2022, 06, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromMinutes(45));
+    Task *t4 = new Task(2, "Task 4", QDateTime(QDate(2022, 06, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromMinutes(30));
+    Task *t5 = new Task(3, "Task 5", QDateTime(QDate(2022, 06, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromHours(2));
+
+    tdl.addTask(t1);
+    tdl.addTask(t2);
+    tdl.addTask(t3);
+    tdl.addTask(t4);
+    tdl.addTask(t5);
+
+    tdl.addDependence(t1, t2);
+    tdl.addDependence(t2, t3);
+    tdl.addDependence(t3, t5);
+    tdl.addDependence(t4, t5);
 
     // pour chaque tâche on en ajoute une "Vide" puis on la remplace par les bonnes valeurs
-    for (int i = 0; i < tasks.size(); i++)
-    {
-        addNewTask(i);
-        displayTask(tasks.at(i), i);
-    }
+
+    this->initialize();
 
     mainLayout->addLayout(defaultLayout);
     mainLayout->setStretch(0, 1);
     mainLayout->setStretch(1, 9);
     mainLayout->setStretch(2, 1);
 
-    connect(actOpen, &QAction::triggered, this, &Dashboard::addTask);
+    this->createActions();
 }
 
 /* * * * * * * * * * * * * * * * * * *\
@@ -95,9 +102,9 @@ QAction *Dashboard::getSaveAction() const
 |*                         PROTECTED METHODS                         *|
 \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-void Dashboard::displayTask(Task task, int indice) const
+void Dashboard::displayTask(Task *task, int indice) const
 {
-    switch (task.getStatus())
+    switch (task->getStatus())
     {
     case TaskStatus::DOING:
         btnStatusTask->at(indice)->setStyleSheet("background: orange;");
@@ -113,16 +120,92 @@ void Dashboard::displayTask(Task task, int indice) const
         break;
     }
 
-    lblNameTask->at(indice)->setText(task.getName());
-    lblDateTask->at(indice)->setText(Utils::dateToString(task.getDeadline()));
-    lblDurationTask->at(indice)->setText(task.getDuration().toString());
-    pgbProgressionTask->at(indice)->setMaximum(100); // VOir comment faire avec la progression
-    pgbProgressionTask->at(indice)->setValue(50);
+    lblNameTask->at(indice)->setText(task->getName());
+    lblDateTask->at(indice)->setText(Utils::dateToString(task->getDeadline()));
+    lblDurationTask->at(indice)->setText(task->getDuration().toString());
+    pgbProgressionTask->at(indice)->setMaximum(100);
+
+    int pgValue = 0;
+
+    QList<Task *> sons = Dashboard::tdl.getSonsOf(task);
+
+    if (sons.size() < 1)
+    {
+        if (task->getStatus() == TaskStatus::DONE)
+        {
+            pgValue = 100;
+        }
+    }
+    else
+    {
+        int nbSons = sons.count() + 1;
+
+        foreach (Task *son, sons)
+        {
+            if (son->getStatus() == TaskStatus::DONE)
+            {
+                pgValue += 100 / nbSons;
+            }
+        }
+    }
+
+    pgbProgressionTask->at(indice)->setValue(pgValue);
+}
+
+void Dashboard::displayTasks()
+{
+    for (int i = 0; i < Dashboard::tdl.getToday().size(); i++)
+    {
+        this->tabTaskRadio.push_back(this->tasks[i]->getId());
+        addNewTask(i);
+        displayTask(Dashboard::tdl.getToday().at(i), i);
+    }
 }
 
 void Dashboard::initialize()
 {
-    this->createActions();
+    foreach (QRadioButton *radio, *radSelectTask)
+    {
+        delete radio;
+    }
+
+    foreach (QPushButton *btn, *btnStatusTask)
+    {
+        delete btn;
+    }
+
+    foreach (QLabel *label, *lblNameTask)
+    {
+        delete label;
+    }
+
+    foreach (QLabel *label, *lblDateTask)
+    {
+        delete label;
+    }
+
+    foreach (QLabel *label, *lblDurationTask)
+    {
+        delete label;
+    }
+
+    foreach (QProgressBar *bar, *pgbProgressionTask)
+    {
+        delete bar;
+    }
+
+    radSelectTask->clear();
+    btnStatusTask->clear();
+    lblNameTask->clear();
+    lblDateTask->clear();
+    lblDurationTask->clear();
+    pgbProgressionTask->clear();
+
+    tabTaskRadio.clear();
+
+    this->tasks = Dashboard::tdl.getToday();
+
+    this->displayTasks();
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
@@ -131,8 +214,15 @@ void Dashboard::initialize()
 
 void Dashboard::addNewTask(int i)
 {
-    radSelectTask->push_back(new QRadioButton(this));
-    btnStatusTask->push_back(new QPushButton(this));
+    QRadioButton *btn = new QRadioButton(this);
+    QPushButton *statusButton = new QPushButton(this);
+    statusButton->setEnabled(false);
+
+    connect(btn, &QRadioButton::toggled, this, &Dashboard::radioButtonClicked);
+    connect(statusButton, &QPushButton::pressed, this, &Dashboard::statusButtonPressed);
+
+    radSelectTask->push_back(btn);
+    btnStatusTask->push_back(statusButton);
     lblNameTask->push_back(new QLabel("NO_NAME", this));
     lblDateTask->push_back(new QLabel("NO_DATE", this));
     lblDurationTask->push_back(new QLabel("NO_DURATION"));
@@ -146,16 +236,9 @@ void Dashboard::addNewTask(int i)
     boardLayout->addWidget(pgbProgressionTask->at(i), i + 1, 5);
 }
 
-void Dashboard::addTask()
-{
-    this->tasks.append(createTask());
-    addNewTask(this->tasks.size() - 1);
-
-    displayTask(this->tasks.at(this->tasks.size() - 1), this->tasks.size() - 1);
-}
-
 void Dashboard::createActions()
 {
+    // TODO : Move ailleurs
     this->actSave = new QAction(tr("&Save"));
     this->actSave->setShortcut(tr("CTRL+S"));
     this->actSave->setStatusTip(tr("Save file in your computer"));
@@ -169,10 +252,81 @@ void Dashboard::createActions()
     this->actNew->setStatusTip(tr("Create a new blank file"));
 }
 
-void Dashboard::displayTasks()
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+ *                            SLOTS                            *
+\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+/*
+void Dashboard::newTaskAdded(Task *task)
 {
-    for (int i = 0; i < tasks.size(); i++)
+    QMessageBox::information(NULL, task->getName(), "Tâche ajoutée depuis la boîte modal, ntr");
+
+    addNewTask(Dashboard::tdl.getToday().size() - 1);
+    QMessageBox::information(NULL, task->getName(), "Tâche ajoutée depuis la boîte modal, ntr");
+    displayTask(*task, Dashboard::tdl.getToday().size() - 1);
+}
+*/
+
+void Dashboard::refresh()
+{
+    this->initialize();
+}
+
+
+void Dashboard::radioButtonClicked(bool isChecked)
+{
+    if (isChecked)
     {
-        displayTask(tasks.at(i), i);
+        // Récupérer l'id du select
+        int id = 0;
+
+        for (int k = 0; k < radSelectTask->size(); k++)
+        {
+            if (radSelectTask->at(k)->isChecked()) id = k;
+        }
+
+        this->selectedTask = this->tdl.getTask(this->tabTaskRadio.at(id));
+
+        QList<Task *> sons = this->tdl.getSonsOf(this->selectedTask);
+
+        int nbSonsUndone = 0;
+
+        foreach (Task *son, sons)
+        {
+            if (son->getStatus() != TaskStatus::DONE) nbSonsUndone++;
+        }
+
+        if (nbSonsUndone < 1) btnStatusTask->at(id)->setEnabled(true);
     }
+}
+
+void Dashboard::statusButtonPressed()
+{
+    TaskStatus status = this->selectedTask->getStatus();
+
+    if (status == TaskStatus::OPEN)
+    {
+        this->selectedTask->setStatus(TaskStatus::DOING);
+    }
+    else if (status == TaskStatus::DOING)
+    {
+        this->selectedTask->setStatus(TaskStatus::DONE);
+
+        if (this->selectedTask->getParents().size() > 0)
+        {
+            Task *directParent = this->selectedTask->getParents().at(0);
+            QList<Task *> otherSons = Dashboard::tdl.getSonsOf(directParent);
+
+            int nbUndone = 0;
+
+            foreach (Task *son, otherSons)
+            {
+                if (son->getStatus() != TaskStatus::DONE) nbUndone++;
+            }
+
+            if (nbUndone < 1) directParent->setStatus(TaskStatus::OPEN);
+        }
+    }
+
+    this->refresh();
 }

@@ -10,6 +10,8 @@
 #define DEADLINE_PRIORITY 10
 #define PARENT_PRIORITY 5
 
+class Task;
+
 class ToDoList
 {
 private:
@@ -37,8 +39,12 @@ public:
     |*              GETTERS              *|
     \* * * * * * * * * * * * * * * * * * */
 
+    Task *getTask(int id) const;
+
+    QList<Task *> getSonsOf(Task *task) const;
+
     QList<Task *> getTasks() const;
-    QVector<Task *> getToday() const;
+    QList<Task *> getToday() const;
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                          PUBLIC METHODS                           *|
@@ -49,8 +55,8 @@ public:
     void addTask(Task *);
     void removeTask(Task *);
 
-    void addDependence(Task *, Task *);
-    void removeDependence(Task *, Task *);
+    void addDependence(Task *_child, Task *_parent);
+    void removeDependence(Task *_child, Task *_parent);
 };
 
 #endif // TODOLIST_H

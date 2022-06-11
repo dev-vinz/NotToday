@@ -11,6 +11,8 @@
 #include <QRadioButton>
 #include <QWidget>
 
+#include <QMessageBox>
+
 #include "tabmodel.h"
 
 class Dashboard : public TabModel
@@ -31,6 +33,11 @@ private:
     QVector<QProgressBar *> *pgbProgressionTask;
     QVector<QPushButton *> *btnStatusTask;
     QVector<QRadioButton *> *radSelectTask;
+    QVector<Task *> tasks;
+
+    QVector<int> tabTaskRadio;
+
+    Task* selectedTask = nullptr;
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                          PRIVATE METHODS                          *|
@@ -39,7 +46,6 @@ private:
     void addNewTask(int i);
     void addTask();
     void createActions();
-    void displayTasks();
 
 public:
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
@@ -61,8 +67,18 @@ protected:
     |*                         PROTECTED METHODS                         *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    void displayTask(Task task, int indice) const override;
+    void displayTask(Task *task, int indice) const override;
+    void displayTasks() override;
     void initialize() override;
+
+public slots:
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+     *                            SLOTS                            *
+    \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    void refresh();
+    void radioButtonClicked(bool);
+    void statusButtonPressed();
 };
 
 #endif // DASHBOARD_H

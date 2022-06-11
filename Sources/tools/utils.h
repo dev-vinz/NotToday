@@ -6,6 +6,10 @@
 #include <QString>
 
 #include "timespan.h"
+#include "todolist.h"
+
+class Task;
+class ToDoList;
 
 class Utils
 {

@@ -7,6 +7,7 @@
 #include <QStatusBar>
 
 #include "tabwidget.h"
+
 #include "../tools/priorityqueue.h"
 
 class TabWidget;

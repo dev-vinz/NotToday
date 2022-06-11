@@ -2,12 +2,15 @@
 
 // Est appelé depuis la boite modale qui pour une nouvelle Task, les paramètres viennent des différentes zones de textes
 
+int Task::CURRENT_ID = 0;
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
 |*                           CONSTRUCTORS                            *|
 \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-Task::Task(TaskStatus status, int priority, QString name, QDateTime deadline, QDateTime startTime, TimeSpan duration, Recurrence recurrence, QList<Task *> parent)
+Task::Task(int priority, QString name, QDateTime deadline, QDateTime startTime, TimeSpan duration, Recurrence recurrence) //, QList<Task *> parent)
 {
+    this->id = Task::CURRENT_ID++;
     this->status = status;
     this->priority = priority;
     this->name = name;
@@ -15,25 +18,6 @@ Task::Task(TaskStatus status, int priority, QString name, QDateTime deadline, QD
     this->startTime = startTime;
     this->recurrence = recurrence;
     this->duration = duration;
-
-    if (parent.size() != 0)
-    {
-        for (int i = 0; i < parent.size(); i++)
-        {
-            this->parent.append(parent.at(i));
-        }
-    }
-}
-
-Task::Task(const Task &task) : status(task.status), priority(task.priority), name(task.name), deadline(task.deadline), startTime(task.startTime), duration(task.duration), recurrence(task.recurrence)
-{
-    if (task.parent.size() != 0)
-    {
-        for (int i = 0; i < parent.size(); i++)
-        {
-            this->parent.append(parent.at(i));
-        }
-    }
 }
 
 Task::~Task()
@@ -127,9 +111,39 @@ TaskStatus Task::getStatus() const
 |*              SETTERS              *|
 \* * * * * * * * * * * * * * * * * * */
 
+void Task::setPriority(int priority)
+{
+    this->priority = priority;
+}
+
 void Task::setDuration(TimeSpan ts)
 {
     this->duration = ts;
+}
+
+void Task::setDeadline(QDateTime date)
+{
+    this->deadline = date;
+}
+
+void Task::setStartTime(QDateTime time)
+{
+    this->startTime = time;
+}
+
+void Task::setName(QString name)
+{
+    this->name = name;
+}
+
+void Task::setRecurrence(Recurrence recurrence)
+{
+    this->recurrence = recurrence;
+}
+
+void Task::setStatus(TaskStatus status)
+{
+    this->status = status;
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
@@ -138,6 +152,7 @@ void Task::setDuration(TimeSpan ts)
 
 void Task::addParent(Task *task)
 {
+    task->setStatus(TaskStatus::LOCKED);
     this->parent.append(task);
 }
 
@@ -167,12 +182,14 @@ void Task::updateTask(Task task)
     this->recurrence = task.recurrence;
     this->duration = task.duration;
 
+    /*
     this->parent.clear();
 
     for (int i = 0; i < task.parent.size(); i++)
     {
         this->addParent(task.parent.at(i));
     }
+    */
 }
 
 // Est appelé quand on veut afficher
@@ -182,10 +199,12 @@ QString Task::readTask() const
 
     message += this->duration.toString() + "\n";
 
+    /*
     for (int i = 0; i < this->parent.size(); i++)
     {
         message += "Parent " + this->parent.at(i)->name + "\n";
     }
+    */
 
     return message;
 }

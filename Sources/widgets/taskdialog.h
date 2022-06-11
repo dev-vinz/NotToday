@@ -21,6 +21,7 @@
 #include "../tools/todolist.h"
 
 class Task;
+
 class TaskDialog : public QDialog
 {
     Q_OBJECT
@@ -43,28 +44,37 @@ private:
 
     QSpinBox *nudPriority;
 
+    Task *task = nullptr;
     ToDoList *toDoList;
-
-    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
-    |*                          PRIVATE METHODS                          *|
-    \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-    void initialize();
 
 public:
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                           CONSTRUCTORS                            *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    TaskDialog(QWidget *_parent= nullptr); //Constructeur pour créer une nouvelle tâche
-    TaskDialog(Task task, QWidget *_parent = nullptr); //Constructeur pour modifier une tâche
+    TaskDialog(ToDoList *tdl, bool addDialog, QWidget *_parent = nullptr); //Constructeur pour modifier une tâche
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+    |*                          PUBLIC METHODS                           *|
+    \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    void initialize(Task * = nullptr);
 
 private slots:
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
      *                            SLOTS                            *
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    void saveAndClose();
+    void addAndClose();
+    void updateAndClose();
+
+signals:
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+     *                           SIGNALS                           *
+    \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    void taskAdded(Task *);
+    void taskUpdated();
 };
 
 #endif // TASKDIALOG_H

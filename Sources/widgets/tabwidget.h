@@ -37,6 +37,21 @@ public:
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     TabWidget(QWidget *_parent = nullptr);
+
+public slots:
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+     *                            SLOTS                            *
+    \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    void tabChanged(int index);
+
+signals:
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+     *                           SIGNALS                           *
+    \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    void refreshDashboard();
+    void refreshTaskManagement();
 };
 
 #endif // TABWIDGET_H

@@ -11,16 +11,20 @@
 #include "timespan.h"
 #include "utils.h"
 
+class Utils;
+
 class Task
 {
 
 private:
+    static int CURRENT_ID;
+
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                            ATTRIBUTES                             *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     int id;
-    TaskStatus status;
+    TaskStatus status = TaskStatus::OPEN;
     int priority;
     QString name;
     QDateTime deadline;
@@ -38,8 +42,8 @@ public:
     |*                           CONSTRUCTORS                            *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    Task(TaskStatus status, int priority, QString name, QDateTime deadline, QDateTime startTime, TimeSpan duration, Recurrence recurrence = Recurrence::NO_RECURRENCE, QList<Task *> parent = QList<Task *>());
-    Task(const Task &);
+    Task(int priority, QString name, QDateTime deadline, QDateTime startTime, TimeSpan duration, Recurrence recurrence = Recurrence::NO_RECURRENCE); //, QList<Task *> parent = QList<Task *>());
+    Task(const Task &) = delete;
     ~Task();
 
     /* * * * * * * * * * * * * * * * * * *\
@@ -68,7 +72,13 @@ public:
     |*              SETTERS              *|
     \* * * * * * * * * * * * * * * * * * */
 
+    void setPriority(int);
     void setDuration(TimeSpan);
+    void setDeadline(QDateTime);
+    void setStartTime(QDateTime);
+    void setName(QString);
+    void setRecurrence(Recurrence);
+    void setStatus(TaskStatus);
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                          PUBLIC METHODS                           *|

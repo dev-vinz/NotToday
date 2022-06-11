@@ -7,6 +7,10 @@
 TabWidget::TabWidget(QWidget *_parent) : QTabWidget(_parent)
 {
     this->initialize();
+
+    connect(this, &QTabWidget::currentChanged, this, &TabWidget::tabChanged);
+    connect(this, &TabWidget::refreshDashboard, this->dashboard, &Dashboard::refresh);
+    connect(this, &TabWidget::refreshTaskManagement, this->taskManagement, &TaskManagement::refresh);
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
@@ -20,4 +24,18 @@ void TabWidget::initialize()
 
     this->addTab(dashboard, tr("Dashboard"));
     this->addTab(taskManagement, tr("Task Management"));
+
+    //connect(taskManagement, &TaskManagement::taskAdded, dashboard, &Dashboard::newTaskAdded);
+}
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+ *                            SLOTS                            *
+\* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+
+void TabWidget::tabChanged(int index)
+{
+    if (index == 0) emit refreshDashboard();
+    if (index == 1) emit refreshTaskManagement();
 }

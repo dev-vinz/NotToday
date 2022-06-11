@@ -32,14 +32,16 @@ PonderatedTask PriorityQueue::pop()
     return front;
 }
 
-QVector<Task *> PriorityQueue::toQVector() const
+QVector<Task *> PriorityQueue::toQVector()
 {
-    PriorityQueue old = *this;
+    QVector<Task *> toAdd;
     QVector<Task *> vector;
 
-    while (!old.empty())
+    while (!empty())
     {
-        vector.push_back(old.pop().task);
+        Task *task = pop().task;
+
+        vector.push_back(task);
     }
 
     return vector;
