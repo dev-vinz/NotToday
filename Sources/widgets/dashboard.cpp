@@ -129,14 +129,7 @@ void Dashboard::displayTask(Task *task, int indice) const
 
     QList<Task *> sons = Dashboard::tdl.getSonsOf(task);
 
-    if (sons.size() < 1)
-    {
-        if (task->getStatus() == TaskStatus::DONE)
-        {
-            pgValue = 100;
-        }
-    }
-    else
+    if (sons.size() > 0)
     {
         int nbSons = sons.count() + 1;
 
@@ -147,6 +140,11 @@ void Dashboard::displayTask(Task *task, int indice) const
                 pgValue += 100 / nbSons;
             }
         }
+    }
+
+    if (task->getStatus() == TaskStatus::DONE)
+    {
+        pgValue = 100;
     }
 
     pgbProgressionTask->at(indice)->setValue(pgValue);
