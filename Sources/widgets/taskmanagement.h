@@ -49,6 +49,10 @@ private:
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     void addNewTask(int i);
+    double definePG(Task * task, int nbSons) const;
+    int defineAllSons(Task *task) const;
+    int defineAllTime(Task *task) const;
+
 
 public:
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\

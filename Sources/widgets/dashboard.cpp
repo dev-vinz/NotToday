@@ -75,28 +75,8 @@ Dashboard::Dashboard(QWidget *_parent) : TabModel(_parent)
     mainLayout->setStretch(0, 1);
     mainLayout->setStretch(1, 9);
     mainLayout->setStretch(2, 1);
-
-    this->createActions();
 }
 
-/* * * * * * * * * * * * * * * * * * *\
-|*              GETTERS              *|
-\* * * * * * * * * * * * * * * * * * */
-
-QAction *Dashboard::getNewAction() const
-{
-    return this->actNew;
-}
-
-QAction *Dashboard::getOpenAction() const
-{
-    return this->actOpen;
-}
-
-QAction *Dashboard::getSaveAction() const
-{
-    return this->actSave;
-}
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
 |*                         PROTECTED METHODS                         *|
@@ -125,30 +105,23 @@ void Dashboard::displayTask(Task *task, int indice) const
     lblDurationTask->at(indice)->setText(task->getDuration().toString());
     pgbProgressionTask->at(indice)->setMaximum(100);
 
-    int pgValue = 0;
+    double pgValue = 0;
+    int nbSons = defineAllSons(task);
+    double time = defineAllTime(task);
 
-    QList<Task *> sons = Dashboard::tdl.getSonsOf(task);
-
-    if (sons.size() > 0)
+    if(nbSons > 0)
     {
-        int nbSons = sons.count() + 1;
-
-        foreach (Task *son, sons)
+        pgValue = definePG(task, time);
+    }
+        if (task->getStatus() == TaskStatus::DONE)
         {
-            if (son->getStatus() == TaskStatus::DONE)
-            {
-                pgValue += 100 / nbSons;
-            }
+            pgValue = 100;
         }
-    }
-
-    if (task->getStatus() == TaskStatus::DONE)
-    {
-        pgValue = 100;
-    }
 
     pgbProgressionTask->at(indice)->setValue(pgValue);
-}
+      }
+
+
 
 void Dashboard::displayTasks()
 {
@@ -234,21 +207,60 @@ void Dashboard::addNewTask(int i)
     boardLayout->addWidget(pgbProgressionTask->at(i), i + 1, 5);
 }
 
-void Dashboard::createActions()
+int Dashboard::defineAllTime(Task *task) const
 {
-    // TODO : Move ailleurs
-    this->actSave = new QAction(tr("&Save"));
-    this->actSave->setShortcut(tr("CTRL+S"));
-    this->actSave->setStatusTip(tr("Save file in your computer"));
+    QList<Task *> sons = Dashboard::tdl.getSonsOf(task);
+    int value = task->getDuration().totalMinutes();
+    if(sons.size()<=0)
+    {
+        return value;
+    }
 
-    this->actOpen = new QAction(tr("&Open"));
-    this->actOpen->setShortcut(tr("CTRL+O"));
-    this->actOpen->setStatusTip(tr("Open file from your computer"));
-
-    this->actNew = new QAction(tr("&New"));
-    this->actNew->setShortcut(tr("CTRL+N"));
-    this->actNew->setStatusTip(tr("Create a new blank file"));
+    foreach(Task * son, sons)
+    {
+        value += defineAllTime(son);
+    }
+    return value;
 }
+
+int Dashboard::defineAllSons(Task *task) const
+{
+    QList<Task *> sons = Dashboard::tdl.getSonsOf(task);
+    int value = 0;
+    if(sons.size()<=0)
+    {
+        return 0;
+    }
+
+    foreach(Task * son, sons)
+    {
+        value += 1 + defineAllSons(son);
+    }
+    return value;
+}
+
+double Dashboard::definePG(Task *task, int time) const
+{
+    QList<Task *> sons = Dashboard::tdl.getSonsOf(task);
+    double value = 0;
+
+    if (task->getStatus() == TaskStatus::DONE)
+    {
+        value += 100.0 / time*task->getDuration().totalMinutes();
+    }
+
+    if(sons.size()<=0)
+    {
+        return value;
+    }
+
+    foreach(Task * son, sons)
+    {
+        value += definePG(son,time);
+    }
+    return value;
+}
+
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
  *                            SLOTS                            *
@@ -328,3 +340,4 @@ void Dashboard::statusButtonPressed()
 
     this->refresh();
 }
+

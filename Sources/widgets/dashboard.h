@@ -24,7 +24,7 @@ private:
     |*                            ATTRIBUTES                             *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    QAction *actSave, *actOpen, *actNew;
+
     QBoxLayout *mainLayout, *defaultLayout, *taskLayout;
     QFile file;
     QGridLayout *boardLayout;
@@ -45,8 +45,9 @@ private:
 
     void addNewTask(int i);
     void addTask();
-    void createActions();
-
+    double definePG(Task * task, int nbSons) const;
+    int defineAllSons(Task *task) const;
+    int defineAllTime(Task *task) const;
 public:
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                           CONSTRUCTORS                            *|

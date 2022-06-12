@@ -18,19 +18,26 @@ private:
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                            ATTRIBUTES                             *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-    QAction *actAbout;
     TabWidget *widget;
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                          PRIVATE METHODS                          *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    void createActions();
+    void createActions();    
     void createMenuBar();
     void initialize();
+    void About();
+    void New();
+    void Open();
+    void Save();
 
 public:
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+    |*                            ATTRIBUTES                             *|
+    \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+    QAction *actAbout;
+    QAction *actSave, *actOpen, *actNew;
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                           CONSTRUCTORS                            *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */

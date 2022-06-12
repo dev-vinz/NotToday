@@ -94,22 +94,34 @@ void TaskDialog::initialize(Task *task)
     cmbParent->clear();
     cmbParent->addItem("-", "");
 
-    for (Task *task : toDoList->getTasks())
-    {
-        cmbParent->addItem(task->getName(), task->getId());
-    }
-
     if (task != nullptr)
     {
         textName->setText(task->getName());
+
         textDeadline->setText(task->getDeadline().toString(Utils::dateFormat()));
 
         cmbReccurence->setCurrentIndex(cmbReccurence->findData(task->getRecurrenceString()));
 
         textDuration->setText(task->getDuration().toString());
 
-        cmbParent->setCurrentIndex(cmbParent->findData(task->getParents().at(0)->getId()));
+        if(task->getParents().size()>0)
+        {
+            cmbParent->setCurrentIndex(cmbParent->findData(task->getParents().at(0)->getId()));
+        }else
+        {
+            cmbParent->setCurrentIndex(cmbParent->findData(""));
+        }
+
+
         nudPriority->setValue(task->getPriority());
+
+        for (Task *t : toDoList->getTasks())
+        {
+            if(t->getId()!=task->getId())
+            {
+                cmbParent->addItem(t->getName(), t->getId());
+            }
+        }
     }
     else
     {
@@ -120,6 +132,12 @@ void TaskDialog::initialize(Task *task)
 
         cmbParent->setCurrentIndex(cmbParent->findData(""));
         nudPriority->setValue(1);
+        for (Task *t : toDoList->getTasks())
+        {
+
+                cmbParent->addItem(t->getName(), t->getId());
+
+        }
     }
 }
 

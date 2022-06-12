@@ -77,6 +77,8 @@ TaskManagement::TaskManagement(QWidget *_parent) : TabModel(_parent)
     connect(modifyTask, &TaskDialog::taskUpdated, this, &TaskManagement::refresh);
 }
 
+
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
 |*                         PROTECTED METHODS                         *|
 \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -104,30 +106,23 @@ void TaskManagement::displayTask(Task *task, int indice) const
     lblDurationTask->at(indice)->setText(task->getDuration().toString());
     pgbProgressionTask->at(indice)->setMaximum(100);
 
-    int pgValue = 0;
+    double pgValue = 0;
+    int nbSons = defineAllSons(task);
+    double time = defineAllTime(task);
 
-    QList<Task *> sons = TaskManagement::tdl.getSonsOf(task);
-
-    if (sons.size() > 0)
+    if(nbSons > 0)
     {
-        int nbSons = sons.count() + 1;
-
-        foreach (Task *son, sons)
+        pgValue = definePG(task, time);
+    }
+        if (task->getStatus() == TaskStatus::DONE)
         {
-            if (son->getStatus() == TaskStatus::DONE)
-            {
-                pgValue += 100 / nbSons;
-            }
+            pgValue = 100;
         }
-    }
-
-    if (task->getStatus() == TaskStatus::DONE)
-    {
-        pgValue = 100;
-    }
 
     pgbProgressionTask->at(indice)->setValue(pgValue);
 }
+
+
 
 void TaskManagement::displayTasks()
 {
@@ -253,6 +248,60 @@ void TaskManagement::addNewTask(int i)
     boardLayout->addWidget(pgbProgressionTask->at(i), i + 1, 5);
 }
 
+int TaskManagement::defineAllTime(Task *task) const
+{
+    QList<Task *> sons = TaskManagement::tdl.getSonsOf(task);
+    int value = task->getDuration().totalMinutes();
+    if(sons.size()<=0)
+    {
+        return value;
+    }
+
+    foreach(Task * son, sons)
+    {
+        value += defineAllTime(son);
+    }
+    return value;
+}
+
+int TaskManagement::defineAllSons(Task *task) const
+{
+    QList<Task *> sons = TaskManagement::tdl.getSonsOf(task);
+    int value = 0;
+    if(sons.size()<=0)
+    {
+        return 0;
+    }
+
+    foreach(Task * son, sons)
+    {
+        value += 1 + defineAllSons(son);
+    }
+    return value;
+}
+
+double TaskManagement::definePG(Task *task, int time) const
+{
+    QList<Task *> sons = TaskManagement::tdl.getSonsOf(task);
+    double value = 0;
+
+    if (task->getStatus() == TaskStatus::DONE)
+    {
+        value += 100.0 / time*task->getDuration().totalMinutes();
+    }
+
+    if(sons.size()<=0)
+    {
+        return value;
+    }
+
+    foreach(Task * son, sons)
+    {
+        value += definePG(son,time);
+    }
+    return value;
+}
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
  *                            SLOTS                            *
 \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -260,7 +309,8 @@ void TaskManagement::addNewTask(int i)
 void TaskManagement::deleteTask()
 {
     if (this->selectedTask == nullptr) return;
-
+    selectedTask->setStatus(TaskStatus::DOING);
+    statusButtonPressed(); //Pour libérer les parents
     this->tdl.removeTask(this->selectedTask);
     this->selectedTask = nullptr;
 
@@ -274,7 +324,6 @@ void TaskManagement::openNewWindow()
     if (emmetteur == btnModifyTask)
     {
         if (this->selectedTask == nullptr) return;
-
         modifyTask->initialize(this->selectedTask);
         modifyTask->show();
     }

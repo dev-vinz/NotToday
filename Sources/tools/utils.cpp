@@ -19,6 +19,7 @@ QString Utils::dateToString(QDateTime date)
     return date.toString(Utils::dateFormat());
 }
 
+
 QString Utils::timeFormat()
 {
     return "dd:HH:mm";
