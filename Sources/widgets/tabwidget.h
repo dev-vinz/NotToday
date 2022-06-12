@@ -6,9 +6,8 @@
 #include <QWidget>
 
 #include "dashboard.h"
-#include "taskmanagement.h"
-
 #include "mainwindow.h"
+#include "taskmanagement.h"
 
 class MainWindow;
 
@@ -19,13 +18,42 @@ class TabWidget : public QTabWidget
     friend MainWindow;
 
 private:
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+    |*                            ATTRIBUTES                             *|
+    \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
     Dashboard *dashboard;
     TaskManagement *taskManagement;
+
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+    |*                          PRIVATE METHODS                          *|
+    \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     void initialize();
 
 public:
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+    |*                           CONSTRUCTORS                            *|
+    \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
     TabWidget(QWidget *_parent = nullptr);
+
+public slots:
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+     *                            SLOTS                            *
+    \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    void tabChanged(int index);
+    void deleteTask();
+
+signals:
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+     *                           SIGNALS                           *
+    \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+    void deleteTasks();
+    void refreshDashboard();
+    void refreshTaskManagement();
+
 };
 
 #endif // TABWIDGET_H

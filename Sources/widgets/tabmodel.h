@@ -5,7 +5,7 @@
 #include <QTabBar>
 #include <QWidget>
 
-#include "../tools/task.h"
+#include "../tools/todolist.h"
 
 class TabModel : public QTabBar
 {
@@ -23,20 +23,19 @@ protected:
     |*                            ATTRIBUTES                             *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    QVector<Task> tasks;
+    static ToDoList tdl;
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                         PROTECTED METHODS                         *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    static Task createTask();
-
-    void addNewTask(int i);
-    void addTask();
-    void displayTasks();
-
-    void virtual displayTask(Task task, int indice) const = 0;
+    void virtual displayTask(Task *task, int indice) const = 0;
+    void virtual displayTasks() = 0;
     void virtual initialize() = 0;
+
+
+public slots:
+    void deleteTDL();
 };
 
 #endif // TABMODEL_H

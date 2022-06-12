@@ -22,6 +22,34 @@ ToDoList::~ToDoList()
 |*              GETTERS              *|
 \* * * * * * * * * * * * * * * * * * */
 
+Task *ToDoList::getTask(int id) const
+{
+    foreach (Task *t, this->getTasks())
+    {
+        if (t->getId() == id) return t;
+    }
+
+    return nullptr;
+}
+
+QList<Task *> ToDoList::getSonsOf(Task *task) const
+{
+    QList<Task *> sons;
+
+    foreach (Task *t, this->getTasks())
+    {
+        foreach (Task *p, t->getParents())
+        {
+            if (p->getId() == task->getId())
+            {
+                sons.push_back(t);
+            }
+        }
+    }
+
+    return sons;
+}
+
 QList<Task *> ToDoList::getTasks() const
 {
     return this->graph.keys();
@@ -38,22 +66,10 @@ QList<Task *> ToDoList::getToday() const
     {
         double timeNext = totalMinutes + task->getDuration().totalMinutes();
 
+        if (task->getStatus() == TaskStatus::DONE) continue;
+
         if (timeNext > ToDoList::HOURS_IN_A_DAY_IN_MINUTES)
         {
-            // Temps en minutes
-            double overflow = timeNext - ToDoList::HOURS_IN_A_DAY_IN_MINUTES;
-            double available = task->getDuration().totalMinutes() - overflow;
-
-            Task *copy = new Task(*task);
-
-            // TODO : Modifier task et mettre le temps overflow
-            task->setDuration(TimeSpan::fromMinutes(overflow));
-
-            // TODO : Modifier la copy et mettre le temps disponible
-            copy->setDuration(TimeSpan::fromMinutes(available));
-
-            today.push_back(copy);
-
             break;
         }
         else
@@ -84,12 +100,12 @@ QVector<Task *> ToDoList::run() const
     {
         QDateTime now = QDateTime::currentDateTime();
 
-        int deadlinePriority = now.secsTo(t->getDeadline()) * DEADLINE_PRIORITY;
+        int deadlinePriority = now.secsTo(t->getDeadline()) / 60 * DEADLINE_PRIORITY;
         int parentPriority = 0;
 
-        foreach (const Task *parent, t->getParents())
+        foreach (const Task *son, this->getSonsOf(t))
         {
-            if (parent->getStatus() != TaskStatus::DONE)
+            if (son->getStatus() != TaskStatus::DONE)
             {
                 parentPriority += PARENT_PRIORITY;
             }
@@ -145,13 +161,15 @@ void ToDoList::removeTask(Task *_task)
     }
 }
 
-void ToDoList::addDependence(Task *_taskSrc, Task *_taskDest)
-{
-    if (!this->graph[_taskSrc].contains(_taskDest))
-    {
-        this->graph[_taskSrc].append(_taskDest);
+#include <iostream>
 
-        _taskDest->addParent(_taskSrc);
+void ToDoList::addDependence(Task *_child, Task *_parent)
+{
+    if (!this->graph[_child].contains(_parent))
+    {
+        this->graph[_child].append(_parent);
+
+        _child->addParent(_parent);
     }
     else
     {
@@ -159,13 +177,13 @@ void ToDoList::addDependence(Task *_taskSrc, Task *_taskDest)
     }
 }
 
-void ToDoList::removeDependence(Task *_taskSrc, Task *_taskDest)
+void ToDoList::removeDependence(Task *_child, Task *_parent)
 {
-    if (this->graph[_taskSrc].contains(_taskDest))
+    if (this->graph[_child].contains(_parent))
     {
-        this->graph[_taskSrc].removeOne(_taskDest);
+        this->graph[_child].removeOne(_parent);
 
-        _taskDest->removeParent(_taskSrc);
+        _child->removeParent(_parent);
     }
     else
     {

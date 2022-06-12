@@ -1,6 +1,7 @@
 #ifndef TIMESPAN_H
 #define TIMESPAN_H
 
+#include <QDateTime>
 #include <QString>
 
 class TimeSpan
@@ -36,6 +37,7 @@ public:
     TimeSpan add(const TimeSpan);
     TimeSpan substract(const TimeSpan);
 
+    QDateTime toDateTime() const;
     QString toString() const;
 
     static TimeSpan fromMinutes(int minutes);
@@ -47,6 +49,18 @@ public:
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     friend TimeSpan operator-(TimeSpan const &ts1, TimeSpan const &ts2);
+    friend TimeSpan operator+(TimeSpan const &ts1, TimeSpan const &ts2);
+
+    TimeSpan &operator-=(const TimeSpan &ts);
+    TimeSpan &operator+=(const TimeSpan &ts);
+
+    friend bool operator<(const TimeSpan &ts1, const TimeSpan &ts2);
+    friend bool operator>(const TimeSpan &ts1, const TimeSpan &ts2);
+    friend bool operator<=(const TimeSpan &ts1, const TimeSpan &ts2);
+    friend bool operator>=(const TimeSpan &ts1, const TimeSpan &ts2);
+
+    friend bool operator==(const TimeSpan &ts1, const TimeSpan &ts2);
+    friend bool operator!=(const TimeSpan &ts1, const TimeSpan &ts2);
 };
 
 #endif // TIMESPAN_H

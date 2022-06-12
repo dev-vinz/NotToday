@@ -5,6 +5,8 @@
 
 #include "task.h"
 
+class Task;
+
 struct PonderatedTask
 {
     Task *task;
@@ -42,7 +44,7 @@ public:
 
     PonderatedTask pop();
 
-    QVector<Task *> toQVector() const;
+    QVector<Task *> toQVector();
 
     void push(PonderatedTask);
 };

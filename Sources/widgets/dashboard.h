@@ -2,14 +2,16 @@
 #define DASHBOARD_H
 
 #include <QAction>
-#include <QFile>
-#include <QObject>
-#include <QWidget>
 #include <QBoxLayout>
-#include <QPushButton>
-#include <QProgressBar>
-#include <QRadioButton>
+#include <QFile>
 #include <QLabel>
+#include <QObject>
+#include <QProgressBar>
+#include <QPushButton>
+#include <QRadioButton>
+#include <QWidget>
+
+#include <QMessageBox>
 
 #include "tabmodel.h"
 
@@ -22,7 +24,6 @@ private:
     |*                            ATTRIBUTES                             *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    QAction *actSave, *actOpen, *actNew;
     QBoxLayout *mainLayout, *defaultLayout, *taskLayout;
     QFile file;
     QGridLayout *boardLayout;
@@ -31,6 +32,11 @@ private:
     QVector<QProgressBar *> *pgbProgressionTask;
     QVector<QPushButton *> *btnStatusTask;
     QVector<QRadioButton *> *radSelectTask;
+    QVector<Task *> tasks;
+
+    QVector<int> tabTaskRadio;
+
+    Task* selectedTask = nullptr;
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                          PRIVATE METHODS                          *|
@@ -38,9 +44,9 @@ private:
 
     void addNewTask(int i);
     void addTask();
-    void createActions();
-    void displayTasks();
-
+    double definePG(Task * task, int nbSons) const;
+    int defineAllSons(Task *task) const;
+    int defineAllTime(Task *task) const;
 public:
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                           CONSTRUCTORS                            *|
@@ -48,21 +54,24 @@ public:
 
     Dashboard(QWidget *_parent = nullptr);
 
-    /* * * * * * * * * * * * * * * * * * *\
-    |*              GETTERS              *|
-    \* * * * * * * * * * * * * * * * * * */
-
-    QAction *getNewAction() const;
-    QAction *getOpenAction() const;
-    QAction *getSaveAction() const;
-
 protected:
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                         PROTECTED METHODS                         *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    void displayTask(Task task, int indice) const override;
+    void displayTask(Task *task, int indice) const override;
+    void displayTasks() override;
     void initialize() override;
+
+public slots:
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
+     *                            SLOTS                            *
+    \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+    void refresh();
+    void radioButtonClicked(bool);
+    void statusButtonPressed();
+
 };
 
 #endif // DASHBOARD_H

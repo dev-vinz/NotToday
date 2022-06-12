@@ -13,15 +13,20 @@
 #include "timespan.h"
 #include "utils.h"
 
+class Utils;
+
 class Task
 {
+
 private:
+    static int CURRENT_ID;
+
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                            ATTRIBUTES                             *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     int id;
-    TaskStatus status;
+    TaskStatus status = TaskStatus::OPEN;
     int priority;
     QString name;
     QDateTime deadline;
@@ -33,14 +38,15 @@ private:
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                          PRIVATE METHODS                          *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 public:
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                           CONSTRUCTORS                            *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    Task(TaskStatus status, int priority, QString name, QDateTime deadline, QDateTime startTime, TimeSpan duration, Recurrence recurrence = Recurrence::NO_RECURRENCE, QList<Task *> parent = QList<Task *>());
-    Task(const Task &);
-    Task(const QJsonObject &);
+    Task(int priority, QString name, QDateTime deadline, QDateTime startTime, TimeSpan duration, Recurrence recurrence = Recurrence::NO_RECURRENCE);
+    Task(const QJsonObject &json);
+    Task(const Task &) = delete;
     ~Task();
 
     /* * * * * * * * * * * * * * * * * * *\
@@ -69,21 +75,21 @@ public:
     |*              SETTERS              *|
     \* * * * * * * * * * * * * * * * * * */
 
+    void setPriority(int);
     void setDuration(TimeSpan);
+    void setDeadline(QDateTime);
+    void setStartTime(QDateTime);
+    void setName(QString);
+    void setRecurrence(Recurrence);
+    void setStatus(TaskStatus);
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                          PUBLIC METHODS                           *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    bool isCheckable() const;
-
     void addParent(Task *task);
-    void deleteTask(Task task);
     void removeParent(Task *task);
-    void updateTask(Task task); // TODO : hein, c'est débile non ?!
-
-    QString readTask() const;
-
+    
     void read(const QJsonObject &json);
     void write(QJsonObject &json) const;
 };
