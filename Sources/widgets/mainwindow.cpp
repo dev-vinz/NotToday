@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent)
 
     connect(actSave, &QAction::triggered, this, &MainWindow::Save);
 
+    connect(this, &MainWindow::deleteAll, this->widget, &TabWidget::deleteTask);
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
@@ -28,7 +29,8 @@ void MainWindow::About()
 }
 void MainWindow::New()
 {
-    QMessageBox::information(NULL,"New","Suppression de la tdl");
+    QMessageBox::information(NULL,"New","Suppression de la todolist");
+    emit deleteAll();
 
 }
 void MainWindow::Save()

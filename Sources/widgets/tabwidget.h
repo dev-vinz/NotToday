@@ -44,14 +44,16 @@ public slots:
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     void tabChanged(int index);
+    void deleteTask();
 
 signals:
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
      *                           SIGNALS                           *
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
+    void deleteTasks();
     void refreshDashboard();
     void refreshTaskManagement();
+
 };
 
 #endif // TABWIDGET_H

@@ -266,16 +266,6 @@ double Dashboard::definePG(Task *task, int time) const
  *                            SLOTS                            *
 \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-/*
-void Dashboard::newTaskAdded(Task *task)
-{
-    QMessageBox::information(NULL, task->getName(), "Tâche ajoutée depuis la boîte modal, ntr");
-
-    addNewTask(Dashboard::tdl.getToday().size() - 1);
-    QMessageBox::information(NULL, task->getName(), "Tâche ajoutée depuis la boîte modal, ntr");
-    displayTask(*task, Dashboard::tdl.getToday().size() - 1);
-}
-*/
 
 void Dashboard::refresh()
 {
@@ -340,4 +330,5 @@ void Dashboard::statusButtonPressed()
 
     this->refresh();
 }
+
 

@@ -1,4 +1,5 @@
 #include "tabmodel.h"
+#include <QMessageBox>
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
 |*                            ATTRIBUTES                             *|
@@ -26,4 +27,16 @@ void TabModel::addNewTask(int i)
 void TabModel::addTask()
 {
     // TODO
+}
+
+
+
+void TabModel::deleteTDL()
+{
+    QVector<Task *> tasks = tdl.run();
+
+    foreach(Task * task, tasks)
+    {
+        tdl.removeTask(task);
+    }
 }

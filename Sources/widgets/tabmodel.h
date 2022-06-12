@@ -32,10 +32,13 @@ protected:
 
     void addNewTask(int i);
     void addTask();
-
     void virtual displayTask(Task *task, int indice) const = 0;
     void virtual displayTasks() = 0;
     void virtual initialize() = 0;
+
+
+public slots:
+    void deleteTDL();
 };
 
 #endif // TABMODEL_H

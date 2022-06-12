@@ -80,6 +80,7 @@ public slots:
     void refresh();
     void radioButtonClicked(bool);
     void statusButtonPressed();
+
 };
 
 #endif // DASHBOARD_H

@@ -14,6 +14,7 @@ class TabWidget;
 
 class MainWindow : public QMainWindow
 {
+    Q_OBJECT
 private:
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                            ATTRIBUTES                             *|
@@ -50,6 +51,10 @@ public slots:
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     void showStatusBar(const QString msg);
+
+signals:
+
+    void deleteAll();
 };
 
 #endif // MAINWINDOW_H
