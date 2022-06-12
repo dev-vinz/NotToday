@@ -1,15 +1,17 @@
 #include <gtest/gtest.h>
+
 #include "todolist.h"
 
 TEST(LibTools, ToDoList)
 {
+
     ToDoList tdl;
 
-    Task *t1 = new Task(3, "Task 1", QDateTime(QDate(2022, 04, 26), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromHours(4));
-    Task *t2 = new Task(1, "Task 2", QDateTime(QDate(2022, 04, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromHours(4));
-    Task *t3 = new Task(1, "Task 3", QDateTime(QDate(2022, 04, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromMinutes(45));
-    Task *t4 = new Task(2, "Task 4", QDateTime(QDate(2022, 04, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromMinutes(30));
-    Task *t5 = new Task(3, "Task 5", QDateTime(QDate(2022, 04, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromHours(2));
+    Task *t1 = new Task(3, "Task 1", QDateTime(QDate(2022, 07, 26), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromHours(4));
+    Task *t2 = new Task(2, "Task 2", QDateTime(QDate(2022, 07, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromHours(4));
+    Task *t3 = new Task(1, "Task 3", QDateTime(QDate(2022, 07, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromMinutes(45));
+    Task *t4 = new Task(2, "Task 4", QDateTime(QDate(2022, 07, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromMinutes(30));
+    Task *t5 = new Task(3, "Task 5", QDateTime(QDate(2022, 07, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromHours(2));
 
     tdl.addTask(t1);
     tdl.addTask(t2);
@@ -19,14 +21,12 @@ TEST(LibTools, ToDoList)
 
     QList<Task *> tasks = tdl.getTasks();
 
-    EXPECT_EQ(tasks.length(), 5);
+    EXPECT_EQ(tasks.size(), 5);
 
     QVector<Task *> priorisedTasks = tdl.getToday();
-    EXPECT_EQ(priorisedTasks[0]->getName(), "Task 1");
-    EXPECT_EQ(priorisedTasks[1]->getName(), "Task ");
-    EXPECT_EQ(priorisedTasks[2]->getName(), "Task ");
-    EXPECT_EQ(priorisedTasks[3]->getName(), "Task ");
-    EXPECT_EQ(priorisedTasks[4]->getName(), "Task ");
+    EXPECT_EQ(priorisedTasks.at(0)->getName(), "Task 1");
+    EXPECT_EQ(priorisedTasks.at(1)->getName(), "Task 5");
+    EXPECT_EQ(priorisedTasks.at(2)->getName(), "Task 4");
 
     tdl.addDependence(t1, t2);
     tdl.addDependence(t2, t3);
@@ -34,9 +34,6 @@ TEST(LibTools, ToDoList)
     tdl.addDependence(t4, t5);
 
     priorisedTasks = tdl.getToday();
-    EXPECT_EQ(priorisedTasks[0]->getName(), "Task 1");
-    EXPECT_EQ(priorisedTasks[1]->getName(), "Task ");
-    EXPECT_EQ(priorisedTasks[2]->getName(), "Task ");
-    EXPECT_EQ(priorisedTasks[3]->getName(), "Task ");
-    EXPECT_EQ(priorisedTasks[4]->getName(), "Task ");
+    EXPECT_EQ(priorisedTasks.at(0)->getName(), "Task 1");
+    EXPECT_EQ(priorisedTasks.at(1)->getName(), "Task 4");
 }

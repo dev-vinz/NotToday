@@ -163,6 +163,7 @@ void Task::addParent(Task *task)
 
 void Task::removeParent(Task *task)
 {
+    task->setStatus(TaskStatus::OPEN);
     this->parent.remove(this->parent.indexOf(task));
 }
 
