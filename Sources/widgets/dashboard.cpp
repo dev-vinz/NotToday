@@ -62,7 +62,7 @@ Dashboard::Dashboard(QWidget *_parent) : TabModel(_parent)
     boardLayout->addWidget(progressionLabel, 0, 5);
 
 
-
+/*
     Task *t1 = new Task(3, "Task 1", QDateTime(QDate(2022, 07, 26), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromHours(4));
     Task *t2 = new Task(2, "Task 2", QDateTime(QDate(2022, 07, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromHours(4));
     Task *t3 = new Task(1, "Task 3", QDateTime(QDate(2022, 07, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromMinutes(45));
@@ -78,9 +78,7 @@ Dashboard::Dashboard(QWidget *_parent) : TabModel(_parent)
     tdl.addDependence(t1, t2);
     tdl.addDependence(t2, t3);
     tdl.addDependence(t3, t5);
-    tdl.addDependence(t4, t5);
-
-
+    tdl.addDependence(t4, t5);*/
 
     this->initialize();
 
@@ -145,7 +143,7 @@ void Dashboard::displayTasks()
     {
         this->tabTaskRadio.push_back(this->tasks[i]->getId()); //Used to know wich task is linked with what radiobutton
         addNewTask(i); //Add the space for the task to be displayed
-        displayTask(Dashboard::tdl.getToday().at(i), i); //put the values of the tasks is the accorfing space
+        displayTask(Dashboard::tdl.getToday().at(i), i); //put the values of the tasks is the according space
     }
 }
 
@@ -267,7 +265,7 @@ void Dashboard::radioButtonClicked(bool isChecked)
     }
 }
 
-//Change the status depending on the previous status
+//Change the status depending on the previous one
 void Dashboard::statusButtonPressed()
 {
     TaskStatus status = this->selectedTask->getStatus();

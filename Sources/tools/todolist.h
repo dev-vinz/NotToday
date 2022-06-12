@@ -33,6 +33,7 @@ public:
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     ToDoList();
+    ToDoList(const QJsonObject &);
     ~ToDoList();
 
     /* * * * * * * * * * * * * * * * * * *\
@@ -57,6 +58,9 @@ public:
 
     void addDependence(Task *_child, Task *_parent);
     void removeDependence(Task *_child, Task *_parent);
+
+    void read(const QJsonObject &json);
+    void write(QJsonObject &json) const;
 };
 
 #endif // TODOLIST_H

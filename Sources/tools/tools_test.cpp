@@ -1,5 +1,4 @@
 #include <gtest/gtest.h>
-
 #include "todolist.h"
 
 TEST(LibTools, ToDoList)
@@ -73,11 +72,11 @@ TEST(LibTools, removeStatus)
 
     EXPECT_EQ(tasks.size(), 5);
 
-    EXPECT_EQ(tasks.at(0)->getStatus(), "OPEN");
-    EXPECT_EQ(tasks.at(1)->getStatus(), "OPEN");
-    EXPECT_EQ(tasks.at(2)->getStatus(), "LOCKED");
-    EXPECT_EQ(tasks.at(3)->getStatus(), "LOCKED");
-    EXPECT_EQ(tasks.at(4)->getStatus(), "LOCKED");
+    EXPECT_EQ(tasks.at(0)->getStatus(), TaskStatus::OPEN);
+    EXPECT_EQ(tasks.at(1)->getStatus(), TaskStatus::OPEN);
+    EXPECT_EQ(tasks.at(2)->getStatus(), TaskStatus::LOCKED);
+    EXPECT_EQ(tasks.at(3)->getStatus(), TaskStatus::LOCKED);
+    EXPECT_EQ(tasks.at(4)->getStatus(), TaskStatus::LOCKED);
 
 
     tdl.removeTask(t1);
@@ -89,12 +88,12 @@ TEST(LibTools, removeStatus)
 
     EXPECT_EQ(tasks.size(), 4);
 
-    EXPECT_EQ(tasks.at(0)->getStatus(), "OPEN");
-    EXPECT_EQ(tasks.at(1)->getStatus(), "OPEN");
-    EXPECT_EQ(tasks.at(2)->getStatus(), "LOCKED");
-    EXPECT_EQ(tasks.at(3)->getStatus(), "LOCKED");
+    EXPECT_EQ(tasks.at(0)->getStatus(), TaskStatus::OPEN);
+    EXPECT_EQ(tasks.at(1)->getStatus(), TaskStatus::OPEN);
+    EXPECT_EQ(tasks.at(2)->getStatus(), TaskStatus::LOCKED);
+    EXPECT_EQ(tasks.at(3)->getStatus(), TaskStatus::LOCKED);
 
-    tdl.removeTask(td2);
+    tdl.removeTask(t2);
 
     EXPECT_EQ(tasks.at(0)->getName(), "Task 4");
     EXPECT_EQ(tasks.at(1)->getName(), "Task 3");
@@ -102,9 +101,9 @@ TEST(LibTools, removeStatus)
 
     EXPECT_EQ(tasks.size(), 3);
 
-    EXPECT_EQ(tasks.at(0)->getStatus(), "OPEN");
-    EXPECT_EQ(tasks.at(1)->getStatus(), "OPEN");
-    EXPECT_EQ(tasks.at(2)->getStatus(), "LOCKED");
+    EXPECT_EQ(tasks.at(0)->getStatus(), TaskStatus::OPEN);
+    EXPECT_EQ(tasks.at(1)->getStatus(), TaskStatus::OPEN);
+    EXPECT_EQ(tasks.at(2)->getStatus(), TaskStatus::LOCKED);
 
 }
 
