@@ -50,25 +50,6 @@ Dashboard::Dashboard(QWidget *_parent) : TabModel(_parent)
     boardLayout->addWidget(durationLabel, 0, 4);
     boardLayout->addWidget(progressionLabel, 0, 5);
 
-    Task *t1 = new Task(3, "Task 1", QDateTime(QDate(2022, 06, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromHours(4));
-    Task *t2 = new Task(1, "Task 2", QDateTime(QDate(2022, 06, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromHours(4));
-    Task *t3 = new Task(1, "Task 3", QDateTime(QDate(2022, 06, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromMinutes(45));
-    Task *t4 = new Task(2, "Task 4", QDateTime(QDate(2022, 06, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromMinutes(30));
-    Task *t5 = new Task(3, "Task 5", QDateTime(QDate(2022, 06, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromHours(2));
-
-    tdl.addTask(t1);
-    tdl.addTask(t2);
-    tdl.addTask(t3);
-    tdl.addTask(t4);
-    tdl.addTask(t5);
-
-    tdl.addDependence(t1, t2);
-    tdl.addDependence(t2, t3);
-    tdl.addDependence(t3, t5);
-    tdl.addDependence(t4, t5);
-
-    // pour chaque tâche on en ajoute une "Vide" puis on la remplace par les bonnes valeurs
-
     this->initialize();
 
     mainLayout->addLayout(defaultLayout);
@@ -113,15 +94,14 @@ void Dashboard::displayTask(Task *task, int indice) const
     {
         pgValue = definePG(task, time);
     }
-        if (task->getStatus() == TaskStatus::DONE)
-        {
-            pgValue = 100;
-        }
+
+    if (task->getStatus() == TaskStatus::DONE)
+    {
+        pgValue = 100;
+    }
 
     pgbProgressionTask->at(indice)->setValue(pgValue);
-      }
-
-
+ }
 
 void Dashboard::displayTasks()
 {

@@ -84,14 +84,8 @@ public:
     |*                          PUBLIC METHODS                           *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    bool isCheckable() const;
-
     void addParent(Task *task);
-    void deleteTask(Task task);
     void removeParent(Task *task);
-    void updateTask(Task task); // TODO : hein, c'est débile non ?!
-
-    QString readTask() const;
 };
 
 #endif // TASK_H

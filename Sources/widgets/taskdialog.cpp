@@ -97,22 +97,9 @@ void TaskDialog::initialize(Task *task)
     if (task != nullptr)
     {
         textName->setText(task->getName());
-
         textDeadline->setText(task->getDeadline().toString(Utils::dateFormat()));
-
         cmbReccurence->setCurrentIndex(cmbReccurence->findData(task->getRecurrenceString()));
-
         textDuration->setText(task->getDuration().toString());
-
-        if(task->getParents().size()>0)
-        {
-            cmbParent->setCurrentIndex(cmbParent->findData(task->getParents().at(0)->getId()));
-        }else
-        {
-            cmbParent->setCurrentIndex(cmbParent->findData(""));
-        }
-
-
         nudPriority->setValue(task->getPriority());
 
         for (Task *t : toDoList->getTasks())
@@ -121,6 +108,16 @@ void TaskDialog::initialize(Task *task)
             {
                 cmbParent->addItem(t->getName(), t->getId());
             }
+        }
+
+        if(task->getParents().size()>0)
+        {
+            Task *parent = task->getParents().at(0);
+            cmbParent->setCurrentIndex(cmbParent->findData(parent->getId()));
+        }
+        else
+        {
+            cmbParent->setCurrentIndex(cmbParent->findData(""));
         }
     }
     else
@@ -134,9 +131,7 @@ void TaskDialog::initialize(Task *task)
         nudPriority->setValue(1);
         for (Task *t : toDoList->getTasks())
         {
-
-                cmbParent->addItem(t->getName(), t->getId());
-
+            cmbParent->addItem(t->getName(), t->getId());
         }
     }
 }
@@ -149,6 +144,7 @@ void TaskDialog::addAndClose()
 {
     int priority = nudPriority->value();
     QString name = textName->text();
+
     if (name == "")
     {
         return;
@@ -217,7 +213,6 @@ void TaskDialog::addAndClose()
 
 void TaskDialog::updateAndClose()
 {
-    TaskStatus status = TaskStatus::OPEN;
     int priority = nudPriority->value();
     QString name = textName->text();
     if (name == "")
@@ -272,7 +267,6 @@ void TaskDialog::updateAndClose()
         if (p != nullptr) parent.push_back(p);
     }
 
-    task->setStatus(status);
     task->setPriority(priority);
     task->setName(name);
     task->setDeadline(deadline);

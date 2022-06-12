@@ -39,6 +39,4 @@ TEST(LibTools, ToDoList)
     EXPECT_EQ(priorisedTasks[2]->getName(), "Task ");
     EXPECT_EQ(priorisedTasks[3]->getName(), "Task ");
     EXPECT_EQ(priorisedTasks[4]->getName(), "Task ");
-
-
 }

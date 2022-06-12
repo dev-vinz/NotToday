@@ -156,57 +156,9 @@ void Task::addParent(Task *task)
     this->parent.append(task);
 }
 
-bool Task::isCheckable() const
-{
-    // TODO
-    return false;
-}
-
-void Task::deleteTask(Task task)
-{
-    // TODO
-}
-
 void Task::removeParent(Task *task)
 {
     this->parent.remove(this->parent.indexOf(task));
-}
-
-void Task::updateTask(Task task)
-{
-    this->status = task.status;
-    this->priority = task.priority;
-    this->name = task.name;
-    this->deadline = task.deadline;
-    this->startTime = task.startTime;
-    this->recurrence = task.recurrence;
-    this->duration = task.duration;
-
-    /*
-    this->parent.clear();
-
-    for (int i = 0; i < task.parent.size(); i++)
-    {
-        this->addParent(task.parent.at(i));
-    }
-    */
-}
-
-// Est appelé quand on veut afficher
-QString Task::readTask() const
-{
-    QString message = "name: " + this->name + "\n " + "priority: " + QString::number(this->priority) + "\n " + "status: " + this->getStatusString() + "\n " + "deadline: " + Utils::dateToString(this->deadline) + "\n " + "startTime: " + Utils::dateToString(this->startTime) + "\n " + "reccurence: " + this->getRecurrenceString() + "\n ";
-
-    message += this->duration.toString() + "\n";
-
-    /*
-    for (int i = 0; i < this->parent.size(); i++)
-    {
-        message += "Parent " + this->parent.at(i)->name + "\n";
-    }
-    */
-
-    return message;
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\

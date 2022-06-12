@@ -10,12 +10,10 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent)
     this->createActions();
     this->createMenuBar();
 
-    connect(actAbout, &QAction::triggered, this, &MainWindow::About);
-    connect(actNew, &QAction::triggered, this, &MainWindow::New);
-
-    connect(actOpen, &QAction::triggered, this, &MainWindow::Open);
-
-    connect(actSave, &QAction::triggered, this, &MainWindow::Save);
+    connect(actAbout, &QAction::triggered, this, &MainWindow::about);
+    connect(actNew, &QAction::triggered, this, &MainWindow::newTdl);
+    connect(actOpen, &QAction::triggered, this, &MainWindow::open);
+    connect(actSave, &QAction::triggered, this, &MainWindow::save);
 
     connect(this, &MainWindow::deleteAll, this->widget, &TabWidget::deleteTask);
 }
@@ -23,24 +21,7 @@ MainWindow::MainWindow(QWidget *_parent) : QMainWindow(_parent)
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
  *                           PRIVATE                           *
 \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-void MainWindow::About()
-{
-    QMessageBox::information(NULL,"About","Projet fait dans le cadre du P2 du semestre d'Automne.\nNot-Today est une application de gestion de temps et de tâches.\n Autheurs:\n\tVincent Jeannin\n\tBenjamin Mouchet\n\tGuillaume Mouchet");
-}
-void MainWindow::New()
-{
-    QMessageBox::information(NULL,"New","Suppression de la todolist");
-    emit deleteAll();
 
-}
-void MainWindow::Save()
-{
-    QMessageBox::information(NULL,"Save","Fonctionnalité pas encore implémentée, elle permettra de garder l\'état entre chaque fermeture de l\'application");
-}
-void MainWindow::Open()
-{
-    QMessageBox::information(NULL,"Open","Fonctionnalité pas encore implémentée, elle permettra de récupérer l\'état de l'application");
-}
 void MainWindow::createActions()
 {
     this->actAbout = new QAction(tr("&About"));
@@ -87,4 +68,24 @@ void MainWindow::initialize()
 void MainWindow::showStatusBar(const QString msg)
 {
     statusBar()->showMessage(msg);
+}
+
+void MainWindow::about()
+{
+    QMessageBox::information(NULL,"About","Projet fait dans le cadre du P2 du semestre d'Automne.\nNot-Today est une application de gestion de temps et de tâches.\n Autheurs:\n\tVincent Jeannin\n\tBenjamin Mouchet\n\tGuillaume Mouchet");
+}
+
+void MainWindow::newTdl()
+{
+    emit deleteAll();
+}
+
+void MainWindow::save()
+{
+    QMessageBox::information(NULL,"Save","Fonctionnalité pas encore implémentée, elle permettra de garder l\'état entre chaque fermeture de l\'application");
+}
+
+void MainWindow::open()
+{
+    QMessageBox::information(NULL,"Open","Fonctionnalité pas encore implémentée, elle permettra de récupérer l\'état de l'application");
 }

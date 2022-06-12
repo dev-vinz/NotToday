@@ -28,10 +28,6 @@ private:
     void createActions();    
     void createMenuBar();
     void initialize();
-    void About();
-    void New();
-    void Open();
-    void Save();
 
 public:
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
@@ -51,6 +47,10 @@ public slots:
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     void showStatusBar(const QString msg);
+    void about();
+    void newTdl();
+    void open();
+    void save();
 
 signals:
 

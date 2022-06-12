@@ -23,15 +23,12 @@ protected:
     |*                            ATTRIBUTES                             *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    // QVector<Task> tasks;
     static ToDoList tdl;
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                         PROTECTED METHODS                         *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    void addNewTask(int i);
-    void addTask();
     void virtual displayTask(Task *task, int indice) const = 0;
     void virtual displayTasks() = 0;
     void virtual initialize() = 0;
