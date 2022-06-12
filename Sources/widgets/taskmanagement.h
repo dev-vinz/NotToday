@@ -29,17 +29,28 @@ private:
     |*                            ATTRIBUTES                             *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+    //Layout
     QBoxLayout *topLayout, *mainLayout, *defaultLayout;
-    TaskDialog *addTaskDialog, *modifyTask;
     QGridLayout *boardLayout;
+
+    //Dialog for modify a Task or add a new one
+    TaskDialog *addTaskDialog, *modifyTask;
+
+    //Labels
     QLabel *lblTitle, *selectLabel, *statusLabel, *nameLabel, *dateLabel, *durationLabel, *progressionLabel;
+
+    //Buttons
     QPushButton *btnAddTask, *btnRemoveTask, *btnModifyTask;
+
+    //each values of the tasks are in Vector, the is is the same than the one gotten from getToday()
+
     QVector<QLabel *> *lblNameTask, *lblDateTask, *lblDurationTask;
     QVector<QProgressBar *> *pgbProgressionTask;
     QVector<QPushButton *> *btnStatusTask;
     QVector<QRadioButton *> *radSelectTask;
     QVector<QVector<Task *>> tasks;
 
+    //When we display the tasks, they are put in another Vector to get the id in the list
     QVector<int> tabTaskRadio;
 
     Task* selectedTask = nullptr;
@@ -49,10 +60,6 @@ private:
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     void addNewTask(int i);
-    double definePG(Task * task, int nbSons) const;
-    int defineAllSons(Task *task) const;
-    int defineAllTime(Task *task) const;
-
 
 public:
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\

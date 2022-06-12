@@ -80,6 +80,7 @@ void MainWindow::newTdl()
     emit deleteAll();
 }
 
+//Not implemented yet
 void MainWindow::save()
 {
     QMessageBox::information(NULL, "Save", "Fonctionnalité pas encore implémentée, elle permettra de garder l\'état entre chaque fermeture de l\'application");

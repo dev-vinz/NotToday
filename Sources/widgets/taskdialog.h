@@ -31,11 +31,14 @@ private:
     |*                            ATTRIBUTES                             *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+    //Layouts
     QBoxLayout *timeLayout;
     QGridLayout *mainLayout;
 
+    //Title
     QLabel *labelTitle, *labelName, *labelDeadline, *labelReccurence, *labelDuration, *labelParent, *labelPriority;
 
+    //User imputs
     QComboBox *cmbReccurence, *cmbParent;
 
     QLineEdit *textName, *textDeadline, *textDuration;
@@ -44,6 +47,8 @@ private:
 
     QSpinBox *nudPriority;
 
+
+    //Tools
     Task *task = nullptr;
     ToDoList *toDoList;
 
@@ -52,19 +57,21 @@ public:
     |*                           CONSTRUCTORS                            *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    TaskDialog(ToDoList *tdl, bool addDialog, QWidget *_parent = nullptr); //Constructeur pour modifier une tâche
+    //Both for modification and for a new Task has the same constructors
+    TaskDialog(ToDoList *tdl, bool addDialog, QWidget *_parent = nullptr);
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
     |*                          PUBLIC METHODS                           *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+    //initialize change how the Dialog function
     void initialize(Task * = nullptr);
-
 private slots:
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
      *                            SLOTS                            *
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+    //depending on the initialization the Close won't work the same
     void addAndClose();
     void updateAndClose();
 
@@ -73,6 +80,7 @@ signals:
      *                           SIGNALS                           *
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+    //Used to refresh the TaskManagement
     void taskAdded(Task *);
     void taskUpdated();
 };

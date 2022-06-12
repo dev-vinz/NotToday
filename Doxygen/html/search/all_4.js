@@ -1,5 +1,9 @@
 var searchData=
 [
-  ['read_0',['read',['../class_task.html#a7ce5f1d378d0c4d2623f980bda9dd6cc',1,'Task::read()'],['../class_to_do_list.html#a9e0e2b4eaa3fd614ca2abaafe6293987',1,'ToDoList::read(const QJsonObject &amp;json)']]],
-  ['run_1',['run',['../class_to_do_list.html#ad8776e2d95fd3103190ff278f023de10',1,'ToDoList']]]
+  ['qt_5fmeta_5fstringdata_5fdashboard_5ft_0',['qt_meta_stringdata_Dashboard_t',['../structqt__meta__stringdata___dashboard__t.html',1,'']]],
+  ['qt_5fmeta_5fstringdata_5fmainwindow_5ft_1',['qt_meta_stringdata_MainWindow_t',['../structqt__meta__stringdata___main_window__t.html',1,'']]],
+  ['qt_5fmeta_5fstringdata_5ftabmodel_5ft_2',['qt_meta_stringdata_TabModel_t',['../structqt__meta__stringdata___tab_model__t.html',1,'']]],
+  ['qt_5fmeta_5fstringdata_5ftabwidget_5ft_3',['qt_meta_stringdata_TabWidget_t',['../structqt__meta__stringdata___tab_widget__t.html',1,'']]],
+  ['qt_5fmeta_5fstringdata_5ftaskdialog_5ft_4',['qt_meta_stringdata_TaskDialog_t',['../structqt__meta__stringdata___task_dialog__t.html',1,'']]],
+  ['qt_5fmeta_5fstringdata_5ftaskmanagement_5ft_5',['qt_meta_stringdata_TaskManagement_t',['../structqt__meta__stringdata___task_management__t.html',1,'']]]
 ];

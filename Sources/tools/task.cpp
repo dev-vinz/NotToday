@@ -11,7 +11,6 @@ int Task::CURRENT_ID = 0;
 Task::Task(int priority, QString name, QDateTime deadline, QDateTime startTime, TimeSpan duration, Recurrence recurrence)
 {
     this->id = Task::CURRENT_ID++;
-    this->status = status;
     this->priority = priority;
     this->name = name;
     this->deadline = deadline;

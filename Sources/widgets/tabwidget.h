@@ -43,7 +43,10 @@ public slots:
      *                            SLOTS                            *
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+    //refresh Dashboard or TaskManagement
     void tabChanged(int index);
+
+    //the slots call the signals deleteTasks and the refreshs for both Dashboard and TaskManagement
     void deleteTask();
 
 signals:

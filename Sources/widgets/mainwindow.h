@@ -54,6 +54,7 @@ public slots:
 
 signals:
 
+    //delete the tdl from the model
     void deleteAll();
 };
 
