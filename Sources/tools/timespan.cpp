@@ -56,11 +56,12 @@ QString TimeSpan::toString() const
     int hours = (int)(this->totalSeconds / 3600) % 24;
     int days = (int)(this->totalSeconds / 86400);
 
+    //Format each values
     QString day = QString("%1").arg(QString::number(days)).rightJustified(2,'0');
     QString hour = QString("%1").arg(QString::number(hours)).rightJustified(2,'0');
-
     QString minute = QString("%1").arg(QString::number(minutes)).rightJustified(2,'0');
 
+    //format each values together
     return QString("%1:%2:%3").arg(day, hour, minute);
 }
 

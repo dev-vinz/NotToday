@@ -23,14 +23,17 @@ private:
     |*                            ATTRIBUTES                             *|
     \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-    int id;
-    TaskStatus status = TaskStatus::OPEN;
+
     int priority;
     QString name;
     QDateTime deadline;
     QDateTime startTime;
     TimeSpan duration;
     Recurrence recurrence;
+
+    //Tools
+    int id;
+    TaskStatus status = TaskStatus::OPEN;
     QList<Task *> parent;
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\

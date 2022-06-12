@@ -6,6 +6,7 @@
 
 TaskManagement::TaskManagement(QWidget *_parent) : TabModel(_parent)
 {
+    //Layout
     mainLayout = new QVBoxLayout(this);
     topLayout = new QHBoxLayout();
     boardLayout = new QGridLayout();
@@ -20,12 +21,14 @@ TaskManagement::TaskManagement(QWidget *_parent) : TabModel(_parent)
     lblDurationTask = new QVector<QLabel *>;
     pgbProgressionTask = new QVector<QProgressBar *>;
 
+    //Title
     lblTitle = new QLabel("Aperçu des tâches");
     QFont font = lblTitle->font();
     font.setUnderline(1);
     lblTitle->setFont(font);
     topLayout->addWidget(lblTitle);
 
+    //Button
     btnAddTask = new QPushButton("Ajouter une Tâche", this);
     btnAddTask->setGeometry(500, 50, 150, 50);
     topLayout->addWidget(btnAddTask);
@@ -40,6 +43,7 @@ TaskManagement::TaskManagement(QWidget *_parent) : TabModel(_parent)
 
     mainLayout->addLayout(boardLayout);
 
+    //Header
     selectLabel = new QLabel("Selecteur");
     selectLabel->setStyleSheet("background: rgba(31,144,186,255); border: 2px solid black;");
     selectLabel->setMaximumHeight(40);
@@ -54,6 +58,7 @@ TaskManagement::TaskManagement(QWidget *_parent) : TabModel(_parent)
     progressionLabel = new QLabel("Progression");
     progressionLabel->setStyleSheet("background: rgba(31,144,186,255); border: 2px solid black;");
 
+    //layout
     boardLayout->addWidget(selectLabel, 0, 0);
     boardLayout->addWidget(statusLabel, 0, 1);
     boardLayout->addWidget(nameLabel, 0, 2);
@@ -66,9 +71,11 @@ TaskManagement::TaskManagement(QWidget *_parent) : TabModel(_parent)
     mainLayout->setStretch(1, 9);
     mainLayout->setStretch(2, 1);
 
+    //Dialogs
     addTaskDialog = new TaskDialog(&TaskManagement::tdl, true);
     modifyTask = new TaskDialog(&TaskManagement::tdl, false);
 
+    //Connect
     connect(btnAddTask, &QPushButton::clicked, this, &TaskManagement::openNewWindow);
     connect(btnModifyTask, &QPushButton::clicked, this, &TaskManagement::openNewWindow);
     connect(btnRemoveTask, &QPushButton::clicked, this, &TaskManagement::deleteTask);
@@ -85,6 +92,8 @@ TaskManagement::TaskManagement(QWidget *_parent) : TabModel(_parent)
 
 void TaskManagement::displayTask(Task *task, int indice) const
 {
+    //The color oh the button depends on its status
+
     switch (task->getStatus())
     {
     case TaskStatus::DOING:
@@ -131,16 +140,17 @@ void TaskManagement::displayTasks()
     for (int i = 0; i < this->tasks.length(); i++)
     {
         for (int j = 0; j < this->tasks[i].length(); j++)
-        {
-            this->tabTaskRadio.push_back(this->tasks[i][j]->getId());
-            addNewTask(nb);
-            displayTask(this->tasks[i][j], nb++);
+        { 
+            this->tabTaskRadio.push_back(this->tasks[i][j]->getId());//Used to know wich task is linked with what radiobutton
+            addNewTask(nb); //Add the space for the task to be displayed
+            displayTask(this->tasks[i][j], nb++); //put the values of the tasks is the accorfing space
         }
     }
 }
 
 void TaskManagement::initialize()
 {
+    //Disable the button depending on a task needed to be selected
     btnModifyTask->setEnabled(false);
     btnRemoveTask->setEnabled(false);
 
@@ -177,6 +187,7 @@ void TaskManagement::initialize()
         tempTab.erase(tempTab.begin(), tempTab.end());
     }
 
+    //Delete and clear everything
     foreach (QRadioButton *radio, *radSelectTask)
     {
         delete radio;
@@ -216,6 +227,7 @@ void TaskManagement::initialize()
 
     tabTaskRadio.clear();
 
+    //Display everything back
     this->tasks = displayBlock;
     this->displayTasks();
 }
@@ -224,6 +236,7 @@ void TaskManagement::initialize()
 |*                          PRIVATE METHODS                          *|
 \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+//Add the space for the task to be displayed
 void TaskManagement::addNewTask(int i)
 {
     QRadioButton *btn = new QRadioButton(this);
@@ -248,60 +261,6 @@ void TaskManagement::addNewTask(int i)
     boardLayout->addWidget(pgbProgressionTask->at(i), i + 1, 5);
 }
 
-int TaskManagement::defineAllTime(Task *task) const
-{
-    QList<Task *> sons = TaskManagement::tdl.getSonsOf(task);
-    int value = task->getDuration().totalMinutes();
-    if(sons.size()<=0)
-    {
-        return value;
-    }
-
-    foreach(Task * son, sons)
-    {
-        value += defineAllTime(son);
-    }
-    return value;
-}
-
-int TaskManagement::defineAllSons(Task *task) const
-{
-    QList<Task *> sons = TaskManagement::tdl.getSonsOf(task);
-    int value = 0;
-    if(sons.size()<=0)
-    {
-        return 0;
-    }
-
-    foreach(Task * son, sons)
-    {
-        value += 1 + defineAllSons(son);
-    }
-    return value;
-}
-
-double TaskManagement::definePG(Task *task, int time) const
-{
-    QList<Task *> sons = TaskManagement::tdl.getSonsOf(task);
-    double value = 0;
-
-    if (task->getStatus() == TaskStatus::DONE)
-    {
-        value += 100.0 / time*task->getDuration().totalMinutes();
-    }
-
-    if(sons.size()<=0)
-    {
-        return value;
-    }
-
-    foreach(Task * son, sons)
-    {
-        value += definePG(son,time);
-    }
-    return value;
-}
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
  *                            SLOTS                            *
 \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -310,7 +269,7 @@ void TaskManagement::deleteTask()
 {
     if (this->selectedTask == nullptr) return;
     selectedTask->setStatus(TaskStatus::DOING);
-    statusButtonPressed(); //Pour libérer les parents
+    statusButtonPressed(); //Unlock the parents
     this->tdl.removeTask(this->selectedTask);
     this->selectedTask = nullptr;
 
@@ -339,6 +298,7 @@ void TaskManagement::refresh()
     this->initialize();
 }
 
+//Used to know wich task to update, delete or change status
 void TaskManagement::radioButtonClicked(bool isChecked)
 {
     if (isChecked)
@@ -369,6 +329,7 @@ void TaskManagement::radioButtonClicked(bool isChecked)
     }
 }
 
+//Change the status depending on the previous status
 void TaskManagement::statusButtonPressed()
 {
     TaskStatus status = this->selectedTask->getStatus();

@@ -8,10 +8,9 @@ int Task::CURRENT_ID = 0;
 |*                           CONSTRUCTORS                            *|
 \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-Task::Task(int priority, QString name, QDateTime deadline, QDateTime startTime, TimeSpan duration, Recurrence recurrence) //, QList<Task *> parent)
+Task::Task(int priority, QString name, QDateTime deadline, QDateTime startTime, TimeSpan duration, Recurrence recurrence)
 {
     this->id = Task::CURRENT_ID++;
-    this->status = status;
     this->priority = priority;
     this->name = name;
     this->deadline = deadline;

@@ -39,6 +39,7 @@ void TabWidget::tabChanged(int index)
     if (index == 1) emit refreshTaskManagement();
 }
 
+//Delete the tdl and refreash both widgets
 void TabWidget::deleteTask()
 {
     emit deleteTasks();

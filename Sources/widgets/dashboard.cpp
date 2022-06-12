@@ -19,30 +19,41 @@ Dashboard::Dashboard(QWidget *_parent) : TabModel(_parent)
     defaultLayout = new QHBoxLayout(this);
     boardLayout = new QGridLayout(this);
 
+    //Title
     lblTitle = new QLabel("DashBoard");
     QFont font = lblTitle->font();
     font.setUnderline(1);
     lblTitle->setFont(font);
     lblTitle->setMaximumHeight(20);
-
     mainLayout->addWidget(lblTitle);
-
     mainLayout->addLayout(boardLayout);
 
+    //Header selecter
     selectLabel = new QLabel("Selecteur");
     selectLabel->setStyleSheet("background: rgba(31,144,186,255); border: 2px solid black;");
     selectLabel->setMaximumHeight(40);
+
+    //Header status
     statusLabel = new QLabel("Status");
     statusLabel->setStyleSheet("background: rgba(31,144,186,255); border: 2px solid black;");
+
+    //Header name
     nameLabel = new QLabel("Name");
     nameLabel->setStyleSheet("background: rgba(31,144,186,255); border: 2px solid black;");
+
+    //Header date
     dateLabel = new QLabel("Date");
     dateLabel->setStyleSheet("background: rgba(31,144,186,255); border: 2px solid black;");
+
+    //Header duration
     durationLabel = new QLabel("Duration");
     durationLabel->setStyleSheet("background: rgba(31,144,186,255); border: 2px solid black;");
+
+    //Header progression
     progressionLabel = new QLabel("Progression");
     progressionLabel->setStyleSheet("background: rgba(31,144,186,255); border: 2px solid black;");
 
+    //Add in the layouts
     boardLayout->addWidget(selectLabel, 0, 0);
     boardLayout->addWidget(statusLabel, 0, 1);
     boardLayout->addWidget(nameLabel, 0, 2);
@@ -65,6 +76,7 @@ Dashboard::Dashboard(QWidget *_parent) : TabModel(_parent)
 
 void Dashboard::displayTask(Task *task, int indice) const
 {
+    //The color oh the button depends on its status
     switch (task->getStatus())
     {
     case TaskStatus::DOING:
@@ -92,7 +104,7 @@ void Dashboard::displayTask(Task *task, int indice) const
 
     if(nbSons > 0)
     {
-        pgValue = definePG(task, time);
+        pgValue = definePG(task, time); //The progression bar is calculated depending on the duration of each child
     }
 
     if (task->getStatus() == TaskStatus::DONE)
@@ -107,14 +119,15 @@ void Dashboard::displayTasks()
 {
     for (int i = 0; i < Dashboard::tdl.getToday().size(); i++)
     {
-        this->tabTaskRadio.push_back(this->tasks[i]->getId());
-        addNewTask(i);
-        displayTask(Dashboard::tdl.getToday().at(i), i);
+        this->tabTaskRadio.push_back(this->tasks[i]->getId()); //Used to know wich task is linked with what radiobutton
+        addNewTask(i); //Add the space for the task to be displayed
+        displayTask(Dashboard::tdl.getToday().at(i), i); //put the values of the tasks is the accorfing space
     }
 }
 
 void Dashboard::initialize()
 {
+    //Delete and clear everything
     foreach (QRadioButton *radio, *radSelectTask)
     {
         delete radio;
@@ -154,6 +167,8 @@ void Dashboard::initialize()
 
     tabTaskRadio.clear();
 
+
+    //Display everything back
     this->tasks = Dashboard::tdl.getToday();
 
     this->displayTasks();
@@ -163,6 +178,7 @@ void Dashboard::initialize()
 |*                          PRIVATE METHODS                          *|
 \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+//Add the space for the task to be displayed
 void Dashboard::addNewTask(int i)
 {
     QRadioButton *btn = new QRadioButton(this);
@@ -187,59 +203,6 @@ void Dashboard::addNewTask(int i)
     boardLayout->addWidget(pgbProgressionTask->at(i), i + 1, 5);
 }
 
-int Dashboard::defineAllTime(Task *task) const
-{
-    QList<Task *> sons = Dashboard::tdl.getSonsOf(task);
-    int value = task->getDuration().totalMinutes();
-    if(sons.size()<=0)
-    {
-        return value;
-    }
-
-    foreach(Task * son, sons)
-    {
-        value += defineAllTime(son);
-    }
-    return value;
-}
-
-int Dashboard::defineAllSons(Task *task) const
-{
-    QList<Task *> sons = Dashboard::tdl.getSonsOf(task);
-    int value = 0;
-    if(sons.size()<=0)
-    {
-        return 0;
-    }
-
-    foreach(Task * son, sons)
-    {
-        value += 1 + defineAllSons(son);
-    }
-    return value;
-}
-
-double Dashboard::definePG(Task *task, int time) const
-{
-    QList<Task *> sons = Dashboard::tdl.getSonsOf(task);
-    double value = 0;
-
-    if (task->getStatus() == TaskStatus::DONE)
-    {
-        value += 100.0 / time*task->getDuration().totalMinutes();
-    }
-
-    if(sons.size()<=0)
-    {
-        return value;
-    }
-
-    foreach(Task * son, sons)
-    {
-        value += definePG(son,time);
-    }
-    return value;
-}
 
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
@@ -252,7 +215,7 @@ void Dashboard::refresh()
     this->initialize();
 }
 
-
+//Used to know wich task to update, delete or change status
 void Dashboard::radioButtonClicked(bool isChecked)
 {
     if (isChecked)
@@ -280,6 +243,7 @@ void Dashboard::radioButtonClicked(bool isChecked)
     }
 }
 
+//Change the status depending on the previous status
 void Dashboard::statusButtonPressed()
 {
     TaskStatus status = this->selectedTask->getStatus();

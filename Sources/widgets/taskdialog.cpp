@@ -4,17 +4,21 @@
 |*                           CONSTRUCTORS                            *|
 \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+//Both update and add have the same constructor, initialize() determine how it will work
 TaskDialog::TaskDialog(ToDoList *tdl, bool addDialog, QWidget *_parent) : QDialog(_parent), toDoList(tdl)
 {
     mainLayout = new QGridLayout(this);
 
+    //Title
     labelTitle = new QLabel("Create New Task");
     QFont font = labelTitle->font();
     font.setUnderline(1);
     labelTitle->setFont(font);
     labelTitle->setMaximumHeight(20);
+
     mainLayout->addWidget(labelTitle);
 
+    //Labels
     labelName = new QLabel("Task's Name");
     mainLayout->addWidget(labelName, 1, 0);
 
@@ -33,9 +37,11 @@ TaskDialog::TaskDialog(ToDoList *tdl, bool addDialog, QWidget *_parent) : QDialo
     labelPriority = new QLabel("Priority");
     mainLayout->addWidget(labelPriority, 5, 1);
 
+    //Submit
     btnSubmit = new QPushButton("Submit", this);
     mainLayout->addWidget(btnSubmit, 7, 1);
 
+    //user inputs
     textName = new QLineEdit("", this);
     mainLayout->addWidget(textName, 2, 0);
 
@@ -73,6 +79,7 @@ TaskDialog::TaskDialog(ToDoList *tdl, bool addDialog, QWidget *_parent) : QDialo
     nudPriority->setMinimum(1);
     mainLayout->addWidget(nudPriority, 6, 1);
 
+    //the close is differents depending if its add or update
     if (addDialog)
     {
         connect(btnSubmit, &QPushButton::released, this, &TaskDialog::addAndClose);
@@ -94,6 +101,7 @@ void TaskDialog::initialize(Task *task)
     cmbParent->clear();
     cmbParent->addItem("-", "");
 
+    //If their is a Task set the values with it
     if (task != nullptr)
     {
         textName->setText(task->getName());
@@ -120,7 +128,7 @@ void TaskDialog::initialize(Task *task)
             cmbParent->setCurrentIndex(cmbParent->findData(""));
         }
     }
-    else
+    else //no Task, the display is empty for a new Task
     {
         textName->clear();
         textDeadline->clear();
@@ -140,6 +148,7 @@ void TaskDialog::initialize(Task *task)
  *                            SLOTS                            *
 \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+//Create a new task and add it to the tdl
 void TaskDialog::addAndClose()
 {
     int priority = nudPriority->value();
@@ -211,6 +220,7 @@ void TaskDialog::addAndClose()
     this->close();
 }
 
+//Update the task that was given
 void TaskDialog::updateAndClose()
 {
     int priority = nudPriority->value();
