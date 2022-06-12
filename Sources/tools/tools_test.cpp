@@ -1,15 +1,17 @@
 #include <gtest/gtest.h>
+
 #include "todolist.h"
 
 TEST(LibTools, ToDoList)
 {
-    ToDoList tdl();
 
-    Task *t1 = new Task(TaskStatus::OPEN, 3, "Task 1", QDateTime(QDate(2022, 04, 26), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromHours(4));
-    Task *t2 = new Task(TaskStatus::OPEN, 1, "Task 2", QDateTime(QDate(2022, 04, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromHours(4));
-    Task *t3 = new Task(TaskStatus::OPEN, 1, "Task 3", QDateTime(QDate(2022, 04, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromMinutes(45));
-    Task *t4 = new Task(TaskStatus::OPEN, 2, "Task 4", QDateTime(QDate(2022, 04, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromMinutes(30));
-    Task *t5 = new Task(TaskStatus::OPEN, 3, "Task 5", QDateTime(QDate(2022, 04, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromHours(2));
+    ToDoList tdl;
+
+    Task *t1 = new Task(3, "Task 1", QDateTime(QDate(2022, 07, 26), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromHours(4));
+    Task *t2 = new Task(2, "Task 2", QDateTime(QDate(2022, 07, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromHours(4));
+    Task *t3 = new Task(1, "Task 3", QDateTime(QDate(2022, 07, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromMinutes(45));
+    Task *t4 = new Task(2, "Task 4", QDateTime(QDate(2022, 07, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromMinutes(30));
+    Task *t5 = new Task(3, "Task 5", QDateTime(QDate(2022, 07, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromHours(2));
 
     tdl.addTask(t1);
     tdl.addTask(t2);
@@ -19,14 +21,12 @@ TEST(LibTools, ToDoList)
 
     QList<Task *> tasks = tdl.getTasks();
 
-    EXPECT_EQ(tasks.length(), 5);
+    EXPECT_EQ(tasks.size(), 5);
 
     QVector<Task *> priorisedTasks = tdl.getToday();
-    EXPECT_EQ(priorisedTasks[0]->getName(), "Task 1");
-    EXPECT_EQ(priorisedTasks[1]->getName(), "Task ");
-    EXPECT_EQ(priorisedTasks[2]->getName(), "Task ");
-    EXPECT_EQ(priorisedTasks[3]->getName(), "Task ");
-    EXPECT_EQ(priorisedTasks[4]->getName(), "Task ");
+    EXPECT_EQ(priorisedTasks.at(0)->getName(), "Task 1");
+    EXPECT_EQ(priorisedTasks.at(1)->getName(), "Task 5");
+    EXPECT_EQ(priorisedTasks.at(2)->getName(), "Task 4");
 
     tdl.addDependence(t1, t2);
     tdl.addDependence(t2, t3);
@@ -34,9 +34,130 @@ TEST(LibTools, ToDoList)
     tdl.addDependence(t4, t5);
 
     priorisedTasks = tdl.getToday();
-    EXPECT_EQ(priorisedTasks[0]->getName(), "Task 1");
-    EXPECT_EQ(priorisedTasks[1]->getName(), "Task ");
-    EXPECT_EQ(priorisedTasks[2]->getName(), "Task ");
-    EXPECT_EQ(priorisedTasks[3]->getName(), "Task ");
-    EXPECT_EQ(priorisedTasks[4]->getName(), "Task ");
+    EXPECT_EQ(priorisedTasks.at(0)->getName(), "Task 1");
+    EXPECT_EQ(priorisedTasks.at(1)->getName(), "Task 4");
+}
+
+/*
+ * When a leaf is removed it need to liberate his parent
+ *
+ */
+TEST(LibTools, removeStatus)
+{
+    ToDoList tdl;
+
+    Task *t1 = new Task(3, "Task 1", QDateTime(QDate(2022, 07, 26), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromHours(4));
+    Task *t2 = new Task(2, "Task 2", QDateTime(QDate(2022, 07, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromHours(4));
+    Task *t3 = new Task(1, "Task 3", QDateTime(QDate(2022, 07, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromMinutes(45));
+    Task *t4 = new Task(2, "Task 4", QDateTime(QDate(2022, 07, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromMinutes(30));
+    Task *t5 = new Task(3, "Task 5", QDateTime(QDate(2022, 07, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromHours(2));
+
+    tdl.addTask(t1);
+    tdl.addTask(t2);
+    tdl.addTask(t3);
+    tdl.addTask(t4);
+    tdl.addTask(t5);
+
+    tdl.addDependence(t1, t2);
+    tdl.addDependence(t2, t3);
+    tdl.addDependence(t3, t5);
+    tdl.addDependence(t4, t5);
+
+    QVector<Task *> tasks = tdl.run();
+
+    EXPECT_EQ(tasks.at(0)->getName(), "Task 1");
+    EXPECT_EQ(tasks.at(1)->getName(), "Task 4");
+    EXPECT_EQ(tasks.at(2)->getName(), "Task 2");
+    EXPECT_EQ(tasks.at(3)->getName(), "Task 3");
+    EXPECT_EQ(tasks.at(4)->getName(), "Task 5");
+
+    EXPECT_EQ(tasks.size(), 5);
+
+    EXPECT_EQ(tasks.at(0)->getStatus(), "OPEN");
+    EXPECT_EQ(tasks.at(1)->getStatus(), "OPEN");
+    EXPECT_EQ(tasks.at(2)->getStatus(), "LOCKED");
+    EXPECT_EQ(tasks.at(3)->getStatus(), "LOCKED");
+    EXPECT_EQ(tasks.at(4)->getStatus(), "LOCKED");
+
+
+    tdl.removeTask(t1);
+
+    EXPECT_EQ(tasks.at(0)->getName(), "Task 4");
+    EXPECT_EQ(tasks.at(1)->getName(), "Task 2");
+    EXPECT_EQ(tasks.at(2)->getName(), "Task 3");
+    EXPECT_EQ(tasks.at(3)->getName(), "Task 5");
+
+    EXPECT_EQ(tasks.size(), 4);
+
+    EXPECT_EQ(tasks.at(0)->getStatus(), "OPEN");
+    EXPECT_EQ(tasks.at(1)->getStatus(), "OPEN");
+    EXPECT_EQ(tasks.at(2)->getStatus(), "LOCKED");
+    EXPECT_EQ(tasks.at(3)->getStatus(), "LOCKED");
+
+    tdl.removeTask(td2);
+
+    EXPECT_EQ(tasks.at(0)->getName(), "Task 4");
+    EXPECT_EQ(tasks.at(1)->getName(), "Task 3");
+    EXPECT_EQ(tasks.at(2)->getName(), "Task 5");
+
+    EXPECT_EQ(tasks.size(), 3);
+
+    EXPECT_EQ(tasks.at(0)->getStatus(), "OPEN");
+    EXPECT_EQ(tasks.at(1)->getStatus(), "OPEN");
+    EXPECT_EQ(tasks.at(2)->getStatus(), "LOCKED");
+
+}
+
+TEST(LibTools, addTask)
+{
+    ToDoList tdl;
+
+    Task *t1 = new Task(3, "Task 1", QDateTime(QDate(2022, 07, 26), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromHours(4));
+    Task *t2 = new Task(2, "Task 2", QDateTime(QDate(2022, 07, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromHours(4));
+    Task *t3 = new Task(1, "Task 3", QDateTime(QDate(2022, 07, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromMinutes(45));
+    Task *t4 = new Task(2, "Task 4", QDateTime(QDate(2022, 07, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromMinutes(30));
+    Task *t5 = new Task(3, "Task 5", QDateTime(QDate(2022, 07, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromHours(2));
+    Task *t6 = new Task(2, "Task 6", QDateTime(QDate(2022, 07, 26), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromHours(1));
+
+    tdl.addTask(t1);
+    tdl.addTask(t2);
+    tdl.addTask(t3);
+    tdl.addTask(t4);
+    tdl.addTask(t5);
+
+    tdl.addDependence(t1, t2);
+    tdl.addDependence(t2, t3);
+    tdl.addDependence(t3, t5);
+    tdl.addDependence(t4, t5);
+
+    QVector<Task *> tasks = tdl.run();
+
+    EXPECT_EQ(tasks.at(0)->getName(), "Task 1");
+    EXPECT_EQ(tasks.at(1)->getName(), "Task 4");
+    EXPECT_EQ(tasks.at(2)->getName(), "Task 2");
+    EXPECT_EQ(tasks.at(3)->getName(), "Task 3");
+    EXPECT_EQ(tasks.at(4)->getName(), "Task 5");
+
+    EXPECT_EQ(tasks.size(), 5);
+
+    tdl.addTask(t6);
+
+    tasks = tdl.run();
+
+    EXPECT_EQ(tasks.at(0)->getName(), "Task 1");
+    EXPECT_EQ(tasks.at(1)->getName(), "Task 6");
+    EXPECT_EQ(tasks.at(2)->getName(), "Task 4");
+    EXPECT_EQ(tasks.at(3)->getName(), "Task 2");
+    EXPECT_EQ(tasks.at(4)->getName(), "Task 3");
+    EXPECT_EQ(tasks.at(5)->getName(), "Task 5");
+
+    tdl.addDependence(t6, t2);
+
+    EXPECT_EQ(tasks.at(0)->getName(), "Task 1");
+    EXPECT_EQ(tasks.at(1)->getName(), "Task 6");
+    EXPECT_EQ(tasks.at(2)->getName(), "Task 4");
+    EXPECT_EQ(tasks.at(3)->getName(), "Task 2");
+    EXPECT_EQ(tasks.at(4)->getName(), "Task 3");
+    EXPECT_EQ(tasks.at(5)->getName(), "Task 5");
+
 }

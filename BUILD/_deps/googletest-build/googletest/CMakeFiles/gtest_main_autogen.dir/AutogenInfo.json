@@ -1,0 +1,84 @@
+{
+	"BUILD_DIR" : "C:/DEV/Qt/not-today/BUILD/_deps/googletest-build/googletest/gtest_main_autogen",
+	"CMAKE_BINARY_DIR" : "C:/DEV/Qt/not-today/BUILD",
+	"CMAKE_CURRENT_BINARY_DIR" : "C:/DEV/Qt/not-today/BUILD/_deps/googletest-build/googletest",
+	"CMAKE_CURRENT_SOURCE_DIR" : "C:/DEV/Qt/not-today/BUILD/_deps/googletest-src/googletest",
+	"CMAKE_EXECUTABLE" : "C:/Program Files/CMake/bin/cmake.exe",
+	"CMAKE_LIST_FILES" : 
+	[
+		"C:/DEV/Qt/not-today/BUILD/_deps/googletest-src/googletest/CMakeLists.txt",
+		"C:/DEV/Qt/not-today/BUILD/_deps/googletest-src/googletest/cmake/internal_utils.cmake",
+		"C:/Program Files/CMake/share/cmake-3.22/Modules/FindPython.cmake",
+		"C:/Program Files/CMake/share/cmake-3.22/Modules/FindPython/Support.cmake",
+		"C:/Program Files/CMake/share/cmake-3.22/Modules/FindPackageHandleStandardArgs.cmake",
+		"C:/Program Files/CMake/share/cmake-3.22/Modules/FindPackageMessage.cmake",
+		"C:/Program Files/CMake/share/cmake-3.22/Modules/CMakePackageConfigHelpers.cmake",
+		"C:/Program Files/CMake/share/cmake-3.22/Modules/WriteBasicConfigVersionFile.cmake",
+		"C:/Program Files/CMake/share/cmake-3.22/Modules/BasicConfigVersion-AnyNewerVersion.cmake.in",
+		"C:/DEV/Qt/not-today/BUILD/_deps/googletest-src/googletest/cmake/Config.cmake.in",
+		"C:/DEV/Qt/not-today/BUILD/_deps/googletest-src/googletest/cmake/gtest.pc.in",
+		"C:/DEV/Qt/not-today/BUILD/_deps/googletest-src/googletest/cmake/gtest_main.pc.in"
+	],
+	"CMAKE_SOURCE_DIR" : "C:/DEV/Qt/not-today/Sources",
+	"DEP_FILE" : "C:/DEV/Qt/not-today/BUILD/_deps/googletest-build/googletest/gtest_main_autogen/deps",
+	"DEP_FILE_RULE_NAME" : "gtest_main_autogen/timestamp",
+	"HEADERS" : [],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "C:/DEV/Qt/not-today/BUILD/_deps/googletest-build/googletest/gtest_main_autogen/include",
+	"MOC_COMPILATION_FILE" : "C:/DEV/Qt/not-today/BUILD/_deps/googletest-build/googletest/gtest_main_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : [],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"C:/DEV/Qt/not-today/BUILD/_deps/googletest-build/googletest",
+		"C:/DEV/Qt/not-today/BUILD/_deps/googletest-src/googletest",
+		"C:/DEV/Qt/not-today/BUILD/_deps/googletest-src/googletest/include",
+		"C:/Qt/Tools/mingw810_64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++",
+		"C:/Qt/Tools/mingw810_64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32",
+		"C:/Qt/Tools/mingw810_64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward",
+		"C:/Qt/Tools/mingw810_64/lib/gcc/x86_64-w64-mingw32/8.1.0/include",
+		"C:/Qt/Tools/mingw810_64/lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed",
+		"C:/Qt/Tools/mingw810_64/x86_64-w64-mingw32/include"
+	],
+	"MOC_MACRO_NAMES" : [ "Q_OBJECT", "Q_GADGET", "Q_NAMESPACE", "Q_NAMESPACE_EXPORT" ],
+	"MOC_OPTIONS" : [],
+	"MOC_PATH_PREFIX" : false,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"C:/Qt/Tools/mingw810_64/bin/c++.exe",
+		"-dM",
+		"-E",
+		"-c",
+		"C:/Program Files/CMake/share/cmake-3.22/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "C:/DEV/Qt/not-today/BUILD/_deps/googletest-build/googletest/gtest_main_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : [],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 4,
+	"PARSE_CACHE_FILE" : "C:/DEV/Qt/not-today/BUILD/_deps/googletest-build/googletest/CMakeFiles/gtest_main_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "C:/Qt/6.1.2/mingw81_64/./bin/moc.exe",
+	"QT_UIC_EXECUTABLE" : "C:/Qt/6.1.2/mingw81_64/./bin/uic.exe",
+	"QT_VERSION_MAJOR" : 6,
+	"QT_VERSION_MINOR" : 1,
+	"SETTINGS_FILE" : "C:/DEV/Qt/not-today/BUILD/_deps/googletest-build/googletest/CMakeFiles/gtest_main_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[
+			"C:/DEV/Qt/not-today/BUILD/_deps/googletest-src/googletest/src/gtest_main.cc",
+			"MU",
+			null
+		]
+	],
+	"UIC_OPTIONS" : [],
+	"UIC_SEARCH_PATHS" : [],
+	"UIC_SKIP" : [],
+	"UIC_UI_FILES" : [],
+	"VERBOSITY" : 0
+}

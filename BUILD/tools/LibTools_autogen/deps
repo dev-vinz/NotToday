@@ -1,0 +1,15 @@
+LibTools_autogen/timestamp: \
+	C:/DEV/Qt/not-today/Sources/tools/CMakeLists.txt \
+	C:/DEV/Qt/not-today/Sources/tools/priorityqueue.cpp \
+	C:/DEV/Qt/not-today/Sources/tools/priorityqueue.h \
+	C:/DEV/Qt/not-today/Sources/tools/recurrence.h \
+	C:/DEV/Qt/not-today/Sources/tools/task.cpp \
+	C:/DEV/Qt/not-today/Sources/tools/task.h \
+	C:/DEV/Qt/not-today/Sources/tools/taskstatus.h \
+	C:/DEV/Qt/not-today/Sources/tools/timespan.cpp \
+	C:/DEV/Qt/not-today/Sources/tools/timespan.h \
+	C:/DEV/Qt/not-today/Sources/tools/todolist.cpp \
+	C:/DEV/Qt/not-today/Sources/tools/todolist.h \
+	C:/DEV/Qt/not-today/Sources/tools/utils.cpp \
+	C:/DEV/Qt/not-today/Sources/tools/utils.h \
+	C:/Program\ Files/CMake/bin/cmake.exe

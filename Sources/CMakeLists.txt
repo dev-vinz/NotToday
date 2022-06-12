@@ -28,7 +28,9 @@ find_package(Qt6 6.1.2 REQUIRED COMPONENTS Core)
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
+
 add_subdirectory("tools")
+
 
 set(PROJECT_SOURCES
         main.cpp
@@ -51,12 +53,17 @@ else()
         add_library(NotToday SHARED
             ${PROJECT_SOURCES}
         )
+
     else()
         add_executable(NotToday
             ${PROJECT_SOURCES}
         )
+
+
     endif()
+    
 endif()
+
 
 target_link_libraries(NotToday PRIVATE Qt${QT_VERSION_MAJOR}::Widgets LibTools)
 

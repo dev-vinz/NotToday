@@ -1,0 +1,15 @@
+gtest_autogen/timestamp: \
+	C:/DEV/Qt/not-today/BUILD/_deps/googletest-src/googletest/CMakeLists.txt \
+	C:/DEV/Qt/not-today/BUILD/_deps/googletest-src/googletest/cmake/Config.cmake.in \
+	C:/DEV/Qt/not-today/BUILD/_deps/googletest-src/googletest/cmake/gtest.pc.in \
+	C:/DEV/Qt/not-today/BUILD/_deps/googletest-src/googletest/cmake/gtest_main.pc.in \
+	C:/DEV/Qt/not-today/BUILD/_deps/googletest-src/googletest/cmake/internal_utils.cmake \
+	C:/DEV/Qt/not-today/BUILD/_deps/googletest-src/googletest/src/gtest-all.cc \
+	C:/Program\ Files/CMake/share/cmake-3.22/Modules/BasicConfigVersion-AnyNewerVersion.cmake.in \
+	C:/Program\ Files/CMake/share/cmake-3.22/Modules/CMakePackageConfigHelpers.cmake \
+	C:/Program\ Files/CMake/share/cmake-3.22/Modules/FindPackageHandleStandardArgs.cmake \
+	C:/Program\ Files/CMake/share/cmake-3.22/Modules/FindPackageMessage.cmake \
+	C:/Program\ Files/CMake/share/cmake-3.22/Modules/FindPython.cmake \
+	C:/Program\ Files/CMake/share/cmake-3.22/Modules/FindPython/Support.cmake \
+	C:/Program\ Files/CMake/share/cmake-3.22/Modules/WriteBasicConfigVersionFile.cmake \
+	C:/Program\ Files/CMake/bin/cmake.exe
