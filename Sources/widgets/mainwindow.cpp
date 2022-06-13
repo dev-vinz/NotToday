@@ -72,7 +72,7 @@ void MainWindow::showStatusBar(const QString msg)
 
 void MainWindow::about()
 {
-    QMessageBox::information(NULL, "About", "Projet fait dans le cadre du P2 du semestre d'Automne.\nNot-Today est une application de gestion de temps et de tâches.\n Autheurs:\n\tVincent Jeannin\n\tBenjamin Mouchet\n\tGuillaume Mouchet");
+    QMessageBox::information(NULL, "About", "Projet fait dans le cadre du P2 du semestre d'Automne.\nNot-Today est une application de gestion de temps et de tâches.\n Auteurs:\n\tVincent Jeannin\n\tBenjamin Mouchet\n\tGuillaume Mouchet");
 }
 
 void MainWindow::newTdl()

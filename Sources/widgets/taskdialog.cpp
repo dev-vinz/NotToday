@@ -133,12 +133,6 @@ void TaskDialog::initialize(Task *task)
         defineAllSons(task);
 
 
-        for(Task *isASon : *AllSons)
-        {
-           qDebug() << isASon->getName();
-        }
-
-
         QList<Task *> test = toDoList->getTasks();
 
         for (Task *t : test)
