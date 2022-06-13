@@ -322,7 +322,10 @@ void TaskManagement::radioButtonClicked(bool isChecked)
 
         foreach (Task *son, sons)
         {
-            if (son->getStatus() != TaskStatus::DONE) nbSonsUndone++;
+            if( son->getRecurrence() == Recurrence::NO_RECURRENCE)
+            {
+                if (son->getStatus() != TaskStatus::DONE) nbSonsUndone++;
+            }
         }
 
         if (nbSonsUndone < 1) btnStatusTask->at(id)->setEnabled(true);
@@ -342,6 +345,36 @@ void TaskManagement::statusButtonPressed()
     {
         this->selectedTask->setStatus(TaskStatus::DONE);
 
+        //Check if we need to create a new task depending on the dependance
+        Recurrence recu = this->selectedTask->getRecurrence();
+        QDateTime time = this->selectedTask->getDeadline();
+        switch(recu)
+        {
+            case Recurrence::EVERY_DAY:
+            time = time.addDays(1);
+            this->selectedTask->setDeadline(time);
+            this->selectedTask->setStatus(TaskStatus::OPEN);
+            break;
+
+            case Recurrence::EVERY_TWO_WEEKS:
+            time = time.addDays(14);
+            this->selectedTask->setDeadline(time);
+            this->selectedTask->setStatus(TaskStatus::OPEN);
+            break;
+
+            case Recurrence::EVERY_WEEK:
+            time = time.addDays(7);
+            this->selectedTask->setDeadline(time);
+            this->selectedTask->setStatus(TaskStatus::OPEN);
+
+            break;
+
+            case Recurrence::NO_RECURRENCE:
+            this->selectedTask->setStatus(TaskStatus::DONE);
+            break;
+
+        }
+
         if (this->selectedTask->getParents().size() > 0)
         {
             Task *directParent = this->selectedTask->getParents().at(0);
@@ -351,11 +384,18 @@ void TaskManagement::statusButtonPressed()
 
             foreach (Task *son, otherSons)
             {
-                if (son->getStatus() != TaskStatus::DONE) nbUndone++;
+                if( son->getRecurrence() == Recurrence::NO_RECURRENCE)
+                {
+                    if (son->getStatus() != TaskStatus::DONE) nbUndone++;
+                }
             }
 
-            if (nbUndone < 1) directParent->setStatus(TaskStatus::OPEN);
+            if(directParent->getStatus() != TaskStatus::DONE)
+            {
+                if (nbUndone < 1) directParent->setStatus(TaskStatus::OPEN);
+            }
         }
+
     }
 
     this->refresh();

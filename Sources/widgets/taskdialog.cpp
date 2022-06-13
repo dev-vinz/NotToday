@@ -7,6 +7,7 @@
 //Both update and add have the same constructor, initialize() determine how it will work
 TaskDialog::TaskDialog(ToDoList *tdl, bool addDialog, QWidget *_parent) : QDialog(_parent), toDoList(tdl)
 {
+
     mainLayout = new QGridLayout(this);
 
     //Title
@@ -94,8 +95,28 @@ TaskDialog::TaskDialog(ToDoList *tdl, bool addDialog, QWidget *_parent) : QDialo
 |*                          PRIVATE METHODS                          *|
 \* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+
+int TaskDialog::defineAllSons(Task *task) const
+{
+    QList<Task *> sons = TaskDialog::toDoList->getSonsOf(task);
+
+    if(sons.size()<=0)
+    {
+        return 0;
+    }
+
+    foreach(Task * son, sons)
+    {
+        AllSons->insert(son);
+        defineAllSons(son);
+    }
+    return 0;
+}
+
 void TaskDialog::initialize(Task *task)
 {
+    AllSons = new QSet<Task *>;
+
     this->task = task;
 
     cmbParent->clear();
@@ -109,14 +130,33 @@ void TaskDialog::initialize(Task *task)
         cmbReccurence->setCurrentIndex(cmbReccurence->findData(task->getRecurrenceString()));
         textDuration->setText(task->getDuration().toString());
         nudPriority->setValue(task->getPriority());
+        defineAllSons(task);
 
-        for (Task *t : toDoList->getTasks())
+
+        for(Task *isASon : *AllSons)
         {
-            if(t->getId()!=task->getId())
-            {
-                cmbParent->addItem(t->getName(), t->getId());
-            }
+           qDebug() << isASon->getName();
         }
+
+
+        QList<Task *> test = toDoList->getTasks();
+
+        for (Task *t : test)
+        {
+
+            if(!(AllSons->contains(t)))
+            {
+                if(t->getId()!=task->getId()){
+                cmbParent->addItem(t->getName(), t->getId());}
+            }
+
+
+        }
+
+
+
+
+        AllSons->clear();
 
         if(task->getParents().size()>0)
         {

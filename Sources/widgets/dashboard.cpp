@@ -63,9 +63,9 @@ Dashboard::Dashboard(QWidget *_parent) : TabModel(_parent)
 
 
 
-    Task *t1 = new Task(3, "Task 1", QDateTime(QDate(2022, 07, 26), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromHours(4));
-    Task *t2 = new Task(2, "Task 2", QDateTime(QDate(2022, 07, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromHours(4));
-    Task *t3 = new Task(1, "Task 3", QDateTime(QDate(2022, 07, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromMinutes(45));
+    Task *t1 = new Task(3, "Task 1", QDateTime(QDate(2022, 07, 26), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromHours(4),Recurrence::EVERY_DAY);
+    Task *t2 = new Task(2, "Task 2", QDateTime(QDate(2022, 07, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromHours(4),Recurrence::EVERY_TWO_WEEKS);
+    Task *t3 = new Task(1, "Task 3", QDateTime(QDate(2022, 07, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromMinutes(45),Recurrence::EVERY_WEEK);
     Task *t4 = new Task(2, "Task 4", QDateTime(QDate(2022, 07, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromMinutes(30));
     Task *t5 = new Task(3, "Task 5", QDateTime(QDate(2022, 07, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromHours(2));
 
@@ -237,6 +237,7 @@ void Dashboard::radioButtonClicked(bool isChecked)
 {
     if (isChecked)
     {
+
         // Récupérer l'id du select
         int id = 0;
 
@@ -253,15 +254,17 @@ void Dashboard::radioButtonClicked(bool isChecked)
 
         foreach (Task *son, sons)
         {
-            if (son->getStatus() != TaskStatus::DONE) nbSonsUndone++;
+            if( son->getRecurrence() == Recurrence::NO_RECURRENCE)
+            {
+                if (son->getStatus() != TaskStatus::DONE) nbSonsUndone++;
+            }
         }
 
         if (nbSonsUndone < 1) btnStatusTask->at(id)->setEnabled(true);
     }
 }
 
-//Change the status depending on the previous one
-
+//Change the status depending on the previous status
 void Dashboard::statusButtonPressed()
 {
     TaskStatus status = this->selectedTask->getStatus();
@@ -274,6 +277,36 @@ void Dashboard::statusButtonPressed()
     {
         this->selectedTask->setStatus(TaskStatus::DONE);
 
+        //Check if we need to create a new task depending on the dependance
+        Recurrence recu = this->selectedTask->getRecurrence();
+        QDateTime time = this->selectedTask->getDeadline();
+        switch(recu)
+        {
+            case Recurrence::EVERY_DAY:
+            time = time.addDays(1);
+            this->selectedTask->setDeadline(time);
+            this->selectedTask->setStatus(TaskStatus::OPEN);
+            break;
+
+            case Recurrence::EVERY_TWO_WEEKS:
+            time = time.addDays(14);
+            this->selectedTask->setDeadline(time);
+            this->selectedTask->setStatus(TaskStatus::OPEN);
+            break;
+
+            case Recurrence::EVERY_WEEK:
+            time = time.addDays(7);
+            this->selectedTask->setDeadline(time);
+            this->selectedTask->setStatus(TaskStatus::OPEN);
+
+            break;
+
+            case Recurrence::NO_RECURRENCE:
+            this->selectedTask->setStatus(TaskStatus::DONE);
+            break;
+
+        }
+
         if (this->selectedTask->getParents().size() > 0)
         {
             Task *directParent = this->selectedTask->getParents().at(0);
@@ -283,14 +316,19 @@ void Dashboard::statusButtonPressed()
 
             foreach (Task *son, otherSons)
             {
-                if (son->getStatus() != TaskStatus::DONE) nbUndone++;
+                if( son->getRecurrence() == Recurrence::NO_RECURRENCE)
+                {
+                    if (son->getStatus() != TaskStatus::DONE) nbUndone++;
+                }
             }
 
-            if (nbUndone < 1) directParent->setStatus(TaskStatus::OPEN);
+            if(directParent->getStatus() != TaskStatus::DONE)
+            {
+                if (nbUndone < 1) directParent->setStatus(TaskStatus::OPEN);
+            }
         }
+
     }
 
     this->refresh();
 }
-
-

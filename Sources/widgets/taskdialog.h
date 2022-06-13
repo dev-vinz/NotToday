@@ -48,9 +48,12 @@ private:
     QSpinBox *nudPriority;
 
 
+    int defineAllSons(Task *task) const;
+
     //Tools
     Task *task = nullptr;
     ToDoList *toDoList;
+    QSet<Task *> *AllSons;
 
 public:
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\
