@@ -70,7 +70,7 @@ QList<Task *> ToDoList::getToday() const
 
         if (timeNext > ToDoList::HOURS_IN_A_DAY_IN_MINUTES)
         {
-            break;
+            continue;
         }
         else
         {

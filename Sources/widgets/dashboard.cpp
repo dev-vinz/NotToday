@@ -61,7 +61,7 @@ Dashboard::Dashboard(QWidget *_parent) : TabModel(_parent)
     boardLayout->addWidget(durationLabel, 0, 4);
     boardLayout->addWidget(progressionLabel, 0, 5);
 
-
+/*
 
     Task *t1 = new Task(3, "Task 1", QDateTime(QDate(2022, 07, 26), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromHours(4),Recurrence::EVERY_DAY);
     Task *t2 = new Task(2, "Task 2", QDateTime(QDate(2022, 07, 28), QTime(15, 0)), QDateTime::currentDateTime(), TimeSpan::fromHours(4),Recurrence::EVERY_TWO_WEEKS);
@@ -78,7 +78,7 @@ Dashboard::Dashboard(QWidget *_parent) : TabModel(_parent)
     tdl.addDependence(t1, t2);
     tdl.addDependence(t2, t3);
     tdl.addDependence(t3, t5);
-    tdl.addDependence(t4, t5);
+    tdl.addDependence(t4, t5);*/
 
     this->initialize();
 
